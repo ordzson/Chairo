@@ -1,0 +1,11 @@
+Use case: ui-mockup
+Asset type: high-fidelity mobile multiplayer lobby screen reference, portrait phone viewport
+Primary request: Extend the approved “Marcador vivo” Chairo game UI into the host lobby for “¿Versículo o inventículo?”. The host chose “También juego”. Guests join by scanning a QR code or entering the room code on their own phone.
+Input images: Image 1 is the approved gameplay composition and strict visual/style reference. Preserve its Chairo logo treatment, ivory paper, dark binder-blue spine, mission-blue ink, top-lit molded controls, hand-drawn line icons, playful early-2000s educational-software character and strong hierarchy. Do not copy its question, score, or answer controls.
+Scene/backdrop: one Chairo mission-manual page filling a 9:16 mobile viewport, no device frame, no browser chrome.
+Structure: 1) compact header title “Sala lista” with a small status “Anfitrión · jugando”; 2) a large central ivory paper ticket holding a prominent square QR-code VISUAL PLACEHOLDER and the room code “G7K4” in huge blue characters, with instruction “Escanea o entra con el código”; 3) a participant roster below with two tactile name tabs: “Ana · anfitrión” and “Leo · listo”, plus one empty dotted slot “Esperando…” to show scalability; 4) a small settings summary strip “Media · 10 preguntas”; 5) one wide yellow molded primary button “EMPEZAR PARTIDA”, enabled because a guest is ready; 6) secondary action “Compartir código”.
+Composition/framing: the QR and G7K4 are the focal area and readable from across a small room; participant names are secondary; primary action is at the bottom thumb zone. The QR is only illustrative in this concept and need not be technically scannable.
+Lighting/mood: anticipation, shared play, cheerful and tactile.
+Color palette: Chairo ivory #f3eadb, mission blue #07266e, deep blue #031b56, joy yellow #ffc61b, turquoise #20b9b9, green #54bd53, orange #f36b22.
+Text (verbatim): “Sala lista”, “Anfitrión · jugando”, “Escanea o entra con el código”, “G7K4”, “Participantes”, “Ana · anfitrión”, “Leo · listo”, “Esperando…”, “Media · 10 preguntas”, “EMPEZAR PARTIDA”, “Compartir código”.
+Constraints: production-quality mobile UI; preserve approved visual world; clearly show QR plus code as equivalent join methods; no generic cards, chat, avatars/photos, glassmorphism, external branding, or watermark.

@@ -1,0 +1,2288 @@
+{
+  "tool": "comp-spec",
+  "version": 1,
+  "createdAt": "2026-09-15T13:36:26.166Z",
+  "comp": ".impeccable/mocks/manual-02-indice.png",
+  "warnings": [
+    "region manual: \"container\": true set in the regions file (the region-size refusal is overridden: one undivided element)",
+    "region ring: \"bleed\": true set in the regions file (the clipped-artwork refusal is overridden: the page crops it there)",
+    "region acetate: \"container\": true set in the regions file (the region-size refusal is overridden: one undivided element)"
+  ],
+  "uncoveredInkCells": [],
+  "compSize": {
+    "width": 941,
+    "height": 1672
+  },
+  "aspect": 0.5628,
+  "orientation": "portrait",
+  "palette": [
+    {
+      "hex": "#e7dccf",
+      "coverage": 0.6124
+    },
+    {
+      "hex": "#f8c825",
+      "coverage": 0.131
+    },
+    {
+      "hex": "#091e6c",
+      "coverage": 0.1155
+    },
+    {
+      "hex": "#6957d0",
+      "coverage": 0.0719
+    },
+    {
+      "hex": "#64bc50",
+      "coverage": 0.0692
+    }
+  ],
+  "bands": [
+    {
+      "y": 0.0088,
+      "strength": 1
+    },
+    {
+      "y": 0.0485,
+      "strength": 0.2898
+    },
+    {
+      "y": 0.1013,
+      "strength": 0.5629
+    },
+    {
+      "y": 0.1586,
+      "strength": 1
+    },
+    {
+      "y": 0.1806,
+      "strength": 0.2569
+    },
+    {
+      "y": 0.2203,
+      "strength": 0.8874
+    },
+    {
+      "y": 0.2599,
+      "strength": 0.4939
+    },
+    {
+      "y": 0.2863,
+      "strength": 1
+    },
+    {
+      "y": 0.326,
+      "strength": 0.4377
+    },
+    {
+      "y": 0.348,
+      "strength": 0.7242
+    },
+    {
+      "y": 0.3789,
+      "strength": 0.206
+    },
+    {
+      "y": 0.4141,
+      "strength": 1
+    },
+    {
+      "y": 0.4537,
+      "strength": 0.3788
+    },
+    {
+      "y": 0.4802,
+      "strength": 1
+    },
+    {
+      "y": 0.5419,
+      "strength": 0.7021
+    },
+    {
+      "y": 0.5727,
+      "strength": 0.3106
+    },
+    {
+      "y": 0.5947,
+      "strength": 0.2341
+    },
+    {
+      "y": 0.6564,
+      "strength": 0.5164
+    },
+    {
+      "y": 0.6784,
+      "strength": 0.3128
+    },
+    {
+      "y": 0.7137,
+      "strength": 0.4337
+    },
+    {
+      "y": 0.7357,
+      "strength": 0.2411
+    },
+    {
+      "y": 0.7753,
+      "strength": 0.6223
+    },
+    {
+      "y": 0.8194,
+      "strength": 0.4008
+    },
+    {
+      "y": 0.8546,
+      "strength": 0.4755
+    },
+    {
+      "y": 0.9031,
+      "strength": 0.4083
+    },
+    {
+      "y": 0.9471,
+      "strength": 0.3127
+    },
+    {
+      "y": 0.9868,
+      "strength": 1
+    }
+  ],
+  "regions": [
+    {
+      "id": "manual",
+      "kind": "chrome",
+      "note": "One continuous ivory manual page enclosed by a blue binding rim; physical book structure behind all named children.",
+      "grid": null,
+      "container": true,
+      "box": {
+        "x": 0,
+        "y": 0,
+        "w": 1,
+        "h": 1
+      },
+      "px": {
+        "x": 0,
+        "y": 0,
+        "w": 941,
+        "h": 1672
+      },
+      "aspect": 0.5628,
+      "palette": [
+        {
+          "hex": "#e7dccf",
+          "coverage": 0.6124
+        },
+        {
+          "hex": "#f8c825",
+          "coverage": 0.131
+        },
+        {
+          "hex": "#091e6c",
+          "coverage": 0.1155
+        },
+        {
+          "hex": "#6957d0",
+          "coverage": 0.0719
+        },
+        {
+          "hex": "#64bc50",
+          "coverage": 0.0692
+        }
+      ],
+      "detail": {
+        "energy": 38.8273
+      },
+      "medium": "semantic",
+      "plate": null,
+      "text": null
+    },
+    {
+      "id": "paper",
+      "kind": "texture",
+      "note": "Clean ivory fibrous paper grain, tiled across the manual.",
+      "grid": null,
+      "box": {
+        "x": 0.0691,
+        "y": 0.0144,
+        "w": 0.1753,
+        "h": 0.0251
+      },
+      "px": {
+        "x": 65,
+        "y": 24,
+        "w": 165,
+        "h": 42
+      },
+      "aspect": 3.9286,
+      "palette": [
+        {
+          "hex": "#e8d9c8",
+          "coverage": 0.9987
+        },
+        {
+          "hex": "#d8b898",
+          "coverage": 0.0013
+        }
+      ],
+      "detail": {
+        "energy": 8.6541
+      },
+      "medium": "raster",
+      "plate": "assets/plates/paper.png",
+      "text": null
+    },
+    {
+      "id": "brand",
+      "kind": "plate",
+      "note": "Golden chunky Chairo lettering with ultramarine dimensional outline and three golden rays; isolated transparent brand asset.",
+      "grid": null,
+      "box": {
+        "x": 0.2731,
+        "y": 0.0138,
+        "w": 0.4793,
+        "h": 0.0969
+      },
+      "px": {
+        "x": 257,
+        "y": 23,
+        "w": 451,
+        "h": 162
+      },
+      "aspect": 2.784,
+      "palette": [
+        {
+          "hex": "#efe5d7",
+          "coverage": 0.4342
+        },
+        {
+          "hex": "#f8c720",
+          "coverage": 0.3109
+        },
+        {
+          "hex": "#092675",
+          "coverage": 0.1974
+        },
+        {
+          "hex": "#090a43",
+          "coverage": 0.0368
+        },
+        {
+          "hex": "#113574",
+          "coverage": 0.0207
+        }
+      ],
+      "detail": {
+        "energy": 38.8492
+      },
+      "medium": "raster",
+      "plate": "assets/plates/brand.png",
+      "text": null
+    },
+    {
+      "id": "heading",
+      "kind": "text",
+      "note": "Centro de juegos; handwritten blue ink.",
+      "grid": null,
+      "box": {
+        "x": 0.3528,
+        "y": 0.1077,
+        "w": 0.3177,
+        "h": 0.0263
+      },
+      "px": {
+        "x": 332,
+        "y": 180,
+        "w": 299,
+        "h": 44
+      },
+      "aspect": 6.7955,
+      "palette": [
+        {
+          "hex": "#efe6d8",
+          "coverage": 0.6756
+        },
+        {
+          "hex": "#0a1963",
+          "coverage": 0.1731
+        },
+        {
+          "hex": "#f8cb0c",
+          "coverage": 0.0894
+        },
+        {
+          "hex": "#a6a7b6",
+          "coverage": 0.038
+        },
+        {
+          "hex": "#3c4876",
+          "coverage": 0.0239
+        }
+      ],
+      "detail": {
+        "energy": 67.0842
+      },
+      "medium": "semantic",
+      "plate": null,
+      "text": null,
+      "type": {
+        "comp": {
+          "lines": 1,
+          "glyphs": 14,
+          "capHeightPx": 23.6,
+          "inkIsDark": true,
+          "allCaps": true,
+          "advance": 0.6557,
+          "advTall": null,
+          "advX": null,
+          "gap": 0.1269,
+          "xRatio": null,
+          "stemW": 0.2127,
+          "contrast": 1.0708,
+          "serif": 1.0219,
+          "densTall": null,
+          "densX": null,
+          "weight": null
+        },
+        "widthClass": "normal",
+        "weightClass": "bold"
+      }
+    },
+    {
+      "id": "header-left",
+      "kind": "text",
+      "note": "BUENAS PREGUNTAS GRANDES HISTORIAS; blue handwritten marginal note.",
+      "grid": null,
+      "box": {
+        "x": 0.0956,
+        "y": 0.0508,
+        "w": 0.1498,
+        "h": 0.0694
+      },
+      "px": {
+        "x": 90,
+        "y": 85,
+        "w": 141,
+        "h": 116
+      },
+      "aspect": 1.2155,
+      "palette": [
+        {
+          "hex": "#e9dccd",
+          "coverage": 0.8581
+        },
+        {
+          "hex": "#283a6a",
+          "coverage": 0.0484
+        },
+        {
+          "hex": "#505c83",
+          "coverage": 0.0342
+        },
+        {
+          "hex": "#182a6a",
+          "coverage": 0.0302
+        },
+        {
+          "hex": "#9599a9",
+          "coverage": 0.0291
+        }
+      ],
+      "detail": {
+        "energy": 31.9147
+      },
+      "medium": "semantic",
+      "plate": null,
+      "text": null,
+      "type": {
+        "comp": null,
+        "measuredAt": "2026-09-15T13:37:08.821Z",
+        "note": "no separable lettering in the crop; size by the region box"
+      }
+    },
+    {
+      "id": "header-right",
+      "kind": "text",
+      "note": "IDEAS JUEGOS PERSONAS UN MUNDO MEJOR; blue handwritten marginal note.",
+      "grid": null,
+      "box": {
+        "x": 0.814,
+        "y": 0.0359,
+        "w": 0.1562,
+        "h": 0.0897
+      },
+      "px": {
+        "x": 766,
+        "y": 60,
+        "w": 147,
+        "h": 150
+      },
+      "aspect": 0.98,
+      "palette": [
+        {
+          "hex": "#ede4d7",
+          "coverage": 0.8289
+        },
+        {
+          "hex": "#203575",
+          "coverage": 0.0668
+        },
+        {
+          "hex": "#465786",
+          "coverage": 0.0375
+        },
+        {
+          "hex": "#a8aaba",
+          "coverage": 0.0367
+        },
+        {
+          "hex": "#707b9b",
+          "coverage": 0.0301
+        }
+      ],
+      "detail": {
+        "energy": 32.1591
+      },
+      "medium": "semantic",
+      "plate": null,
+      "text": null,
+      "type": {
+        "comp": null,
+        "measuredAt": "2026-09-15T13:37:08.915Z",
+        "note": "no separable lettering in the crop; size by the region box"
+      }
+    },
+    {
+      "id": "underline",
+      "kind": "chrome",
+      "note": "Short yellow underline below the page heading.",
+      "grid": null,
+      "box": {
+        "x": 0.3284,
+        "y": 0.134,
+        "w": 0.3528,
+        "h": 0.0114
+      },
+      "px": {
+        "x": 309,
+        "y": 224,
+        "w": 332,
+        "h": 19
+      },
+      "aspect": 17.4737,
+      "palette": [
+        {
+          "hex": "#efe7d7",
+          "coverage": 0.6092
+        },
+        {
+          "hex": "#f8cb0a",
+          "coverage": 0.3531
+        },
+        {
+          "hex": "#a89b74",
+          "coverage": 0.0148
+        },
+        {
+          "hex": "#a4a49a",
+          "coverage": 0.0121
+        },
+        {
+          "hex": "#bebcc2",
+          "coverage": 0.0108
+        }
+      ],
+      "detail": {
+        "energy": 15.1896
+      },
+      "medium": "semantic",
+      "plate": null,
+      "text": null
+    },
+    {
+      "id": "ring",
+      "kind": "plate",
+      "note": "One polished silver binder ring crossing a bronze punched eyelet, horizontal; transparent background.",
+      "grid": null,
+      "bleed": true,
+      "box": {
+        "x": 0,
+        "y": 0.1591,
+        "w": 0.102,
+        "h": 0.0407
+      },
+      "px": {
+        "x": 0,
+        "y": 266,
+        "w": 96,
+        "h": 68
+      },
+      "aspect": 1.4118,
+      "palette": [
+        {
+          "hex": "#f8bd11",
+          "coverage": 0.3691
+        },
+        {
+          "hex": "#583c1d",
+          "coverage": 0.255
+        },
+        {
+          "hex": "#0d0908",
+          "coverage": 0.1812
+        },
+        {
+          "hex": "#453b33",
+          "coverage": 0.1119
+        },
+        {
+          "hex": "#f4f4f2",
+          "coverage": 0.0828
+        }
+      ],
+      "detail": {
+        "energy": 20.9126
+      },
+      "medium": "raster",
+      "plate": "assets/plates/ring.png",
+      "text": null
+    },
+    {
+      "id": "divider-0",
+      "kind": "chrome",
+      "note": "One yellow index strip, rounded trailing edge; selected strip advances left.",
+      "grid": null,
+      "box": {
+        "x": 0.0446,
+        "y": 0.1549,
+        "w": 0.9384,
+        "h": 0.0694
+      },
+      "px": {
+        "x": 42,
+        "y": 259,
+        "w": 883,
+        "h": 116
+      },
+      "aspect": 7.6121,
+      "palette": [
+        {
+          "hex": "#f8c821",
+          "coverage": 0.7826
+        },
+        {
+          "hex": "#091c64",
+          "coverage": 0.0941
+        },
+        {
+          "hex": "#f8f7f3",
+          "coverage": 0.0847
+        },
+        {
+          "hex": "#101e4b",
+          "coverage": 0.0221
+        },
+        {
+          "hex": "#d48008",
+          "coverage": 0.0165
+        }
+      ],
+      "detail": {
+        "energy": 53.6935
+      },
+      "medium": "semantic",
+      "plate": null,
+      "text": null
+    },
+    {
+      "id": "game-0",
+      "kind": "text",
+      "note": "Jeopardy; selectable game name with a coherent icon on its left.",
+      "grid": null,
+      "box": {
+        "x": 0.254,
+        "y": 0.1705,
+        "w": 0.3241,
+        "h": 0.0389
+      },
+      "px": {
+        "x": 239,
+        "y": 285,
+        "w": 305,
+        "h": 65
+      },
+      "aspect": 4.6923,
+      "palette": [
+        {
+          "hex": "#f7f6f3",
+          "coverage": 0.3532
+        },
+        {
+          "hex": "#f8c820",
+          "coverage": 0.3247
+        },
+        {
+          "hex": "#091a60",
+          "coverage": 0.256
+        },
+        {
+          "hex": "#0e1b4b",
+          "coverage": 0.0382
+        },
+        {
+          "hex": "#cfd2dd",
+          "coverage": 0.028
+        }
+      ],
+      "detail": {
+        "energy": 61.1849
+      },
+      "medium": "semantic",
+      "plate": null,
+      "text": null,
+      "type": {
+        "comp": null,
+        "measuredAt": "2026-09-15T13:37:08.995Z",
+        "note": "no separable lettering in the crop; size by the region box"
+      }
+    },
+    {
+      "id": "status-0",
+      "kind": "text",
+      "note": "Próximamente; status of the game.",
+      "grid": null,
+      "box": {
+        "x": 0.7535,
+        "y": 0.1776,
+        "w": 0.17,
+        "h": 0.0197
+      },
+      "px": {
+        "x": 709,
+        "y": 297,
+        "w": 160,
+        "h": 33
+      },
+      "aspect": 4.8485,
+      "palette": [
+        {
+          "hex": "#f8cb34",
+          "coverage": 0.7325
+        },
+        {
+          "hex": "#081955",
+          "coverage": 0.1347
+        },
+        {
+          "hex": "#d6b845",
+          "coverage": 0.0498
+        },
+        {
+          "hex": "#595449",
+          "coverage": 0.0424
+        },
+        {
+          "hex": "#a98a44",
+          "coverage": 0.0406
+        }
+      ],
+      "detail": {
+        "energy": 44.1183
+      },
+      "medium": "semantic",
+      "plate": null,
+      "text": null,
+      "type": {
+        "comp": {
+          "lines": 1,
+          "glyphs": 12,
+          "capHeightPx": 19.5,
+          "inkIsDark": true,
+          "allCaps": false,
+          "advance": 0.589,
+          "advTall": 0.5378,
+          "advX": 0.589,
+          "gap": 0.0768,
+          "xRatio": 0.7302,
+          "stemW": 0.1926,
+          "contrast": 1.0973,
+          "serif": 0.8529,
+          "densTall": 0.5532,
+          "densX": 0.6589,
+          "weight": 0.5532
+        },
+        "widthClass": "normal",
+        "weightClass": "medium"
+      }
+    },
+    {
+      "id": "divider-1",
+      "kind": "chrome",
+      "note": "One orange index strip, rounded trailing edge; selected strip advances left.",
+      "grid": null,
+      "box": {
+        "x": 0.102,
+        "y": 0.2249,
+        "w": 0.881,
+        "h": 0.0628
+      },
+      "px": {
+        "x": 96,
+        "y": 376,
+        "w": 829,
+        "h": 105
+      },
+      "aspect": 7.8952,
+      "palette": [
+        {
+          "hex": "#f4702c",
+          "coverage": 0.8624
+        },
+        {
+          "hex": "#0c134c",
+          "coverage": 0.0582
+        },
+        {
+          "hex": "#b13b08",
+          "coverage": 0.046
+        },
+        {
+          "hex": "#2b1308",
+          "coverage": 0.0188
+        },
+        {
+          "hex": "#4d2c42",
+          "coverage": 0.0146
+        }
+      ],
+      "detail": {
+        "energy": 32.3928
+      },
+      "medium": "semantic",
+      "plate": null,
+      "text": null
+    },
+    {
+      "id": "game-1",
+      "kind": "text",
+      "note": "¿Versículo o inventículo?; selectable game name with a coherent icon on its left.",
+      "grid": null,
+      "box": {
+        "x": 0.254,
+        "y": 0.2404,
+        "w": 0.4336,
+        "h": 0.0299
+      },
+      "px": {
+        "x": 239,
+        "y": 402,
+        "w": 408,
+        "h": 50
+      },
+      "aspect": 8.16,
+      "palette": [
+        {
+          "hex": "#f87430",
+          "coverage": 0.757
+        },
+        {
+          "hex": "#090c51",
+          "coverage": 0.1369
+        },
+        {
+          "hex": "#0e1442",
+          "coverage": 0.0638
+        },
+        {
+          "hex": "#5d3140",
+          "coverage": 0.0216
+        },
+        {
+          "hex": "#dd6e46",
+          "coverage": 0.0207
+        }
+      ],
+      "detail": {
+        "energy": 46.1228
+      },
+      "medium": "semantic",
+      "plate": null,
+      "text": null,
+      "type": {
+        "comp": {
+          "lines": 1,
+          "glyphs": 21,
+          "capHeightPx": 30.7,
+          "inkIsDark": true,
+          "allCaps": false,
+          "advance": 0.5535,
+          "advTall": 0.1953,
+          "advX": 0.5535,
+          "gap": 0.0977,
+          "xRatio": 0.6837,
+          "stemW": 0.1826,
+          "contrast": 1.0442,
+          "serif": 0.2744,
+          "densTall": 0.7465,
+          "densX": 0.6373,
+          "weight": 0.7465
+        },
+        "widthClass": "condensed",
+        "weightClass": "black",
+        "chosen": {
+          "family": "Cabin Condensed",
+          "weight": 700,
+          "fontSizePx": 44,
+          "source": "catalog",
+          "estimatedSize": true,
+          "stamp": "71b8670ffbf1"
+        }
+      }
+    },
+    {
+      "id": "status-1",
+      "kind": "text",
+      "note": "Próximamente; status of the game.",
+      "grid": null,
+      "box": {
+        "x": 0.7535,
+        "y": 0.2476,
+        "w": 0.17,
+        "h": 0.0197
+      },
+      "px": {
+        "x": 709,
+        "y": 414,
+        "w": 160,
+        "h": 33
+      },
+      "aspect": 4.8485,
+      "palette": [
+        {
+          "hex": "#f7783a",
+          "coverage": 0.694
+        },
+        {
+          "hex": "#0d154d",
+          "coverage": 0.1603
+        },
+        {
+          "hex": "#a14f42",
+          "coverage": 0.0528
+        },
+        {
+          "hex": "#d16642",
+          "coverage": 0.051
+        },
+        {
+          "hex": "#241c3c",
+          "coverage": 0.0419
+        }
+      ],
+      "detail": {
+        "energy": 32.5198
+      },
+      "medium": "semantic",
+      "plate": null,
+      "text": null,
+      "type": {
+        "comp": {
+          "lines": 1,
+          "glyphs": 12,
+          "capHeightPx": 19.9,
+          "inkIsDark": true,
+          "allCaps": false,
+          "advance": 0.5775,
+          "advTall": 0.5273,
+          "advX": 0.5775,
+          "gap": 0.0753,
+          "xRatio": 0.7215,
+          "stemW": 0.1908,
+          "contrast": 1.0832,
+          "serif": 0.7333,
+          "densTall": 0.5645,
+          "densX": 0.6749,
+          "weight": 0.5645
+        },
+        "widthClass": "condensed",
+        "weightClass": "bold"
+      }
+    },
+    {
+      "id": "divider-2",
+      "kind": "chrome",
+      "note": "One turquoise index strip, rounded trailing edge; selected strip advances left.",
+      "grid": null,
+      "box": {
+        "x": 0.102,
+        "y": 0.2883,
+        "w": 0.881,
+        "h": 0.0628
+      },
+      "px": {
+        "x": 96,
+        "y": 482,
+        "w": 829,
+        "h": 105
+      },
+      "aspect": 7.8952,
+      "palette": [
+        {
+          "hex": "#15b4c0",
+          "coverage": 0.8613
+        },
+        {
+          "hex": "#082462",
+          "coverage": 0.0524
+        },
+        {
+          "hex": "#080a57",
+          "coverage": 0.0451
+        },
+        {
+          "hex": "#0e8ba0",
+          "coverage": 0.0298
+        },
+        {
+          "hex": "#095786",
+          "coverage": 0.0115
+        }
+      ],
+      "detail": {
+        "energy": 29.4461
+      },
+      "medium": "semantic",
+      "plate": null,
+      "text": null
+    },
+    {
+      "id": "game-2",
+      "kind": "text",
+      "note": "El discípulo más perdido; selectable game name with a coherent icon on its left.",
+      "grid": null,
+      "box": {
+        "x": 0.254,
+        "y": 0.3038,
+        "w": 0.4336,
+        "h": 0.0299
+      },
+      "px": {
+        "x": 239,
+        "y": 508,
+        "w": 408,
+        "h": 50
+      },
+      "aspect": 8.16,
+      "palette": [
+        {
+          "hex": "#16b6c3",
+          "coverage": 0.6776
+        },
+        {
+          "hex": "#080d58",
+          "coverage": 0.1917
+        },
+        {
+          "hex": "#1391b0",
+          "coverage": 0.0523
+        },
+        {
+          "hex": "#0b5f8d",
+          "coverage": 0.0519
+        },
+        {
+          "hex": "#082e69",
+          "coverage": 0.0266
+        }
+      ],
+      "detail": {
+        "energy": 52.0094
+      },
+      "medium": "semantic",
+      "plate": null,
+      "text": null,
+      "type": {
+        "comp": {
+          "lines": 1,
+          "glyphs": 21,
+          "capHeightPx": 31.6,
+          "inkIsDark": true,
+          "allCaps": false,
+          "advance": 0.5379,
+          "advTall": 0.5379,
+          "advX": 0.5379,
+          "gap": 0.0949,
+          "xRatio": 0.6961,
+          "stemW": 0.183,
+          "contrast": 1.0806,
+          "serif": 0.8835,
+          "densTall": 0.6807,
+          "densX": 0.6579,
+          "weight": 0.6807
+        },
+        "widthClass": "condensed",
+        "weightClass": "black"
+      }
+    },
+    {
+      "id": "status-2",
+      "kind": "text",
+      "note": "Próximamente; status of the game.",
+      "grid": null,
+      "box": {
+        "x": 0.7535,
+        "y": 0.311,
+        "w": 0.17,
+        "h": 0.0197
+      },
+      "px": {
+        "x": 709,
+        "y": 520,
+        "w": 160,
+        "h": 33
+      },
+      "aspect": 4.8485,
+      "palette": [
+        {
+          "hex": "#20b9c6",
+          "coverage": 0.6721
+        },
+        {
+          "hex": "#080f4c",
+          "coverage": 0.1413
+        },
+        {
+          "hex": "#159fc8",
+          "coverage": 0.0761
+        },
+        {
+          "hex": "#0b4b7f",
+          "coverage": 0.0598
+        },
+        {
+          "hex": "#0f79a9",
+          "coverage": 0.0507
+        }
+      ],
+      "detail": {
+        "energy": 35.8716
+      },
+      "medium": "semantic",
+      "plate": null,
+      "text": null,
+      "type": {
+        "comp": {
+          "lines": 1,
+          "glyphs": 12,
+          "capHeightPx": 19.9,
+          "inkIsDark": true,
+          "allCaps": false,
+          "advance": 0.5517,
+          "advTall": 0.514,
+          "advX": 0.5517,
+          "gap": 0.0752,
+          "xRatio": 0.7188,
+          "stemW": 0.1838,
+          "contrast": 1.0892,
+          "serif": 0.5159,
+          "densTall": 0.5647,
+          "densX": 0.6694,
+          "weight": 0.5647
+        },
+        "widthClass": "condensed",
+        "weightClass": "bold"
+      }
+    },
+    {
+      "id": "divider-3",
+      "kind": "chrome",
+      "note": "One blue index strip, rounded trailing edge; selected strip advances left.",
+      "grid": null,
+      "box": {
+        "x": 0.102,
+        "y": 0.3523,
+        "w": 0.881,
+        "h": 0.0628
+      },
+      "px": {
+        "x": 96,
+        "y": 589,
+        "w": 829,
+        "h": 105
+      },
+      "aspect": 7.8952,
+      "palette": [
+        {
+          "hex": "#206ade",
+          "coverage": 0.7851
+        },
+        {
+          "hex": "#081160",
+          "coverage": 0.0798
+        },
+        {
+          "hex": "#0a429f",
+          "coverage": 0.0616
+        },
+        {
+          "hex": "#2c7ada",
+          "coverage": 0.059
+        },
+        {
+          "hex": "#083674",
+          "coverage": 0.0146
+        }
+      ],
+      "detail": {
+        "energy": 19.4671
+      },
+      "medium": "semantic",
+      "plate": null,
+      "text": null
+    },
+    {
+      "id": "game-3",
+      "kind": "text",
+      "note": "Revelaciones; selectable game name with a coherent icon on its left.",
+      "grid": null,
+      "box": {
+        "x": 0.254,
+        "y": 0.3678,
+        "w": 0.4336,
+        "h": 0.0299
+      },
+      "px": {
+        "x": 239,
+        "y": 615,
+        "w": 408,
+        "h": 50
+      },
+      "aspect": 8.16,
+      "palette": [
+        {
+          "hex": "#206be1",
+          "coverage": 0.8184
+        },
+        {
+          "hex": "#080a59",
+          "coverage": 0.126
+        },
+        {
+          "hex": "#0f3aa1",
+          "coverage": 0.0339
+        },
+        {
+          "hex": "#3280e1",
+          "coverage": 0.02
+        },
+        {
+          "hex": "#080838",
+          "coverage": 0.0017
+        }
+      ],
+      "detail": {
+        "energy": 26.0946
+      },
+      "medium": "semantic",
+      "plate": null,
+      "text": null,
+      "type": {
+        "comp": {
+          "lines": 1,
+          "glyphs": 12,
+          "capHeightPx": 31.9,
+          "inkIsDark": true,
+          "allCaps": false,
+          "advance": 0.5644,
+          "advTall": 0.1881,
+          "advX": 0.5644,
+          "gap": 0.0941,
+          "xRatio": 0.7212,
+          "stemW": 0.187,
+          "contrast": 1.1002,
+          "serif": null,
+          "densTall": 0.8111,
+          "densX": 0.6648,
+          "weight": 0.8111
+        },
+        "widthClass": "condensed",
+        "weightClass": "black"
+      }
+    },
+    {
+      "id": "status-3",
+      "kind": "text",
+      "note": "Próximamente; status of the game.",
+      "grid": null,
+      "box": {
+        "x": 0.7535,
+        "y": 0.375,
+        "w": 0.17,
+        "h": 0.0197
+      },
+      "px": {
+        "x": 709,
+        "y": 627,
+        "w": 160,
+        "h": 33
+      },
+      "aspect": 4.8485,
+      "palette": [
+        {
+          "hex": "#2a72e5",
+          "coverage": 0.6376
+        },
+        {
+          "hex": "#080c56",
+          "coverage": 0.1128
+        },
+        {
+          "hex": "#1649b5",
+          "coverage": 0.1077
+        },
+        {
+          "hex": "#08197b",
+          "coverage": 0.0991
+        },
+        {
+          "hex": "#3585e6",
+          "coverage": 0.0427
+        }
+      ],
+      "detail": {
+        "energy": 26.1435
+      },
+      "medium": "semantic",
+      "plate": null,
+      "text": null,
+      "type": {
+        "comp": {
+          "lines": 1,
+          "glyphs": 12,
+          "capHeightPx": 19.4,
+          "inkIsDark": true,
+          "allCaps": false,
+          "advance": 0.5678,
+          "advTall": 0.5291,
+          "advX": 0.5678,
+          "gap": 0.0774,
+          "xRatio": 0.7251,
+          "stemW": 0.1882,
+          "contrast": 1.0876,
+          "serif": 0.9543,
+          "densTall": 0.589,
+          "densX": 0.6722,
+          "weight": 0.589
+        },
+        "widthClass": "condensed",
+        "weightClass": "bold"
+      }
+    },
+    {
+      "id": "divider-4",
+      "kind": "chrome",
+      "note": "One green index strip, rounded trailing edge; selected strip advances left.",
+      "grid": null,
+      "box": {
+        "x": 0.102,
+        "y": 0.4163,
+        "w": 0.881,
+        "h": 0.0628
+      },
+      "px": {
+        "x": 96,
+        "y": 696,
+        "w": 829,
+        "h": 105
+      },
+      "aspect": 7.8952,
+      "palette": [
+        {
+          "hex": "#64bc50",
+          "coverage": 0.8683
+        },
+        {
+          "hex": "#2a7d21",
+          "coverage": 0.0396
+        },
+        {
+          "hex": "#083e24",
+          "coverage": 0.0372
+        },
+        {
+          "hex": "#08134d",
+          "coverage": 0.036
+        },
+        {
+          "hex": "#57a254",
+          "coverage": 0.0189
+        }
+      ],
+      "detail": {
+        "energy": 29.0945
+      },
+      "medium": "semantic",
+      "plate": null,
+      "text": null
+    },
+    {
+      "id": "game-4",
+      "kind": "text",
+      "note": "Buscando perlas; selectable game name with a coherent icon on its left.",
+      "grid": null,
+      "box": {
+        "x": 0.254,
+        "y": 0.4318,
+        "w": 0.4336,
+        "h": 0.0299
+      },
+      "px": {
+        "x": 239,
+        "y": 722,
+        "w": 408,
+        "h": 50
+      },
+      "aspect": 8.16,
+      "palette": [
+        {
+          "hex": "#66bd54",
+          "coverage": 0.8094
+        },
+        {
+          "hex": "#08134d",
+          "coverage": 0.1266
+        },
+        {
+          "hex": "#529859",
+          "coverage": 0.0281
+        },
+        {
+          "hex": "#080a5a",
+          "coverage": 0.0186
+        },
+        {
+          "hex": "#0c284c",
+          "coverage": 0.0172
+        }
+      ],
+      "detail": {
+        "energy": 40.0964
+      },
+      "medium": "semantic",
+      "plate": null,
+      "text": null,
+      "type": {
+        "comp": {
+          "lines": 1,
+          "glyphs": 14,
+          "capHeightPx": 31.8,
+          "inkIsDark": true,
+          "allCaps": false,
+          "advance": 0.5664,
+          "advTall": 0.5979,
+          "advX": 0.5664,
+          "gap": 0.0629,
+          "xRatio": 0.6923,
+          "stemW": 0.1922,
+          "contrast": 1.1134,
+          "serif": 0.9257,
+          "densTall": 0.7207,
+          "densX": 0.6672,
+          "weight": 0.7207
+        },
+        "widthClass": "condensed",
+        "weightClass": "black"
+      }
+    },
+    {
+      "id": "status-4",
+      "kind": "text",
+      "note": "Próximamente; status of the game.",
+      "grid": null,
+      "box": {
+        "x": 0.7535,
+        "y": 0.439,
+        "w": 0.17,
+        "h": 0.0197
+      },
+      "px": {
+        "x": 709,
+        "y": 734,
+        "w": 160,
+        "h": 33
+      },
+      "aspect": 4.8485,
+      "palette": [
+        {
+          "hex": "#6cc056",
+          "coverage": 0.6936
+        },
+        {
+          "hex": "#08124b",
+          "coverage": 0.1303
+        },
+        {
+          "hex": "#5ca85c",
+          "coverage": 0.0734
+        },
+        {
+          "hex": "#438253",
+          "coverage": 0.0642
+        },
+        {
+          "hex": "#163e4e",
+          "coverage": 0.0385
+        }
+      ],
+      "detail": {
+        "energy": 37.0927
+      },
+      "medium": "semantic",
+      "plate": null,
+      "text": null,
+      "type": {
+        "comp": {
+          "lines": 1,
+          "glyphs": 12,
+          "capHeightPx": 19.6,
+          "inkIsDark": true,
+          "allCaps": false,
+          "advance": 0.5869,
+          "advTall": 0.5359,
+          "advX": 0.5869,
+          "gap": 0.0766,
+          "xRatio": 0.7314,
+          "stemW": 0.1931,
+          "contrast": 1.0749,
+          "serif": 0.7869,
+          "densTall": 0.5561,
+          "densX": 0.6661,
+          "weight": 0.5561
+        },
+        "widthClass": "normal",
+        "weightClass": "medium"
+      }
+    },
+    {
+      "id": "divider-5",
+      "kind": "chrome",
+      "note": "One violet index strip, rounded trailing edge; selected strip advances left.",
+      "grid": null,
+      "box": {
+        "x": 0.102,
+        "y": 0.4803,
+        "w": 0.881,
+        "h": 0.0622
+      },
+      "px": {
+        "x": 96,
+        "y": 803,
+        "w": 829,
+        "h": 104
+      },
+      "aspect": 7.9712,
+      "palette": [
+        {
+          "hex": "#6957d0",
+          "coverage": 0.8798
+        },
+        {
+          "hex": "#0c1060",
+          "coverage": 0.067
+        },
+        {
+          "hex": "#3a309c",
+          "coverage": 0.0347
+        },
+        {
+          "hex": "#08081f",
+          "coverage": 0.0097
+        },
+        {
+          "hex": "#8679e7",
+          "coverage": 0.0087
+        }
+      ],
+      "detail": {
+        "energy": 15.3068
+      },
+      "medium": "semantic",
+      "plate": null,
+      "text": null
+    },
+    {
+      "id": "game-5",
+      "kind": "text",
+      "note": "Trivia; selectable game name with a coherent icon on its left.",
+      "grid": null,
+      "box": {
+        "x": 0.254,
+        "y": 0.4958,
+        "w": 0.4336,
+        "h": 0.0299
+      },
+      "px": {
+        "x": 239,
+        "y": 829,
+        "w": 408,
+        "h": 50
+      },
+      "aspect": 8.16,
+      "palette": [
+        {
+          "hex": "#6b59d3",
+          "coverage": 0.9334
+        },
+        {
+          "hex": "#090958",
+          "coverage": 0.0539
+        },
+        {
+          "hex": "#2e2e8f",
+          "coverage": 0.0113
+        },
+        {
+          "hex": "#7878e8",
+          "coverage": 0.0013
+        }
+      ],
+      "detail": {
+        "energy": 16.6343
+      },
+      "medium": "semantic",
+      "plate": null,
+      "text": null,
+      "type": {
+        "comp": {
+          "lines": 1,
+          "glyphs": 6,
+          "capHeightPx": 31.9,
+          "inkIsDark": true,
+          "allCaps": false,
+          "advance": 0.298,
+          "advTall": 0.1882,
+          "advX": 0.596,
+          "gap": 0.0941,
+          "xRatio": 0.6982,
+          "stemW": 0.1882,
+          "contrast": 1.008,
+          "serif": null,
+          "densTall": 0.8683,
+          "densX": 0.6342,
+          "weight": 0.8683
+        },
+        "widthClass": "normal",
+        "weightClass": "black"
+      }
+    },
+    {
+      "id": "status-5",
+      "kind": "text",
+      "note": "Próximamente; status of the game.",
+      "grid": null,
+      "box": {
+        "x": 0.7535,
+        "y": 0.503,
+        "w": 0.17,
+        "h": 0.0197
+      },
+      "px": {
+        "x": 709,
+        "y": 841,
+        "w": 160,
+        "h": 33
+      },
+      "aspect": 4.8485,
+      "palette": [
+        {
+          "hex": "#6c5dd7",
+          "coverage": 0.7111
+        },
+        {
+          "hex": "#0e0f69",
+          "coverage": 0.1858
+        },
+        {
+          "hex": "#322f9b",
+          "coverage": 0.0828
+        },
+        {
+          "hex": "#0a0a4a",
+          "coverage": 0.0118
+        },
+        {
+          "hex": "#654bdb",
+          "coverage": 0.0084
+        }
+      ],
+      "detail": {
+        "energy": 28.0378
+      },
+      "medium": "semantic",
+      "plate": null,
+      "text": null,
+      "type": {
+        "comp": {
+          "lines": 1,
+          "glyphs": 12,
+          "capHeightPx": 19.6,
+          "inkIsDark": true,
+          "allCaps": false,
+          "advance": 0.5871,
+          "advTall": 0.5233,
+          "advX": 0.5871,
+          "gap": 0.0766,
+          "xRatio": 0.7292,
+          "stemW": 0.1893,
+          "contrast": 1.1013,
+          "serif": 0.7699,
+          "densTall": 0.5556,
+          "densX": 0.6504,
+          "weight": 0.5556
+        },
+        "widthClass": "normal",
+        "weightClass": "medium"
+      }
+    },
+    {
+      "id": "acetate",
+      "kind": "chrome",
+      "note": "Translucent panel with softly raised edges and punched margin; selected game details.",
+      "grid": null,
+      "container": true,
+      "box": {
+        "x": 0.0404,
+        "y": 0.5425,
+        "w": 0.9426,
+        "h": 0.3062
+      },
+      "px": {
+        "x": 38,
+        "y": 907,
+        "w": 887,
+        "h": 512
+      },
+      "aspect": 1.7324,
+      "palette": [
+        {
+          "hex": "#d7cdc7",
+          "coverage": 0.6167
+        },
+        {
+          "hex": "#f7c736",
+          "coverage": 0.1146
+        },
+        {
+          "hex": "#104bd4",
+          "coverage": 0.0933
+        },
+        {
+          "hex": "#f1efe9",
+          "coverage": 0.088
+        },
+        {
+          "hex": "#09237a",
+          "coverage": 0.0875
+        }
+      ],
+      "detail": {
+        "energy": 34.4559
+      },
+      "medium": "semantic",
+      "plate": null,
+      "text": null
+    },
+    {
+      "id": "brush",
+      "kind": "plate",
+      "note": "One broad golden yellow dry brush swash behind the game title; transparent, no text or symbols.",
+      "grid": null,
+      "box": {
+        "x": 0.1158,
+        "y": 0.5676,
+        "w": 0.6015,
+        "h": 0.0879
+      },
+      "px": {
+        "x": 109,
+        "y": 949,
+        "w": 566,
+        "h": 147
+      },
+      "aspect": 3.8503,
+      "palette": [
+        {
+          "hex": "#f7c734",
+          "coverage": 0.4035
+        },
+        {
+          "hex": "#eae4e1",
+          "coverage": 0.3156
+        },
+        {
+          "hex": "#091e67",
+          "coverage": 0.1189
+        },
+        {
+          "hex": "#cdc2bc",
+          "coverage": 0.1076
+        },
+        {
+          "hex": "#ebc362",
+          "coverage": 0.0544
+        }
+      ],
+      "detail": {
+        "energy": 44.8846
+      },
+      "medium": "raster",
+      "plate": "assets/plates/brush.png",
+      "text": null
+    },
+    {
+      "id": "preview-title",
+      "kind": "text",
+      "note": "Jeopardy; white chunky title with dark blue outline.",
+      "grid": null,
+      "box": {
+        "x": 0.2859,
+        "y": 0.5837,
+        "w": 0.3815,
+        "h": 0.0544
+      },
+      "px": {
+        "x": 269,
+        "y": 976,
+        "w": 359,
+        "h": 91
+      },
+      "aspect": 3.9451,
+      "palette": [
+        {
+          "hex": "#f8c830",
+          "coverage": 0.3636
+        },
+        {
+          "hex": "#f8f7f6",
+          "coverage": 0.3457
+        },
+        {
+          "hex": "#091f69",
+          "coverage": 0.2446
+        },
+        {
+          "hex": "#12346c",
+          "coverage": 0.0233
+        },
+        {
+          "hex": "#090f3f",
+          "coverage": 0.0227
+        }
+      ],
+      "detail": {
+        "energy": 56.6145
+      },
+      "medium": "semantic",
+      "plate": null,
+      "text": null,
+      "type": {
+        "comp": null,
+        "measuredAt": "2026-09-15T13:37:10.124Z",
+        "note": "no separable lettering in the crop; size by the region box"
+      }
+    },
+    {
+      "id": "preview-status",
+      "kind": "text",
+      "note": "Próximamente; ink blue label on a yellow background.",
+      "grid": null,
+      "box": {
+        "x": 0.7099,
+        "y": 0.6166,
+        "w": 0.203,
+        "h": 0.0293
+      },
+      "px": {
+        "x": 668,
+        "y": 1031,
+        "w": 191,
+        "h": 49
+      },
+      "aspect": 3.898,
+      "palette": [
+        {
+          "hex": "#f8c937",
+          "coverage": 0.7631
+        },
+        {
+          "hex": "#091a60",
+          "coverage": 0.0927
+        },
+        {
+          "hex": "#e6ba50",
+          "coverage": 0.0505
+        },
+        {
+          "hex": "#d8d2cb",
+          "coverage": 0.0474
+        },
+        {
+          "hex": "#12224f",
+          "coverage": 0.0463
+        }
+      ],
+      "detail": {
+        "energy": 33.9728
+      },
+      "medium": "semantic",
+      "plate": null,
+      "text": null,
+      "type": {
+        "comp": {
+          "lines": 1,
+          "glyphs": 13,
+          "capHeightPx": 31.5,
+          "inkIsDark": true,
+          "allCaps": true,
+          "advance": 0.5238,
+          "advTall": null,
+          "advX": null,
+          "gap": 0.0635,
+          "xRatio": null,
+          "stemW": 0.131,
+          "contrast": 0.9374,
+          "serif": null,
+          "densTall": null,
+          "densX": null,
+          "weight": null
+        },
+        "widthClass": "condensed",
+        "weightClass": "regular"
+      }
+    },
+    {
+      "id": "stage",
+      "kind": "plate",
+      "note": "Cobalt blue game-show set and exactly three gold-trimmed podiums with 100, 200, 300, silkscreen brush edges; isolated transparent background.",
+      "grid": null,
+      "box": {
+        "x": 0.1626,
+        "y": 0.6525,
+        "w": 0.6589,
+        "h": 0.1495
+      },
+      "px": {
+        "x": 153,
+        "y": 1091,
+        "w": 620,
+        "h": 250
+      },
+      "aspect": 2.48,
+      "palette": [
+        {
+          "hex": "#ddd5cf",
+          "coverage": 0.403
+        },
+        {
+          "hex": "#104ad4",
+          "coverage": 0.288
+        },
+        {
+          "hex": "#092580",
+          "coverage": 0.2199
+        },
+        {
+          "hex": "#0b35a7",
+          "coverage": 0.0482
+        },
+        {
+          "hex": "#2166e8",
+          "coverage": 0.0409
+        }
+      ],
+      "detail": {
+        "energy": 39.6037
+      },
+      "medium": "raster",
+      "plate": "assets/plates/stage.png",
+      "text": null
+    },
+    {
+      "id": "preview-help",
+      "kind": "text",
+      "note": "Estamos preparando este juego.",
+      "grid": null,
+      "box": {
+        "x": 0.288,
+        "y": 0.8026,
+        "w": 0.4283,
+        "h": 0.0227
+      },
+      "px": {
+        "x": 271,
+        "y": 1342,
+        "w": 403,
+        "h": 38
+      },
+      "aspect": 10.6053,
+      "palette": [
+        {
+          "hex": "#e9ded9",
+          "coverage": 0.7665
+        },
+        {
+          "hex": "#09228e",
+          "coverage": 0.1378
+        },
+        {
+          "hex": "#1d388b",
+          "coverage": 0.0439
+        },
+        {
+          "hex": "#99a0c0",
+          "coverage": 0.0265
+        },
+        {
+          "hex": "#6a79af",
+          "coverage": 0.0253
+        }
+      ],
+      "detail": {
+        "energy": 84.0548
+      },
+      "medium": "semantic",
+      "plate": null,
+      "text": null,
+      "type": {
+        "comp": {
+          "lines": 1,
+          "glyphs": 25,
+          "capHeightPx": 23.3,
+          "inkIsDark": true,
+          "allCaps": false,
+          "advance": 0.5148,
+          "advTall": 0.547,
+          "advX": 0.5148,
+          "gap": 0.0858,
+          "xRatio": 0.6772,
+          "stemW": 0.1739,
+          "contrast": 1.0911,
+          "serif": 1.2326,
+          "densTall": 0.5281,
+          "densX": 0.6294,
+          "weight": 0.5281
+        },
+        "widthClass": "condensed",
+        "weightClass": "medium"
+      }
+    },
+    {
+      "id": "preference-paper",
+      "kind": "chrome",
+      "note": "Ivory paper slip underneath the acetate panel, with punched left margin.",
+      "grid": null,
+      "box": {
+        "x": 0.0499,
+        "y": 0.8571,
+        "w": 0.9267,
+        "h": 0.1316
+      },
+      "px": {
+        "x": 47,
+        "y": 1433,
+        "w": 872,
+        "h": 220
+      },
+      "aspect": 3.9636,
+      "palette": [
+        {
+          "hex": "#f0e2d0",
+          "coverage": 0.9384
+        },
+        {
+          "hex": "#0b2068",
+          "coverage": 0.0242
+        },
+        {
+          "hex": "#253b70",
+          "coverage": 0.0137
+        },
+        {
+          "hex": "#9b9caa",
+          "coverage": 0.0119
+        },
+        {
+          "hex": "#c7c3c5",
+          "coverage": 0.0118
+        }
+      ],
+      "detail": {
+        "energy": 28.6974
+      },
+      "medium": "semantic",
+      "plate": null,
+      "text": null
+    },
+    {
+      "id": "preference-label",
+      "kind": "text",
+      "note": "Modalidad preferida (opcional).",
+      "grid": null,
+      "box": {
+        "x": 0.221,
+        "y": 0.8762,
+        "w": 0.4346,
+        "h": 0.0227
+      },
+      "px": {
+        "x": 208,
+        "y": 1465,
+        "w": 409,
+        "h": 38
+      },
+      "aspect": 10.7632,
+      "palette": [
+        {
+          "hex": "#f2e6d5",
+          "coverage": 0.8211
+        },
+        {
+          "hex": "#0e2362",
+          "coverage": 0.0567
+        },
+        {
+          "hex": "#c9c7c8",
+          "coverage": 0.0556
+        },
+        {
+          "hex": "#091a6c",
+          "coverage": 0.0423
+        },
+        {
+          "hex": "#3d4e7a",
+          "coverage": 0.0243
+        }
+      ],
+      "detail": {
+        "energy": 69.131
+      },
+      "medium": "semantic",
+      "plate": null,
+      "text": null,
+      "type": {
+        "comp": {
+          "lines": 1,
+          "glyphs": 28,
+          "capHeightPx": 20.3,
+          "inkIsDark": true,
+          "allCaps": false,
+          "advance": 0.4923,
+          "advTall": 0.48,
+          "advX": 0.4923,
+          "gap": 0.0985,
+          "xRatio": 0.6761,
+          "stemW": 0.1678,
+          "contrast": 1.1103,
+          "serif": 0.9958,
+          "densTall": 0.6057,
+          "densX": 0.5557,
+          "weight": 0.6057
+        },
+        "widthClass": "condensed",
+        "weightClass": "bold"
+      }
+    },
+    {
+      "id": "preference-select",
+      "kind": "control",
+      "note": "Native select, dark blue border and cream fill; Sin preferencia.",
+      "grid": null,
+      "box": {
+        "x": 0.221,
+        "y": 0.9007,
+        "w": 0.4782,
+        "h": 0.0431
+      },
+      "px": {
+        "x": 208,
+        "y": 1506,
+        "w": 450,
+        "h": 72
+      },
+      "aspect": 6.25,
+      "palette": [
+        {
+          "hex": "#f8e9d9",
+          "coverage": 0.8644
+        },
+        {
+          "hex": "#abacb4",
+          "coverage": 0.0632
+        },
+        {
+          "hex": "#535d80",
+          "coverage": 0.0309
+        },
+        {
+          "hex": "#0c1e64",
+          "coverage": 0.0255
+        },
+        {
+          "hex": "#727a8f",
+          "coverage": 0.016
+        }
+      ],
+      "detail": {
+        "energy": 34.0115
+      },
+      "medium": "semantic",
+      "plate": null,
+      "text": null
+    },
+    {
+      "id": "preference-help",
+      "kind": "text",
+      "note": "La modalidad se elegirá dentro de cada juego.",
+      "grid": null,
+      "box": {
+        "x": 0.2221,
+        "y": 0.9551,
+        "w": 0.457,
+        "h": 0.0179
+      },
+      "px": {
+        "x": 209,
+        "y": 1597,
+        "w": 430,
+        "h": 30
+      },
+      "aspect": 14.3333,
+      "palette": [
+        {
+          "hex": "#f1e5d5",
+          "coverage": 0.7872
+        },
+        {
+          "hex": "#cac7c8",
+          "coverage": 0.066
+        },
+        {
+          "hex": "#9fa2b1",
+          "coverage": 0.0638
+        },
+        {
+          "hex": "#0d1968",
+          "coverage": 0.047
+        },
+        {
+          "hex": "#1e3172",
+          "coverage": 0.036
+        }
+      ],
+      "detail": {
+        "energy": 72.3299
+      },
+      "medium": "semantic",
+      "plate": null,
+      "text": null,
+      "type": {
+        "comp": {
+          "lines": 1,
+          "glyphs": 36,
+          "capHeightPx": 17.9,
+          "inkIsDark": true,
+          "allCaps": false,
+          "advance": 0.5015,
+          "advTall": 0.5155,
+          "advX": 0.5015,
+          "gap": 0.1114,
+          "xRatio": 0.6601,
+          "stemW": 0.1348,
+          "contrast": 1.0242,
+          "serif": 0.4745,
+          "densTall": 0.4744,
+          "densX": 0.5741,
+          "weight": 0.4744
+        },
+        "widthClass": "condensed",
+        "weightClass": "regular"
+      }
+    },
+    {
+      "id": "footer-note",
+      "kind": "text",
+      "note": "LAS MISMAS PREGUNTAS MÁS PERSONAS MÁS VIDA; handwritten blue note.",
+      "grid": null,
+      "box": {
+        "x": 0.7864,
+        "y": 0.8882,
+        "w": 0.1413,
+        "h": 0.0742
+      },
+      "px": {
+        "x": 740,
+        "y": 1485,
+        "w": 133,
+        "h": 124
+      },
+      "aspect": 1.0726,
+      "palette": [
+        {
+          "hex": "#eee1cf",
+          "coverage": 0.8054
+        },
+        {
+          "hex": "#24386e",
+          "coverage": 0.0649
+        },
+        {
+          "hex": "#c9c4c6",
+          "coverage": 0.0466
+        },
+        {
+          "hex": "#9196a8",
+          "coverage": 0.0434
+        },
+        {
+          "hex": "#56648a",
+          "coverage": 0.0397
+        }
+      ],
+      "detail": {
+        "energy": 33.012
+      },
+      "medium": "semantic",
+      "plate": null,
+      "text": null,
+      "type": {
+        "comp": {
+          "lines": 1,
+          "glyphs": 3,
+          "capHeightPx": 115.1,
+          "inkIsDark": true,
+          "allCaps": true,
+          "advance": 0.4257,
+          "advTall": 0.4865,
+          "advX": null,
+          "gap": 0.013,
+          "xRatio": null,
+          "stemW": 0.018,
+          "contrast": 0.7594,
+          "serif": null,
+          "densTall": 0.1854,
+          "densX": null,
+          "weight": 0.1854
+        },
+        "widthClass": "condensed",
+        "weightClass": "light",
+        "chosen": {
+          "family": "Edu AU VIC WA NT Arrows",
+          "weight": 400,
+          "fontSizePx": 164,
+          "source": "catalog",
+          "estimatedSize": true,
+          "stamp": "ccd0979c264d"
+        }
+      }
+    }
+  ]
+}

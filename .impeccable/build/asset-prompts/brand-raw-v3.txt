@@ -1,0 +1,10 @@
+Use case: logo-brand
+Asset type: production raster plate for the Chairo Angular game-center header
+Primary request: Recreate the attached approved crop as a clean isolated wordmark asset at high fidelity.
+Input images: Image 1 is the authoritative composition and style reference.
+Subject: The exact word "Chairo" in chunky rounded golden-yellow lettering with a deep ultramarine dimensional outline/shadow and exactly three short golden rays above the final o.
+Style/medium: tactile early-2000s printed software-manual illustration, subtle painted and screen-printed texture, dimensional but crisp.
+Composition/framing: preserve the crop's exact wide proportions, silhouette, spelling, letter relationships, and ray placement; center the complete mark with a small safe margin; no other words.
+Color palette: saturated golden yellow, deep cobalt/ultramarine, tiny warm orange edge accents.
+Text (verbatim): "Chairo"
+Constraints: transparent PNG with genuine alpha outside the mark; keep all holes in letters transparent; no paper background; no checkerboard; no extra symbols; no subtitle; no watermark.

@@ -1,0 +1,22 @@
+{
+  "prompt": "Use case: ui-mockup.\nAsset type: high-fidelity portrait mobile web interface composition for Chairo, “Centro de juegos”.\nPrimary request: Create variation 3 “Pestañas en cabecera” inside the approved “Manual de misión” visual world. A designed interactive-looking portrait 9:16 phone web viewport fills the entire canvas, square-on. No external phone frame or surrounding photographic room.\nInput images: Image 1 fixes the Chairo identity: chunky golden-yellow Chairo lettering with dark ultramarine depth, blue ink on ivory paper, colorful software-manual dividers, physical binder and translucent punched acetate. Images 2 and 3 fix the quality of paper, ink, divider board and organized manual construction only; do not copy their brand, English words, dashboards or dry typography.\nStructural variation: Instead of the reference’s right-side tab rail, put all six game dividers above the selected page in exactly two horizontal rows of three attached tabs. (1) Header: the same cheerful Chairo wordmark with “Centro de juegos”, roughly 15% of height. (2) Two joined rows of physically overlapping colored top-edge file tabs spanning the whole width, roughly 29% of height; each tab has a generous readable multiline full game title, a tiny simple pictogram and a small “Próximamente”. They are the top edges of real layered divider sheets, not isolated cards or a dashboard grid. First row yellow Jeopardy selected with dark-blue outline, orange ¿Versículo o inventículo?, teal El discípulo más perdido; second row blue Revelaciones, green Buscando perlas, violet Trivia. (3) A single dominant full-width punched milk-acetate game sheet below, around 42% height, joined to those divider sheets, with large title “Jeopardy”, one vivid blue-and-yellow rendered game-show illustration with three podiums, “Próximamente” as an informational blue-ink stamp, and “Estamos preparando este juego.” There is no entry button. The broad image and translucent sleeve are the focal moment. (4) Quiet small punched paper label below the sheet, around 14% height, displaying “Modalidad preferida (opcional)”, a closed select showing “Sin preferencia”, and “La modalidad se elegirá dentro de cada juego.”\nExact six full game titles, all separate and every tab labeled “Próximamente”: “Jeopardy”, “¿Versículo o inventículo?”, “El discípulo más perdido”, “Revelaciones”, “Buscando perlas”, “Trivia”.\nMaterials: ivory textured paper, rich chrome-yellow, oxide-orange, ultramarine, teal, grass-green and violet satin divider board; precise blue ink; subtly worn paper edges, punched spine, small metal rings; tactile early-2000s software-manual rendering and restrained bright acetate reflections. Legible full names and generous touch targets, dark blue or very dark ink on light colored tabs and white lettering only on dark blue/violet tabs.\nConstraints: retain the approved world and type voice, no “Entrar”, no start/play/join controls, no links away, no obligatory mode choice, no account/navigation chrome, no “modo familia siempre activo”, no invented gameplay assertions or slogans. No desk, mugs, plants, pens or room scenery. Focus on a usable game explorer: six explorable tabs, one active sheet, everything coming soon. Avoid modern glassmorphism, isolated tile grids and generic SaaS styling.\n",
+  "image": ".impeccable/mocks/manual-03-cabecera.png",
+  "width": 941,
+  "height": 1672,
+  "approved": false,
+  "direction": "Manual de misión",
+  "generation": "built-in-image_gen",
+  "source": null,
+  "references": [
+    ".impeccable/mocks/decision/challenger-manual.png",
+    ".impeccable/mocks/reference/manual-board.webp",
+    ".impeccable/mocks/reference/manual-hero.webp"
+  ],
+  "implementation_constraints": [
+    "Seis juegos independientes y todos Próximamente",
+    "Pestañas explorables y accesibles; sin Entrar ni navegación",
+    "Modalidad opcional con valor inicial Sin preferencia",
+    "La modalidad se elegirá dentro de cada juego",
+    "Corregir iconos incongruentes y contraste insuficiente de los comps; los nombres y estados son texto semántico"
+  ]
+}

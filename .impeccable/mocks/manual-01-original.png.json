@@ -1,0 +1,22 @@
+{
+  "prompt": "Use case: ui-mockup\nAsset type: high-fidelity portrait mobile product UI direction comp\nPrimary request: Design a portrait mobile first viewport for “Chairo — Centro de juegos” in the direction “Manual de misión”: the game center behaves like a colorful early-2000s boxed-software reference manual with stepped divider tabs and a punched translucent acetate leaf hovering above the active section. Each game is a tab; the active tab reveals title, one-line mechanic and a clear “Entrar” action.\nText (verbatim): “Chairo”, “Centro de juegos”, “Jeopardy”, “¿Versículo o inventículo?”, “El discípulo más perdido”, “Revelaciones”, “Buscando perlas”, “Trivia”, “Entrar”.\nComposition/framing: portrait phone viewport, full canvas is the open manual, colored stepped tab rail, one active content leaf dominant, tiny optional pinned mode preference integrated as a punched label and never blocking.\nColor palette: warm ivory, chrome yellow, oxide orange, teal, ultramarine, grass green.\nMaterials/textures: milk acetate, satin divider board, crisp ink, tiny hinge shadow, rendered early-2000s physicality.\nConstraints: Spanish; highly legible; playful for all ages but not childish; game choice primary; no account UI; no generic card grid; no glassmorphism; no modern SaaS styling; no invented claims; no watermark.\n",
+  "image": ".impeccable/mocks/manual-01-original.png",
+  "width": 941,
+  "height": 1672,
+  "approved": false,
+  "direction": "Manual de misión",
+  "generation": "preserved-existing-comp",
+  "source": ".impeccable/mocks/decision/challenger-manual.png",
+  "references": [
+    ".impeccable/mocks/decision/challenger-manual.png",
+    ".impeccable/mocks/reference/manual-board.webp",
+    ".impeccable/mocks/reference/manual-hero.webp"
+  ],
+  "implementation_constraints": [
+    "Seis juegos independientes y todos Próximamente",
+    "Pestañas explorables y accesibles; sin Entrar ni navegación",
+    "Modalidad opcional con valor inicial Sin preferencia",
+    "La modalidad se elegirá dentro de cada juego",
+    "Corregir iconos incongruentes y contraste insuficiente de los comps; los nombres y estados son texto semántico"
+  ]
+}

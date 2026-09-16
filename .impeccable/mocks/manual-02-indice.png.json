@@ -1,0 +1,26 @@
+{
+  "prompt": "Use case: ui-mockup.\nAsset type: high-fidelity portrait mobile web interface composition for Chairo, “Centro de juegos”.\nPrimary request: Create variation 2 “Índice primero” inside the already approved “Manual de misión” visual world. Render a designed, immediately usable phone-width interface filling the whole canvas, portrait 9:16. This is an interface, viewed square-on, without a phone mockup or photographed surroundings.\nInput images: Image 1 is the approved Chairo composition and the visual identity authority: preserve its friendly chunky golden-yellow Chairo lettering with dark ultramarine depth, blue ink, ivory paper, physical binder, milk acetate and cheerful early-2000s software-manual materiality. Images 2 and 3 are supporting material and craftsmanship references only; do not copy their GLIDE brand, English copy or dashboard.\nStructure from top to bottom: (1) compact Chairo wordmark and “Centro de juegos” header, taking about 14% of the screen; (2) dominant full-width tabbed table of contents, about 43% of the screen, made of exactly six stacked colored divider strips, each a generous finger target, with full game name left and a small readable “Próximamente” on the right. The first yellow strip is selected, projecting a few pixels and bearing a clear blue selection outline. The other strips are orange, teal, blue, green and violet. Each strip looks like a real satin manual divider joined to the binder spine, with subtly stepped trailing tabs, never a rounded card dashboard. (3) Below the full index, one punched translucent acetate leaf, about 29% of the screen, reveals the selected game title “Jeopardy”, a small blue-and-yellow game-show podium illustration with three podiums, the state “Próximamente”, and the sentence “Estamos preparando este juego.” (4) A modest paper label at the bottom, about 14%, shows “Modalidad preferida (opcional)” with one closed select reading “Sin preferencia”, then “La modalidad se elegirá dentro de cada juego.”\nExact game order and names, each must appear separately and each must show “Próximamente”: “Jeopardy”; “¿Versículo o inventículo?”; “El discípulo más perdido”; “Revelaciones”; “Buscando perlas”; “Trivia”.\nMaterials: richly rendered ivory paper grain, crisp saturated divider board, gentle physical shadows, punched margin and milk acetate with a controlled translucent sheen. Text remains crisp, dark blue, aligned, high contrast and comfortable at phone size. Keep the user task primary and the object tactile.\nConstraints: no “Entrar”, no start/play/join buttons, no disabled-looking game names, no routing links, no account/menu controls, no required modality, no “modo familia siempre activo”, no fake gameplay facts, no extra slogans, no desk, mug, plants or marker. All six games must be visible in the composition with legible complete names. Keep a single visual focal point in the colorful full index; the preview is quieter. Professional and joyful for all ages, never sterile, generic SaaS or childish.\n",
+  "image": ".impeccable/mocks/manual-02-indice.png",
+  "width": 941,
+  "height": 1672,
+  "approved": true,
+  "direction": "Manual de misión",
+  "generation": "built-in-image_gen",
+  "source": null,
+  "references": [
+    ".impeccable/mocks/decision/challenger-manual.png",
+    ".impeccable/mocks/reference/manual-board.webp",
+    ".impeccable/mocks/reference/manual-hero.webp"
+  ],
+  "implementation_constraints": [
+    "Seis juegos independientes y todos Próximamente",
+    "Pestañas explorables y accesibles; sin Entrar ni navegación",
+    "Modalidad opcional con valor inicial Sin preferencia",
+    "La modalidad se elegirá dentro de cada juego",
+    "Corregir iconos incongruentes y contraste insuficiente de los comps; los nombres y estados son texto semántico"
+  ],
+  "approval": {
+    "source": "explicit-user-message",
+    "quote": "indice primero, dame un prompt para que otra instancia lo construya, tu contexto ya esta muy lleno"
+  }
+}

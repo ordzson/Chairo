@@ -1,0 +1,26 @@
+Use case: ui-mockup
+Asset type: one high-fidelity portrait mobile app UI concept comp for Chairo, direction “Canal 302”
+Primary request: Design a strict broadcast teletext magazine interface, as if a classic 40-column television teletext service became a polished mobile game launcher. This is a complete shippable UI comp, not concept art.
+Scene/backdrop: edge-to-edge flat dark navy portrait phone viewport; no phone hardware frame and no surrounding scene.
+Structure: top broadcast status line with “CHA|RO” and “CANAL 302”; prominent page header “P100  CENTRO DE JUEGOS”; a dense monospaced 40-column-feeling block mosaic index; six games presented as numbered teletext channels in a single vertical program listing, never as cards. One clearly focused row and a compact focused-program preview panel below. Bottom input legend for touch and keyboard.
+Exact text, render verbatim and with correct accents:
+“P100  CENTRO DE JUEGOS”
+“101  Jeopardy”
+“102  ¿Versículo o inventículo?”
+“103  El discípulo más perdido”
+“104  Revelaciones”
+“105  Buscando perlas”
+“106  Trivia”
+Focused preview text:
+“EN FOCO  102”
+“¿Versículo o inventículo?”
+“Decide si la frase viene de la Biblia.”
+Optional persistent indicator, tiny and non-blocking:
+“MODO FIJO: GRUPO”
+Bottom legend:
+“TOCA UN CANAL  •  ↑↓ MOVER  •  ↵ ENTRAR”
+Style/medium: exact pixel-structured broadcast teletext typography and block graphics; bitmap monospace type, hard rectangular color cells, thin scanline suggestion, authentic editorial information-density, careful baseline alignment, crisp accessible spacing. Flat UI only.
+Composition/framing: portrait 9:16 viewport, safe-area aware, direct touch targets while retaining a strict text terminal/magazine identity. The channel list dominates. Highlight channel 102 with a solid cyan focus bar and dark navy type. Preview remains visibly subordinate.
+Color palette: flat dark navy background; cyan, signal yellow, and white only; red reserved exclusively for the small reveal/status accent. No other colors.
+Constraints: readable Spanish typography; exact text; one image; six named games; selection happens after choosing a game, while “MODO FIJO” remains only an optional tiny persistent preference and never a blocking first decision; direct touch and keyboard selection are visibly supported; disciplined 40-column grid; no invented claims or features.
+Avoid: generic card grid, rounded cards, gradients, glassmorphism, shadows, 3D, photos, device mockup frame, illustrations, oversized marketing headline, decorative icons, extra copy, extra game names, illegible text, misspellings, faux app-store styling, bottom navigation.

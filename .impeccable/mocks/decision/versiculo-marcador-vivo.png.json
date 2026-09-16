@@ -1,0 +1,8 @@
+{
+  "optionId": "marcador-vivo",
+  "seedKey": "faacbba6",
+  "approved": true,
+  "reference": ".impeccable/review/mobile.png",
+  "promptFile": "versiculo-marcador-vivo.png.prompt.txt",
+  "generator": "built-in imagegen"
+}

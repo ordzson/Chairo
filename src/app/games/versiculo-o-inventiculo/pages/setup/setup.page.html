@@ -1,0 +1,123 @@
+<a class="skip-link" href="#setup-form">Ir a la configuración</a>
+
+<main class="manual-shell setup-shell">
+  <article class="mission-manual setup-manual motion-rise" aria-labelledby="setup-title">
+    <div class="binder-spine" aria-hidden="true"></div>
+    <chairo-manual-header
+      backLink="/"
+      backLabel="Volver al centro de juegos"
+      [note]="['Prepara', 'la partida']"
+    />
+
+    <h1 id="setup-title" class="game-title motion-slide-in">¿Versículo o inventículo?</h1>
+
+    <form id="setup-form" class="setup-form motion-rise" (submit)="$event.preventDefault(); createRoom()">
+      <fieldset class="setup-section difficulty-section">
+        <legend>
+          <chairo-game-icon name="mountain" />
+          <span>Dificultad</span>
+        </legend>
+        <div class="choice-row choice-row--difficulty">
+          @for (option of difficulties; track option.value) {
+            <input
+              class="choice-input"
+              type="radio"
+              name="difficulty"
+              id="difficulty-{{ option.value }}"
+              [value]="option.value"
+              [checked]="difficulty() === option.value"
+              (change)="chooseDifficulty(option.value)"
+            >
+            <label
+              class="choice-label pressable"
+              [class.is-selected]="difficulty() === option.value"
+              for="difficulty-{{ option.value }}"
+            >{{ option.label }}</label>
+          }
+        </div>
+      </fieldset>
+
+      <fieldset class="setup-section question-section">
+        <legend>
+          <chairo-game-icon name="list" />
+          <span>Preguntas</span>
+        </legend>
+        <div class="stepper" aria-describedby="question-range">
+          <button
+            id="question-minus"
+            class="stepper-button pressable"
+            type="button"
+            aria-label="Quitar 5 preguntas"
+            [disabled]="questionCount() === questionCounts[0]"
+            (click)="changeQuestionCount(-1)"
+          >
+            <chairo-game-icon name="minus" />
+          </button>
+          <output class="question-count" aria-live="polite" for="question-minus question-plus">{{ questionCount() }}</output>
+          <button
+            id="question-plus"
+            class="stepper-button pressable"
+            type="button"
+            aria-label="Agregar 5 preguntas"
+            [disabled]="questionCount() === questionCounts[questionCounts.length - 1]"
+            (click)="changeQuestionCount(1)"
+          >
+            <chairo-game-icon name="plus" />
+          </button>
+        </div>
+        <p id="question-range" class="section-help">De 5 a 30, en pasos de 5.</p>
+      </fieldset>
+
+      <fieldset class="setup-section role-section">
+        <legend>
+          <chairo-game-icon name="users" />
+          <span>Rol del anfitrión</span>
+        </legend>
+        <div class="choice-row choice-row--role">
+          <input
+            class="choice-input"
+            type="radio"
+            name="host-role"
+            id="host-role-player"
+            value="player"
+            [checked]="hostRole() === 'player'"
+            (change)="chooseHostRole('player')"
+          >
+          <label class="choice-label role-choice pressable" [class.is-selected]="hostRole() === 'player'" for="host-role-player">
+            <chairo-game-icon name="person" />
+            <span>También juego</span>
+          </label>
+
+          <input
+            class="choice-input"
+            type="radio"
+            name="host-role"
+            id="host-role-only"
+            value="host-only"
+            [checked]="hostRole() === 'host-only'"
+            (change)="chooseHostRole('host-only')"
+          >
+          <label class="choice-label role-choice pressable" [class.is-selected]="hostRole() === 'host-only'" for="host-role-only">
+            <chairo-game-icon name="host" />
+            <span>Solo anfitrión</span>
+          </label>
+        </div>
+        <p class="role-explanation" aria-live="polite">
+          {{ hostRole() === 'player' ? 'Responderás desde este teléfono.' : 'Conducirás la partida sin responder.' }}
+        </p>
+      </fieldset>
+
+      <aside class="fallback-note motion-rise" aria-label="Selección de preguntas">
+        <chairo-game-icon name="note" />
+        <p>Si faltan preguntas, completaremos con niveles anteriores.</p>
+      </aside>
+
+      <button class="create-room-button pressable" type="submit" [disabled]="creating()">
+        <chairo-game-icon name="play" />
+        <span>{{ creating() ? 'Creando sala…' : 'Crear sala' }}</span>
+      </button>
+      <p class="save-status" aria-live="polite" aria-atomic="true">{{ createError() }}</p>
+      <a class="cancel-link" routerLink="/">Cancelar</a>
+    </form>
+  </article>
+</main>

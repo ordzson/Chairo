@@ -1,0 +1,139 @@
+/* Las medidas que las pantallas afinan por su cuenta. Los valores por defecto
+   son los de la configuración; sala y unión sobreescriben lo que difiere. */
+:host {
+  display: contents;
+  --manual-rings-inset: 10% auto 24% clamp(-56px, -5.9vw, -34px);
+  --manual-header-min-height: clamp(154px, 20vw, 192px);
+  --manual-header-min-height-compact: 138px;
+  --manual-note-size: clamp(1.05rem, 2.6vw, 1.55rem);
+  --manual-note-leading: 1.02;
+}
+
+.manual-rings {
+  position: absolute;
+  z-index: 10;
+  inset: var(--manual-rings-inset);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  pointer-events: none;
+  mix-blend-mode: multiply;
+}
+
+.manual-rings img {
+  width: clamp(76px, 10vw, 98px);
+  height: auto;
+}
+
+.manual-header {
+  display: grid;
+  grid-template-columns: 84px minmax(0, 1fr) 126px;
+  gap: clamp(12px, 2vw, 24px);
+  align-items: start;
+  min-height: var(--manual-header-min-height);
+}
+
+.back-button {
+  --press-face: var(--yellow);
+  --press-depth: 6px;
+  --press-lift: 3px;
+  display: inline-grid;
+  place-items: center;
+  width: 64px;
+  min-height: 64px;
+  color: var(--ink);
+  background: var(--yellow);
+  border: 2px solid var(--ink);
+  border-radius: 50%;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.back-button .game-icon {
+  width: 34px;
+}
+
+.manual-brand {
+  display: grid;
+  justify-items: center;
+}
+
+.manual-brand img {
+  display: block;
+  width: min(100%, 382px);
+  height: auto;
+}
+
+.manual-brand p {
+  margin: -0.08em 0 0;
+  font-family: 'Kalam', cursive;
+  font-size: clamp(1.4rem, 3.3vw, 2rem);
+  line-height: 1;
+}
+
+.manual-brand span {
+  width: min(76%, 290px);
+  height: 6px;
+  margin-top: 0.28rem;
+  background: var(--yellow);
+  border-radius: 70% 30% 80% 20%;
+  transform: rotate(-1deg);
+}
+
+.manual-note {
+  justify-self: end;
+  margin: 0.5rem 0 0;
+  font-family: 'Kalam', cursive;
+  font-size: var(--manual-note-size);
+  line-height: var(--manual-note-leading);
+  text-align: center;
+  transform: rotate(-6deg);
+}
+
+.back-button:focus-visible {
+  outline: 4px solid var(--focus);
+  outline-offset: 3px;
+  box-shadow: 0 0 0 7px var(--ink), var(--press-shadow, 0 8px 18px rgb(3 20 65 / 0.25));
+}
+
+@media (max-width: 640px) {
+  .manual-rings {
+    inset-inline-start: -46px;
+  }
+
+  .manual-rings img {
+    width: 72px;
+  }
+
+  .manual-header {
+    grid-template-columns: 52px minmax(0, 1fr);
+    min-height: var(--manual-header-min-height-compact);
+  }
+
+  .back-button {
+    width: 48px;
+    min-height: 48px;
+  }
+
+  .back-button .game-icon {
+    width: 27px;
+  }
+
+  .manual-brand {
+    padding-right: 18px;
+  }
+
+  .manual-brand p {
+    font-size: clamp(1.1rem, 5vw, 1.55rem);
+  }
+
+  .manual-note {
+    display: none;
+  }
+}
+
+@media (max-width: 350px) {
+  .manual-brand {
+    padding-right: 8px;
+  }
+}

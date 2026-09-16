@@ -1,0 +1,8 @@
+{
+  "optionId": "tarjeta-escenario",
+  "seedKey": "faacbba6",
+  "approved": false,
+  "reference": ".impeccable/review/mobile.png",
+  "promptFile": "versiculo-tarjeta-escenario.png.prompt.txt",
+  "generator": "built-in imagegen"
+}

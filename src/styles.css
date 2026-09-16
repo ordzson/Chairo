@@ -1,0 +1,977 @@
+@import '@fontsource/cabin-condensed/500.css';
+@import '@fontsource/cabin-condensed/600.css';
+@import '@fontsource/cabin-condensed/700.css';
+@import '@fontsource/dosis/600.css';
+@import '@fontsource/dosis/700.css';
+@import '@fontsource/kalam/400.css';
+@import '@fontsource/kalam/700.css';
+@import '@fontsource/lilita-one/400.css';
+
+:root {
+  color-scheme: light;
+  --ink: #07266e;
+  --ink-deep: #031b56;
+  --paper: #f3eadb;
+  --paper-light: #fff8e9;
+  --yellow: #ffc61b;
+  --orange: #f36b22;
+  --turquoise: #20b9b9;
+  --blue: #2775d9;
+  --green: #54bd53;
+  --violet: #8262ce;
+  --focus: #fff8cf;
+  --shadow-soft: 0 18px 34px rgb(2 19 63 / 0.3);
+
+  /* Motion tokens: one vocabulary of time and easing for every piece. */
+  --motion-instant: 90ms;
+  --motion-fast: 160ms;
+  --motion-medium: 280ms;
+  --motion-slow: 460ms;
+  --motion-entrance: 620ms;
+  --motion-idle: 7s;
+  --ease-settle: cubic-bezier(.2, .8, .2, 1);
+  --ease-snap: cubic-bezier(.16, 1, .3, 1);
+  --ease-standard: cubic-bezier(.4, 0, .2, 1);
+  --motion-step: 55ms;
+  font-family: 'Cabin Condensed', sans-serif;
+  font-synthesis: none;
+}
+
+* { box-sizing: border-box; }
+
+html {
+  min-width: 320px;
+  background: #061d5c;
+  scroll-behavior: smooth;
+}
+
+body {
+  min-width: 320px;
+  min-height: 100vh;
+  margin: 0;
+  color: var(--ink);
+  background:
+    linear-gradient(100deg, rgb(255 255 255 / 0.04), transparent 30%, rgb(255 198 27 / 0.07)),
+    #061d5c;
+}
+
+button, select { font: inherit; }
+
+button { color: inherit; }
+
+::selection {
+  color: #fff;
+  background: #153f9a;
+}
+
+@property --motion-delay { syntax: '*'; inherits: false; }
+@property --motion-duration { syntax: '*'; inherits: false; }
+@property --motion-ease { syntax: '*'; inherits: false; }
+@property --motion-distance { syntax: '*'; inherits: false; }
+@property --motion-float-distance { syntax: '*'; inherits: false; }
+@property --motion-rest { syntax: '*'; inherits: false; }
+@property --motion-tilt { syntax: '*'; inherits: false; }
+@property --motion-index { syntax: '*'; inherits: false; }
+
+/* These two are read by children, so they stay inheritable. */
+@property --motion-step { syntax: '*'; inherits: true; }
+@property --motion-stagger-base { syntax: '*'; inherits: true; }
+
+/* ==========================================================================
+   Motion system
+   Reusable keyframes and utilities. A piece declares which motion it uses in
+   the markup (.motion-*) and the choreography section below says when.
+   Every entrance ends on the resting state, so zeroing duration under reduced
+   motion or during tests leaves the page exactly as it looks at rest.
+   ========================================================================== */
+
+@keyframes motion-rise {
+  from {
+    opacity: 0;
+    transform: translateY(var(--motion-distance, 16px)) var(--motion-rest, rotate(0deg)) scale(1);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) var(--motion-rest, rotate(0deg)) scale(1);
+  }
+}
+
+@keyframes motion-slide-in {
+  from {
+    opacity: 0;
+    transform: translateX(calc(var(--motion-distance, 38px) * -1)) var(--motion-rest, rotate(0deg)) scale(1);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0) var(--motion-rest, rotate(0deg)) scale(1);
+  }
+}
+
+@keyframes motion-stamp {
+  from {
+    opacity: 0;
+    transform: rotate(var(--motion-tilt, -4deg)) var(--motion-rest, rotate(0deg)) scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: rotate(0deg) var(--motion-rest, rotate(0deg)) scale(1);
+  }
+}
+
+@keyframes motion-draw {
+  from { opacity: 0; transform: var(--motion-rest, rotate(0deg)) scaleX(0); }
+  to { opacity: 1; transform: var(--motion-rest, rotate(0deg)) scaleX(1); }
+}
+
+@keyframes motion-pop {
+  from { transform: var(--motion-rest, rotate(0deg)) scale(0.78); }
+  to { transform: var(--motion-rest, rotate(0deg)) scale(1); }
+}
+
+@keyframes motion-float {
+  0%, 100% { transform: var(--motion-rest, rotate(0deg)) translateY(0); }
+  50% { transform: var(--motion-rest, rotate(0deg)) translateY(var(--motion-float-distance, -5px)); }
+}
+
+.motion-rise,
+.motion-slide-in,
+.motion-stamp,
+.motion-draw,
+.motion-pop,
+.motion-float {
+  animation-delay: var(--motion-delay, 0ms);
+  animation-fill-mode: both;
+}
+
+.motion-rise {
+  animation-name: motion-rise;
+  animation-duration: var(--motion-duration, var(--motion-entrance));
+  animation-timing-function: var(--motion-ease, var(--ease-settle));
+}
+
+.motion-slide-in {
+  animation-name: motion-slide-in;
+  animation-duration: var(--motion-duration, var(--motion-entrance));
+  animation-timing-function: var(--motion-ease, var(--ease-settle));
+}
+
+.motion-stamp {
+  animation-name: motion-stamp;
+  animation-duration: var(--motion-duration, var(--motion-slow));
+  animation-timing-function: var(--motion-ease, var(--ease-snap));
+}
+
+.motion-draw {
+  transform-origin: left center;
+  animation-name: motion-draw;
+  animation-duration: var(--motion-duration, var(--motion-slow));
+  animation-timing-function: var(--motion-ease, var(--ease-settle));
+}
+
+.motion-pop {
+  animation-name: motion-pop;
+  animation-duration: var(--motion-duration, var(--motion-medium));
+  animation-timing-function: var(--motion-ease, var(--ease-snap));
+}
+
+.motion-float {
+  animation-name: motion-float;
+  animation-duration: var(--motion-duration, var(--motion-idle));
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+}
+
+/* Stagger container: children enter one after another, in DOM order. */
+.motion-stagger > * {
+  --motion-delay: calc(var(--motion-stagger-base, 0ms) + var(--motion-index, 0) * var(--motion-step));
+}
+
+.motion-stagger > :nth-child(1) { --motion-index: 0; }
+.motion-stagger > :nth-child(2) { --motion-index: 1; }
+.motion-stagger > :nth-child(3) { --motion-index: 2; }
+.motion-stagger > :nth-child(4) { --motion-index: 3; }
+.motion-stagger > :nth-child(5) { --motion-index: 4; }
+.motion-stagger > :nth-child(6) { --motion-index: 5; }
+.motion-stagger > :nth-child(7) { --motion-index: 6; }
+.motion-stagger > :nth-child(8) { --motion-index: 7; }
+.motion-stagger > :nth-child(9) { --motion-index: 8; }
+.motion-stagger > :nth-child(n + 10) { --motion-index: 9; }
+
+/* ==========================================================================
+   Press system
+   One reusable primitive for every pressable plate in the manual: a moulded
+   colour face resting on a side wall cut from its own colour. The face is lit
+   from above like a piece of moulded plastic, it lifts under the pointer and
+   compresses flat onto the page when pressed.
+   A piece opts in with .pressable and declares only what differs from the
+   defaults: --press-face (its colour), --press-depth (how thick it is) and
+   --press-lift (how far it rises). Everything else is derived, so a new button
+   never hand-copies a shadow. The lift uses `translate` so it composes with the
+   entrance animations, which own `transform`.
+   ========================================================================== */
+
+.pressable {
+  --press-face: var(--yellow);
+  --press-depth: 6px;
+  --press-lift: 3px;
+
+  /* The side wall is cut from the face colour in three tones: the strip right
+     under the face still catches light, the middle is the body of the wall and
+     the base sits in its own shade. Three tones is what makes 6px of shadow
+     read as a moulded edge instead of a flat drop. */
+  --press-edge-lit: color-mix(in srgb, var(--press-face) 74%, var(--ink-deep));
+  --press-edge: color-mix(in srgb, var(--press-face) 52%, var(--ink-deep));
+  --press-edge-base: color-mix(in srgb, var(--press-face) 33%, var(--ink-deep));
+
+  /* Top-lit finish, painted over the face: a diagonal specular streak and a
+     crown that fades out at the waist. Kept shallow on purpose so the ink text
+     that sits across the middle of a piece never loses contrast. */
+  --press-gloss:
+    linear-gradient(101deg, rgb(255 255 255 / 0.3), rgb(255 255 255 / 0) 30%),
+    linear-gradient(
+      180deg,
+      rgb(255 255 255 / 0.3) 0%,
+      rgb(255 255 255 / 0.08) 26%,
+      rgb(255 255 255 / 0) 44%,
+      rgb(3 20 65 / 0.06) 100%
+    );
+
+  /* How far the face currently floats above its wall; the states move this. */
+  --press-offset: var(--press-depth);
+  --press-transition:
+    translate var(--motion-fast) var(--ease-snap),
+    scale var(--motion-fast) var(--ease-snap),
+    box-shadow var(--motion-fast) var(--ease-settle),
+    filter var(--motion-fast) ease-out;
+  --press-shadow:
+    /* The side wall, bottom-lit to top-lit. */
+    0 calc(var(--press-offset) * 0.3) 0 var(--press-edge-lit),
+    0 var(--press-offset) 0 var(--press-edge),
+    0 calc(var(--press-offset) * 1.14) 0 var(--press-edge-base),
+    /* Contact with the page: one tight, one ambient. */
+    0 calc(var(--press-offset) + 2px) 4px rgb(3 20 65 / 0.18),
+    0 calc(var(--press-offset) + 4px) calc(var(--press-offset) + 9px) rgb(3 20 65 / 0.2),
+    /* The curvature of the face itself: lit lip, rolled sides, shaded belly. */
+    inset 0 2px 0 rgb(255 255 255 / 0.5),
+    inset 0 9px 9px -8px rgb(255 255 255 / 0.55),
+    inset 3px 0 7px -5px rgb(255 255 255 / 0.32),
+    inset -3px 0 7px -5px rgb(3 20 65 / 0.16),
+    inset 0 -6px 8px -5px rgb(3 20 65 / 0.22),
+    inset 0 -3px 0 rgb(3 20 65 / 0.14);
+  position: relative;
+  translate: 0 0;
+  scale: 1;
+  box-shadow: var(--press-shadow);
+  transition: var(--press-transition);
+}
+
+/* The finish rides on top of whatever the piece uses as its own surface.
+   Replaced widgets ignore pseudo-elements, so `select` paints --press-gloss
+   as a background layer instead. */
+.pressable:not(select)::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: var(--press-gloss);
+  border-radius: inherit;
+}
+
+/* Lifting turns the piece further into the light; pressing takes it out. */
+.pressable:hover,
+.pressable:focus-visible {
+  --press-offset: calc(var(--press-depth) + var(--press-lift));
+  translate: 0 calc(var(--press-lift) * -1);
+  filter: saturate(1.07) brightness(1.03);
+}
+
+.pressable:active {
+  --press-offset: 0px;
+  translate: 0 var(--press-depth);
+  scale: 1 0.985;
+  filter: saturate(1.03) brightness(0.98);
+  transition-duration: var(--motion-instant);
+}
+
+::-webkit-scrollbar { width: 12px; }
+::-webkit-scrollbar-track { background: #061d5c; }
+::-webkit-scrollbar-thumb {
+  border: 3px solid #061d5c;
+  border-radius: 999px;
+  background: var(--yellow);
+}
+
+.skip-link {
+  position: fixed;
+  z-index: 100;
+  inset: 0 auto auto 1rem;
+  padding: 0.75rem 1rem;
+  color: #fff;
+  background: var(--ink-deep);
+  border: 2px solid var(--yellow);
+  border-radius: 0 0 10px 10px;
+  transform: translateY(-120%);
+  transition: transform var(--motion-fast) var(--ease-settle);
+}
+
+.skip-link:focus { transform: translateY(0); }
+
+/* Texto solo para lectores de pantalla: la sala y la unión nombran códigos y
+   estados que la composición muestra de otra forma. */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.manual-shell {
+  /* Above the dot field, which paints as a fixed layer at z-index 0. */
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  padding: clamp(0px, 2vw, 24px);
+  overflow: hidden;
+}
+
+.mission-manual {
+  position: relative;
+  isolation: isolate;
+  width: min(100%, 980px);
+  min-height: 100vh;
+  margin: 0 auto;
+  padding: clamp(18px, 4.1vw, 40px) clamp(12px, 2.7vw, 26px) clamp(18px, 3.6vw, 36px) clamp(18px, 5.8vw, 57px);
+  overflow: hidden;
+  background-color: var(--paper);
+  background-image: url('../assets/plates/paper.png');
+  background-repeat: repeat;
+  background-size: 330px 84px;
+  border: 2px solid #d0bb91;
+  border-radius: clamp(0px, 2.2vw, 22px);
+  box-shadow: var(--shadow-soft), inset 0 0 50px rgb(104 70 19 / 0.13);
+}
+
+.mission-manual::after {
+  content: '';
+  position: absolute;
+  z-index: 8;
+  inset: 5px;
+  pointer-events: none;
+  border: 1px dashed rgb(7 38 110 / 0.54);
+  border-radius: 16px;
+}
+
+.binder-spine {
+  position: absolute;
+  z-index: -1;
+  inset: 0 auto 0 0;
+  width: clamp(12px, 3.1vw, 30px);
+  background: #082b7d;
+  border-right: 2px solid #bd8b2b;
+  box-shadow: inset -6px 0 12px rgb(1 12 48 / 0.5), 5px 0 8px rgb(57 35 0 / 0.18);
+}
+
+.manual-header {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(100px, 1fr) minmax(280px, 2.8fr) minmax(100px, 1fr);
+  align-items: center;
+  min-height: clamp(182px, 24vw, 236px);
+}
+
+.brand-lockup {
+  align-self: start;
+  display: grid;
+  justify-items: center;
+  padding-top: 2px;
+}
+
+.brand-plate {
+  display: block;
+  width: min(100%, 452px);
+  height: auto;
+}
+
+.brand-lockup h1 {
+  margin: -0.08em 0 0;
+  font-family: 'Kalam', cursive;
+  font-size: clamp(1.65rem, 3.8vw, 2.35rem);
+  line-height: 1;
+  letter-spacing: -0.025em;
+  text-wrap: balance;
+}
+
+.title-stroke {
+  width: min(88%, 330px);
+  height: 7px;
+  margin-top: 0.3rem;
+  background: var(--yellow);
+  border-radius: 80% 20% 70% 30%;
+  transform: rotate(-1deg);
+}
+
+.margin-note {
+  margin: 0;
+  font-family: 'Kalam', cursive;
+  font-size: clamp(0.8rem, 2.2vw, 1.35rem);
+  line-height: 1.1;
+  text-transform: uppercase;
+  transform: rotate(-5deg);
+}
+
+.margin-note--left { padding-left: 12%; }
+.margin-note--right { justify-self: end; transform: rotate(5deg); }
+
+.game-index-section { position: relative; }
+
+.game-index {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  gap: 8px;
+}
+
+.game-tab {
+  --tab-color: var(--yellow);
+  --press-face: var(--tab-color);
+  position: relative;
+  display: grid;
+  grid-template-columns: clamp(64px, 10vw, 96px) minmax(0, 1fr) 1px minmax(134px, 19%);
+  align-items: center;
+  width: calc(100% - clamp(22px, 5.7vw, 54px));
+  min-height: clamp(76px, 10.7vw, 104px);
+  margin-left: clamp(22px, 5.7vw, 54px);
+  padding: 0 clamp(13px, 2.6vw, 25px);
+  overflow: hidden;
+  text-align: left;
+  background-color: var(--tab-color);
+  background-image: url('../assets/plates/paper.png');
+  background-blend-mode: soft-light;
+  background-size: 330px 84px;
+  border: 2px solid var(--ink);
+  border-radius: 0 clamp(18px, 3vw, 30px) clamp(18px, 3vw, 30px) 0;
+  cursor: pointer;
+  transition:
+    var(--press-transition),
+    width var(--motion-medium) var(--ease-settle),
+    margin-left var(--motion-medium) var(--ease-settle);
+}
+
+.game-tab .game-icon {
+  transition: transform var(--motion-medium) var(--ease-snap);
+}
+
+.game-tab:hover .game-icon,
+.game-tab:focus-visible .game-icon {
+  transform: translateY(-3px) rotate(-7deg);
+}
+
+.game-tab.is-selected .game-icon {
+  --motion-duration: var(--motion-slow);
+  animation-name: motion-pop;
+  animation-duration: var(--motion-duration);
+  animation-timing-function: var(--ease-snap);
+  animation-fill-mode: both;
+}
+
+/* The open chapter is the thickest card in the stack. */
+.game-tab.is-selected {
+  --press-depth: 10px;
+  z-index: 2;
+  width: 100%;
+  margin-left: 0;
+}
+
+/* Pressable pieces keep their edge under the ring; flat ones fall back. */
+.game-tab:focus-visible,
+.game-sheet:focus-visible,
+select:focus-visible {
+  outline: 4px solid var(--focus);
+  outline-offset: -7px;
+  box-shadow: 0 0 0 7px var(--ink), var(--press-shadow, 0 10px 20px rgb(3 20 65 / 0.32));
+}
+
+.game-tab--orange { --tab-color: var(--orange); }
+.game-tab--turquoise { --tab-color: var(--turquoise); }
+.game-tab--blue { --tab-color: var(--blue); }
+.game-tab--green { --tab-color: var(--green); }
+.game-tab--violet { --tab-color: var(--violet); }
+
+.game-icon {
+  position: relative;
+  z-index: 1;
+  display: inline-grid;
+  place-items: center;
+  width: clamp(42px, 6.3vw, 62px);
+  aspect-ratio: 1;
+}
+
+.game-icon svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 3.2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.tab-name,
+.tab-status,
+.tab-rule { position: relative; z-index: 1; }
+
+.tab-name {
+  min-width: 0;
+  padding-right: 0.75rem;
+  font-size: clamp(1.15rem, 4.7vw, 2.75rem);
+  font-weight: 700;
+  line-height: 0.98;
+  letter-spacing: -0.025em;
+  overflow-wrap: anywhere;
+}
+
+.is-selected .tab-name {
+  font-family: 'Lilita One', 'Cabin Condensed', sans-serif;
+  font-weight: 400;
+  text-shadow: 0 3px 0 #fff, 2px 0 0 #fff, -2px 0 0 #fff, 0 -2px 0 #fff;
+}
+
+.tab-rule {
+  align-self: stretch;
+  width: 1px;
+  margin-block: 18px;
+  background: currentColor;
+}
+
+.tab-status {
+  justify-self: center;
+  padding-left: clamp(8px, 2vw, 20px);
+  font-family: 'Dosis', sans-serif;
+  font-size: clamp(0.9rem, 3vw, 1.75rem);
+  font-weight: 700;
+  line-height: 1;
+}
+
+.binder-rings {
+  position: absolute;
+  z-index: 5;
+  inset: -7px auto -7px clamp(-66px, -6.4vw, -34px);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  pointer-events: none;
+  mix-blend-mode: multiply;
+}
+
+.binder-rings img {
+  width: clamp(76px, 10.2vw, 100px);
+  height: auto;
+  mix-blend-mode: normal;
+}
+
+.game-sheet {
+  position: relative;
+  z-index: 3;
+  display: grid;
+  justify-items: center;
+  min-height: clamp(410px, 55vw, 535px);
+  /* Clears the pressed edge of the last chapter above it. */
+  margin: 14px 0 0 clamp(-12px, -1.6vw, -4px);
+  padding: clamp(30px, 5.2vw, 50px) clamp(14px, 4vw, 38px) clamp(20px, 3vw, 30px);
+  overflow: hidden;
+  background:
+    linear-gradient(125deg, rgb(255 255 255 / 0.66), rgb(255 255 255 / 0.28) 45%, rgb(184 199 223 / 0.24)),
+    rgb(245 246 239 / 0.72);
+  border: 2px solid rgb(255 255 255 / 0.8);
+  border-radius: clamp(16px, 2.8vw, 28px);
+  box-shadow: 0 10px 22px rgb(3 26 80 / 0.23), inset 0 0 28px rgb(255 255 255 / 0.7), inset 0 -2px 1px rgb(7 38 110 / 0.16);
+  backdrop-filter: blur(3px) saturate(0.82);
+}
+
+.game-sheet::before {
+  content: '';
+  position: absolute;
+  inset: 8px;
+  pointer-events: none;
+  border: 1px solid rgb(7 38 110 / 0.18);
+  border-radius: 20px;
+}
+
+/* Transparent to layout: exists only so the sheet contents can be re-created. */
+.sheet-render { display: contents; }
+
+.sheet-heading {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  width: min(100%, 790px);
+  min-height: 100px;
+}
+
+.brush-plate {
+  position: absolute;
+  z-index: -1;
+  inset: 50% auto auto 0;
+  width: min(72%, 570px);
+  height: auto;
+  transform: translateY(-50%);
+  mix-blend-mode: multiply;
+}
+
+.sheet-icon { width: clamp(58px, 8vw, 78px); }
+
+.sheet-heading h2 {
+  min-width: 0;
+  margin: 0;
+  padding-inline: 0.3rem 0.75rem;
+  font-family: 'Lilita One', 'Cabin Condensed', sans-serif;
+  font-size: clamp(2rem, 5.8vw, 3.75rem);
+  font-weight: 400;
+  line-height: 0.95;
+  letter-spacing: -0.025em;
+  overflow-wrap: anywhere;
+  text-shadow: 0 3px 0 #fff, 2px 0 0 #fff, -2px 0 0 #fff, 0 -2px 0 #fff;
+}
+
+.sheet-status {
+  margin: 0;
+  padding: 0.35rem 0.65rem;
+  font-family: 'Kalam', cursive;
+  font-size: clamp(1rem, 3vw, 1.85rem);
+  font-weight: 700;
+  line-height: 1;
+  background: var(--yellow);
+  transform: rotate(-4deg);
+}
+
+.stage-plate {
+  display: block;
+  width: min(89%, 620px);
+  height: auto;
+  margin-top: clamp(8px, 2vw, 18px);
+}
+
+.preparing-copy {
+  align-self: end;
+  margin: 0.5rem 0 0;
+  font-family: 'Dosis', sans-serif;
+  font-size: clamp(1.15rem, 3.5vw, 2rem);
+  font-weight: 700;
+  line-height: 1.15;
+  text-align: center;
+  text-wrap: balance;
+}
+
+.game-start-link {
+  --press-face: var(--yellow);
+  --press-depth: 7px;
+  --press-lift: 3px;
+  align-self: end;
+  min-height: 58px;
+  margin: 0.6rem 0 0;
+  padding: 0.75rem 1.5rem;
+  color: var(--ink);
+  font-family: 'Lilita One', 'Cabin Condensed', sans-serif;
+  font-size: clamp(1.35rem, 3.5vw, 2.1rem);
+  line-height: 1;
+  text-align: center;
+  text-decoration: none;
+  background: var(--yellow);
+  border: 2px solid var(--ink);
+  border-radius: 14px;
+}
+
+.game-start-link:focus-visible {
+  outline: 4px solid var(--focus);
+  outline-offset: 3px;
+  box-shadow: 0 0 0 7px var(--ink), var(--press-shadow);
+}
+
+.preference-sheet {
+  position: relative;
+  display: grid;
+  grid-template-columns: clamp(62px, 9vw, 88px) minmax(0, 1fr) minmax(140px, 24%);
+  gap: clamp(12px, 2vw, 20px);
+  align-items: center;
+  margin-top: 12px;
+  padding: clamp(24px, 3.4vw, 34px) clamp(20px, 3.6vw, 36px) clamp(22px, 3.4vw, 34px) clamp(42px, 6vw, 58px);
+  background-color: var(--paper-light);
+  background-image: url('../assets/plates/paper.png');
+  background-size: 330px 84px;
+  border: 1px solid #d7c29a;
+  border-radius: 16px;
+  box-shadow: 0 8px 16px rgb(63 40 3 / 0.16);
+}
+
+.paper-holes {
+  position: absolute;
+  inset: 22% auto 22% 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.paper-holes span {
+  width: 28px;
+  aspect-ratio: 1;
+  background: #d6c39f;
+  border: 2px solid #c2a875;
+  border-radius: 50%;
+  box-shadow: inset 2px 3px 4px rgb(62 42 5 / 0.26);
+}
+
+.preference-icon { width: clamp(58px, 8vw, 78px); }
+
+.preference-fields { min-width: 0; }
+
+.preference-fields label {
+  display: block;
+  margin-bottom: 0.4rem;
+  font-size: clamp(1.1rem, 3vw, 1.8rem);
+  font-weight: 700;
+  line-height: 1.05;
+}
+
+.preference-fields label span { font-weight: 500; }
+
+.select-wrap { position: relative; display: block; }
+
+.select-wrap select {
+  --press-face: #fff9e8;
+  --press-depth: 4px;
+  --press-lift: 2px;
+  width: 100%;
+  min-height: 64px;
+  padding: 0.7rem 3.1rem 0.7rem 1rem;
+  color: var(--ink);
+  background-color: rgb(255 249 232 / 0.78);
+  background-image: var(--press-gloss);
+  border: 2px solid var(--ink);
+  border-radius: 12px;
+  appearance: none;
+  cursor: pointer;
+  transition:
+    var(--press-transition),
+    background-color var(--motion-fast) var(--ease-settle);
+}
+
+.select-wrap select:hover { background-color: rgb(255 249 232 / 0.95); }
+
+.select-wrap svg {
+  position: absolute;
+  top: 50%;
+  right: 1.15rem;
+  width: 20px;
+  fill: none;
+  stroke: var(--ink);
+  stroke-width: 3;
+  pointer-events: none;
+  transform: translateY(-50%);
+  transition: transform var(--motion-medium) var(--ease-snap);
+}
+
+.select-wrap select:focus-visible + svg,
+.select-wrap select:hover + svg { transform: translateY(-25%); }
+
+.preference-fields > p {
+  margin: 0.7rem 0 0;
+  font-size: clamp(1rem, 2.6vw, 1.55rem);
+  line-height: 1.2;
+}
+
+.footer-note {
+  margin: 0;
+  font-family: 'Kalam', cursive;
+  font-size: clamp(0.8rem, 2.2vw, 1.3rem);
+  line-height: 1.05;
+  text-transform: uppercase;
+  transform: rotate(-7deg);
+}
+
+/* ==========================================================================
+   Motion choreography
+   The manual assembles itself the way a binder is opened: cover, title,
+   chapters, then the sheet. Only delays and resting transforms live here;
+   the motions themselves come from the system above.
+   ========================================================================== */
+
+.mission-manual {
+  --motion-distance: 8px;
+  --motion-duration: var(--motion-medium);
+}
+
+.brand-plate { --motion-delay: 100ms; }
+
+.brand-lockup h1 {
+  --motion-delay: 190ms;
+  --motion-distance: 12px;
+}
+
+.title-stroke {
+  --motion-delay: 300ms;
+  --motion-rest: rotate(-1deg);
+}
+
+.margin-note--left {
+  --motion-delay: 360ms;
+  --motion-rest: rotate(-5deg);
+}
+
+.margin-note--right {
+  --motion-delay: 400ms;
+  --motion-rest: rotate(5deg);
+}
+
+.binder-rings {
+  --motion-stagger-base: 420ms;
+  --motion-step: 70ms;
+}
+
+.binder-rings img { --motion-distance: -14px; }
+
+.game-index { --motion-stagger-base: 470ms; }
+
+.game-sheet {
+  --motion-delay: 790ms;
+  --motion-distance: 20px;
+}
+
+/* Sheet contents are re-created when the chapter changes, so these replay
+   on every selection. Their delays stay short for that reason. */
+.sheet-heading { --motion-duration: var(--motion-slow); }
+
+.sheet-status {
+  --motion-delay: 120ms;
+  --motion-rest: rotate(-4deg);
+}
+
+.stage-plate {
+  --motion-delay: 70ms;
+  --motion-distance: 18px;
+  animation:
+    motion-rise var(--motion-slow) var(--ease-settle) var(--motion-delay, 0ms) both,
+    motion-float var(--motion-idle) ease-in-out calc(var(--motion-delay, 0ms) + var(--motion-slow)) infinite;
+}
+
+.preparing-copy { --motion-delay: 180ms; }
+
+.preference-sheet {
+  --motion-delay: 900ms;
+  --motion-distance: 20px;
+}
+
+@media (max-width: 640px) {
+  .manual-shell { padding: 0; }
+
+  .mission-manual {
+    padding-inline: 26px 8px;
+    border-inline: 0;
+    border-radius: 0;
+  }
+
+  .mission-manual::after { inset: 4px; border-radius: 0; }
+
+  .manual-header {
+    display: block;
+    min-height: 166px;
+  }
+
+  .brand-lockup { padding-inline: 10%; }
+  .brand-plate { width: min(100%, 340px); }
+  .margin-note { display: none; }
+
+  .game-index { gap: 6px; }
+
+  .game-tab {
+    --press-depth: 5px;
+    grid-template-columns: 44px minmax(0, 1fr);
+    grid-template-rows: minmax(30px, auto) auto;
+    column-gap: 8px;
+    min-height: 72px;
+    padding: 9px 12px 8px 9px;
+    border-radius: 0 18px 18px 0;
+  }
+
+  .game-tab .game-icon { grid-row: 1 / 3; align-self: center; width: 40px; }
+  .tab-name { align-self: end; padding-right: 0; line-height: 1; }
+  .tab-rule { display: none; }
+  .tab-status {
+    grid-column: 2;
+    justify-self: start;
+    align-self: start;
+    padding: 0.25rem 0 0;
+    font-size: clamp(0.75rem, 3.6vw, 0.95rem);
+  }
+
+  .binder-rings { inset-inline-start: -45px; }
+  .binder-rings img { width: 70px; }
+
+  .game-sheet {
+    min-height: 390px;
+    margin-left: -16px;
+    padding: 30px 12px 20px;
+  }
+
+  .sheet-heading {
+    grid-template-columns: 48px minmax(0, 1fr);
+    grid-template-rows: auto auto;
+    min-height: 100px;
+  }
+
+  .sheet-heading .sheet-icon { grid-row: 1 / 3; width: 46px; }
+  .sheet-heading h2 { padding: 0 0.2rem; }
+  .sheet-status { grid-column: 2; justify-self: start; margin: 0.25rem 0 0 0.3rem; }
+  .brush-plate { width: 88%; }
+  .stage-plate { width: 100%; }
+
+  .preference-sheet {
+    grid-template-columns: 48px minmax(0, 1fr);
+    padding: 24px 12px 24px 36px;
+  }
+
+  .preference-icon { align-self: start; width: 46px; margin-top: 1.4rem; }
+  .footer-note { display: none; }
+  .paper-holes { left: 4px; }
+  .paper-holes span { width: 22px; }
+  .select-wrap select { min-height: 54px; }
+}
+
+@media (max-width: 350px) {
+  .mission-manual { padding-inline: 23px 5px; }
+  .brand-lockup { padding-inline: 4%; }
+  .game-tab { width: calc(100% - 14px); margin-left: 14px; }
+  .game-tab.is-selected { width: 100%; margin-left: 0; }
+  .game-sheet { margin-left: -13px; }
+  .preference-sheet { margin-left: -12px; padding-left: 32px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0s !important;
+    transition-delay: 0s !important;
+    animation-duration: 0s !important;
+    animation-delay: 0s !important;
+    animation-iteration-count: 1 !important;
+  }
+}
+
+@media (forced-colors: active) {
+  .mission-manual,
+  .game-tab,
+  .game-sheet,
+  .preference-sheet { forced-color-adjust: auto; }
+
+  .game-tab:focus,
+  .game-sheet:focus,
+  select:focus {
+    outline: 3px solid Highlight;
+    outline-offset: 2px;
+  }
+}

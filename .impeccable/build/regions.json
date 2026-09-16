@@ -1,0 +1,414 @@
+{
+  "regions": [
+    {
+      "id": "manual",
+      "kind": "chrome",
+      "box": {
+        "x": 0,
+        "y": 0,
+        "w": 1,
+        "h": 1
+      },
+      "container": true,
+      "note": "One continuous ivory manual page enclosed by a blue binding rim; physical book structure behind all named children."
+    },
+    {
+      "id": "paper",
+      "kind": "texture",
+      "box": {
+        "x": 0.06907545164718384,
+        "y": 0.014354066985645933,
+        "w": 0.17534537725823593,
+        "h": 0.025119617224880382
+      },
+      "note": "Clean ivory fibrous paper grain, tiled across the manual."
+    },
+    {
+      "id": "brand",
+      "kind": "plate",
+      "box": {
+        "x": 0.2731137088204038,
+        "y": 0.01375598086124402,
+        "w": 0.47927736450584485,
+        "h": 0.09688995215311005
+      },
+      "note": "Golden chunky Chairo lettering with ultramarine dimensional outline and three golden rays; isolated transparent brand asset."
+    },
+    {
+      "id": "heading",
+      "kind": "text",
+      "box": {
+        "x": 0.3528161530286929,
+        "y": 0.1076555023923445,
+        "w": 0.3177470775770457,
+        "h": 0.02631578947368421
+      },
+      "note": "Centro de juegos; handwritten blue ink."
+    },
+    {
+      "id": "header-left",
+      "kind": "text",
+      "box": {
+        "x": 0.09564293304994687,
+        "y": 0.05083732057416268,
+        "w": 0.14984059511158343,
+        "h": 0.06937799043062201
+      },
+      "note": "BUENAS PREGUNTAS GRANDES HISTORIAS; blue handwritten marginal note."
+    },
+    {
+      "id": "header-right",
+      "kind": "text",
+      "box": {
+        "x": 0.8140276301806588,
+        "y": 0.03588516746411483,
+        "w": 0.15621679064824653,
+        "h": 0.08971291866028708
+      },
+      "note": "IDEAS JUEGOS PERSONAS UN MUNDO MEJOR; blue handwritten marginal note."
+    },
+    {
+      "id": "underline",
+      "kind": "chrome",
+      "box": {
+        "x": 0.3283740701381509,
+        "y": 0.1339712918660287,
+        "w": 0.3528161530286929,
+        "h": 0.011363636363636364
+      },
+      "note": "Short yellow underline below the page heading."
+    },
+    {
+      "id": "ring",
+      "kind": "plate",
+      "box": {
+        "x": 0.0,
+        "y": 0.1590909090909091,
+        "w": 0.10201912858660998,
+        "h": 0.04066985645933014
+      },
+      "note": "One polished silver binder ring crossing a bronze punched eyelet, horizontal; transparent background.",
+      "bleed": true
+    },
+    {
+      "id": "divider-0",
+      "kind": "chrome",
+      "box": {
+        "x": 0.044633368756641874,
+        "y": 0.15490430622009568,
+        "w": 0.9383634431455898,
+        "h": 0.06937799043062201
+      },
+      "note": "One yellow index strip, rounded trailing edge; selected strip advances left."
+    },
+    {
+      "id": "game-0",
+      "kind": "text",
+      "box": {
+        "x": 0.25398512221041447,
+        "y": 0.17045454545454544,
+        "w": 0.3241232731137088,
+        "h": 0.038875598086124404
+      },
+      "note": "Jeopardy; selectable game name with a coherent icon on its left."
+    },
+    {
+      "id": "status-0",
+      "kind": "text",
+      "box": {
+        "x": 0.7534537725823592,
+        "y": 0.17763157894736842,
+        "w": 0.17003188097768332,
+        "h": 0.019736842105263157
+      },
+      "note": "Próximamente; status of the game."
+    },
+    {
+      "id": "divider-1",
+      "kind": "chrome",
+      "box": {
+        "x": 0.10201912858660998,
+        "y": 0.22488038277511962,
+        "w": 0.8809776833156217,
+        "h": 0.06279904306220095
+      },
+      "note": "One orange index strip, rounded trailing edge; selected strip advances left."
+    },
+    {
+      "id": "game-1",
+      "kind": "text",
+      "box": {
+        "x": 0.25398512221041447,
+        "y": 0.24043062200956938,
+        "w": 0.43358129649309246,
+        "h": 0.029904306220095694
+      },
+      "note": "¿Versículo o inventículo?; selectable game name with a coherent icon on its left."
+    },
+    {
+      "id": "status-1",
+      "kind": "text",
+      "box": {
+        "x": 0.7534537725823592,
+        "y": 0.24760765550239233,
+        "w": 0.17003188097768332,
+        "h": 0.019736842105263157
+      },
+      "note": "Próximamente; status of the game."
+    },
+    {
+      "id": "divider-2",
+      "kind": "chrome",
+      "box": {
+        "x": 0.10201912858660998,
+        "y": 0.28827751196172247,
+        "w": 0.8809776833156217,
+        "h": 0.06279904306220095
+      },
+      "note": "One turquoise index strip, rounded trailing edge; selected strip advances left."
+    },
+    {
+      "id": "game-2",
+      "kind": "text",
+      "box": {
+        "x": 0.25398512221041447,
+        "y": 0.3038277511961722,
+        "w": 0.43358129649309246,
+        "h": 0.029904306220095694
+      },
+      "note": "El discípulo más perdido; selectable game name with a coherent icon on its left."
+    },
+    {
+      "id": "status-2",
+      "kind": "text",
+      "box": {
+        "x": 0.7534537725823592,
+        "y": 0.31100478468899523,
+        "w": 0.17003188097768332,
+        "h": 0.019736842105263157
+      },
+      "note": "Próximamente; status of the game."
+    },
+    {
+      "id": "divider-3",
+      "kind": "chrome",
+      "box": {
+        "x": 0.10201912858660998,
+        "y": 0.3522727272727273,
+        "w": 0.8809776833156217,
+        "h": 0.06279904306220095
+      },
+      "note": "One blue index strip, rounded trailing edge; selected strip advances left."
+    },
+    {
+      "id": "game-3",
+      "kind": "text",
+      "box": {
+        "x": 0.25398512221041447,
+        "y": 0.36782296650717705,
+        "w": 0.43358129649309246,
+        "h": 0.029904306220095694
+      },
+      "note": "Revelaciones; selectable game name with a coherent icon on its left."
+    },
+    {
+      "id": "status-3",
+      "kind": "text",
+      "box": {
+        "x": 0.7534537725823592,
+        "y": 0.375,
+        "w": 0.17003188097768332,
+        "h": 0.019736842105263157
+      },
+      "note": "Próximamente; status of the game."
+    },
+    {
+      "id": "divider-4",
+      "kind": "chrome",
+      "box": {
+        "x": 0.10201912858660998,
+        "y": 0.41626794258373206,
+        "w": 0.8809776833156217,
+        "h": 0.06279904306220095
+      },
+      "note": "One green index strip, rounded trailing edge; selected strip advances left."
+    },
+    {
+      "id": "game-4",
+      "kind": "text",
+      "box": {
+        "x": 0.25398512221041447,
+        "y": 0.4318181818181818,
+        "w": 0.43358129649309246,
+        "h": 0.029904306220095694
+      },
+      "note": "Buscando perlas; selectable game name with a coherent icon on its left."
+    },
+    {
+      "id": "status-4",
+      "kind": "text",
+      "box": {
+        "x": 0.7534537725823592,
+        "y": 0.43899521531100477,
+        "w": 0.17003188097768332,
+        "h": 0.019736842105263157
+      },
+      "note": "Próximamente; status of the game."
+    },
+    {
+      "id": "divider-5",
+      "kind": "chrome",
+      "box": {
+        "x": 0.10201912858660998,
+        "y": 0.48026315789473684,
+        "w": 0.8809776833156217,
+        "h": 0.06220095693779904
+      },
+      "note": "One violet index strip, rounded trailing edge; selected strip advances left."
+    },
+    {
+      "id": "game-5",
+      "kind": "text",
+      "box": {
+        "x": 0.25398512221041447,
+        "y": 0.4958133971291866,
+        "w": 0.43358129649309246,
+        "h": 0.029904306220095694
+      },
+      "note": "Trivia; selectable game name with a coherent icon on its left."
+    },
+    {
+      "id": "status-5",
+      "kind": "text",
+      "box": {
+        "x": 0.7534537725823592,
+        "y": 0.5029904306220095,
+        "w": 0.17003188097768332,
+        "h": 0.019736842105263157
+      },
+      "note": "Próximamente; status of the game."
+    },
+    {
+      "id": "acetate",
+      "kind": "chrome",
+      "box": {
+        "x": 0.040382571732199786,
+        "y": 0.5424641148325359,
+        "w": 0.9426142401700319,
+        "h": 0.3062200956937799
+      },
+      "note": "Translucent panel with softly raised edges and punched margin; selected game details.",
+      "container": true
+    },
+    {
+      "id": "brush",
+      "kind": "plate",
+      "box": {
+        "x": 0.11583421891604676,
+        "y": 0.5675837320574163,
+        "w": 0.6014877789585548,
+        "h": 0.08791866028708134
+      },
+      "note": "One broad golden yellow dry brush swash behind the game title; transparent, no text or symbols."
+    },
+    {
+      "id": "preview-title",
+      "kind": "text",
+      "box": {
+        "x": 0.2858660998937301,
+        "y": 0.583732057416268,
+        "w": 0.38150903294367694,
+        "h": 0.05442583732057416
+      },
+      "note": "Jeopardy; white chunky title with dark blue outline."
+    },
+    {
+      "id": "preview-status",
+      "kind": "text",
+      "box": {
+        "x": 0.7098831030818279,
+        "y": 0.6166267942583732,
+        "w": 0.20297555791710944,
+        "h": 0.02930622009569378
+      },
+      "note": "Próximamente; ink blue label on a yellow background."
+    },
+    {
+      "id": "stage",
+      "kind": "plate",
+      "box": {
+        "x": 0.16259298618490967,
+        "y": 0.652511961722488,
+        "w": 0.6588735387885228,
+        "h": 0.14952153110047847
+      },
+      "note": "Cobalt blue game-show set and exactly three gold-trimmed podiums with 100, 200, 300, silkscreen brush edges; isolated transparent background."
+    },
+    {
+      "id": "preview-help",
+      "kind": "text",
+      "box": {
+        "x": 0.2879914984059511,
+        "y": 0.8026315789473685,
+        "w": 0.42826780021253985,
+        "h": 0.022727272727272728
+      },
+      "note": "Estamos preparando este juego."
+    },
+    {
+      "id": "preference-paper",
+      "kind": "chrome",
+      "box": {
+        "x": 0.04994686503719448,
+        "y": 0.8570574162679426,
+        "w": 0.926673751328374,
+        "h": 0.13157894736842105
+      },
+      "note": "Ivory paper slip underneath the acetate panel, with punched left margin."
+    },
+    {
+      "id": "preference-label",
+      "kind": "text",
+      "box": {
+        "x": 0.22104144527098832,
+        "y": 0.8761961722488039,
+        "w": 0.434643995749203,
+        "h": 0.022727272727272728
+      },
+      "note": "Modalidad preferida (opcional)."
+    },
+    {
+      "id": "preference-select",
+      "kind": "control",
+      "box": {
+        "x": 0.22104144527098832,
+        "y": 0.9007177033492823,
+        "w": 0.4782146652497343,
+        "h": 0.0430622009569378
+      },
+      "note": "Native select, dark blue border and cream fill; Sin preferencia."
+    },
+    {
+      "id": "preference-help",
+      "kind": "text",
+      "box": {
+        "x": 0.22210414452709884,
+        "y": 0.9551435406698564,
+        "w": 0.4569606801275239,
+        "h": 0.017942583732057416
+      },
+      "note": "La modalidad se elegirá dentro de cada juego."
+    },
+    {
+      "id": "footer-note",
+      "kind": "text",
+      "box": {
+        "x": 0.7863974495217854,
+        "y": 0.8881578947368421,
+        "w": 0.14133900106269925,
+        "h": 0.07416267942583732
+      },
+      "note": "LAS MISMAS PREGUNTAS MÁS PERSONAS MÁS VIDA; handwritten blue note."
+    }
+  ]
+}

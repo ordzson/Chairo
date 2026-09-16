@@ -1,0 +1,9 @@
+Use case: ui-mockup
+Asset type: high-fidelity mobile product UI direction comp
+Primary request: Design a portrait mobile first viewport for “Chairo — Centro de juegos” in the direction “Buceo de descubrimientos”. Choosing a game feels like descending through a luminous ocean discovery profile; five games appear at distinct depths on one clear vertical axis and the focused game is illuminated with its mechanic and an obvious “Entrar” action.
+Scene/backdrop: a rendered early-2000s Frutiger Aero ocean environment with turquoise surface light, deeper cobalt water, glassy bubbles, friendly bioluminescent details, glossy plastic instrument trim.
+Text (verbatim): “Chairo”, “Centro de juegos”, “Jeopardy”, “¿Versículo o inventículo?”, “El discípulo más perdido”, “Revelaciones”, “Buscando perlas”, “Trivia”, “Entrar”.
+Composition/framing: portrait phone viewport, interface fills canvas, mobile-safe type, visible vertical depth axis, one selected game dominant, remaining games legible along the path, tiny optional pinned mode preference that never blocks game choice.
+Color palette: abyss blue, turquoise, luminous cyan, cloud white, lime accent.
+Materials/textures: water depth, glowing marine particles, wet glass, polished 2000s 3D render.
+Constraints: Spanish; for all ages; game choice is primary; mode is secondary and optional here; no account UI; no generic cards; no modern SaaS styling; no invented claims; no watermark.

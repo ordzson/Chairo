@@ -1,0 +1,4 @@
+Edit target: the attached ring production asset.
+Background-extraction only. Preserve the foreground artwork, exact colors, dimensions, text, shape and placement without redrawing. Delete the visible gray-and-white tiled background completely. Produce a real transparent-background RGBA PNG cutout: all empty background pixels must have alpha 0, edge pixels antialiased alpha, and foreground pixels alpha 255. Preserve opaque white artwork details. The gray-white tiles in the input are an unwanted painted backdrop, not part of the artwork. They must disappear. Do not replace the backdrop with white, another color, or another tile pattern. Return the foreground as native transparent image data, ready to place on any background.
+Foreground to keep: the horizontal silver/bronze ring and single bronze eyelet; clear the eyelet opening.
+Keep original pixel dimensions and aspect. Output transparent PNG with an actual alpha channel.

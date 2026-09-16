@@ -1,0 +1,132 @@
+{
+  "title": "Elige el mundo visual de Chairo",
+  "question": "¿Qué dirección debe convertir el Centro de juegos en un lugar reconocible, alegre y fácil de usar?",
+  "options": [
+    {
+      "id": "assigned",
+      "label": "Álbum de estampas vivas",
+      "kicker": "THE ROLL",
+      "lineage": "álbumes de estampas, láminas holográficas y software familiar de los 2000",
+      "thesis": "Cada juego es una estampa coleccionable que cobra vida al tocarla.",
+      "palette": ["#19B8B0", "#8EDB45", "#FFD83D", "#5A63D8", "#F8FCF2"],
+      "materials": ["laminado brillante", "foil iridiscente", "plástico translúcido"],
+      "viewport": "Una página de álbum ocupa la pantalla: Chairo arriba, una estampa protagonista y el resto asomándose como colección explorable; la preferencia de modalidad vive como una pequeña pegatina fijable.",
+      "risk": "Puede parecer infantil si las ilustraciones no conservan detalle, profundidad y tipografía madura.",
+      "raised": [
+        {"from": "Registro de exposición", "raise": "La selección, disponibilidad y preferencia fijada se distinguen por capas materiales, no solo por color."},
+        {"from": "Ciclorama", "raise": "La apertura cambia de luz con una transición única y reducible que acompaña la elección."},
+        {"from": "PC-98", "raise": "Cada estado de foco tiene un contorno inequívoco y navegación completa por teclado."}
+      ],
+      "comp": ".impeccable/mocks/decision/assigned.png"
+    },
+    {
+      "id": "model-pick",
+      "label": "Plaza de canales",
+      "kicker": "IMPECCABLE’S PICK",
+      "lineage": "menús de consolas familiares y quioscos interactivos de ciencia de los 2000",
+      "thesis": "Los cinco juegos habitan una plaza luminosa y cada acceso es un canal con identidad propia.",
+      "palette": ["#48CFE3", "#74D14C", "#FFCB45", "#FF7657", "#F4FBFF"],
+      "materials": ["plástico perlado", "cromo suave", "agua y cielo renderizados"],
+      "viewport": "Un carrusel espacial de cinco canales rodea un orbe central; el juego enfocado crece, explica su mecánica en una línea y ofrece Entrar.",
+      "risk": "Es la dirección más familiar para un centro de juegos y puede recordar demasiado a interfaces de consola conocidas.",
+      "comp": ".impeccable/mocks/decision/model-pick.png"
+    },
+    {
+      "id": "challenger-teletext",
+      "label": "Canal 302",
+      "verdict": "competitive",
+      "lineage": "revistas de teletexto y concursos televisivos",
+      "thesis": "El centro funciona como una señal en vivo donde cada juego tiene número y la siguiente partida siempre está al aire.",
+      "palette": ["#061236", "#2DD4D7", "#FFE34D", "#FFFFFF", "#FF5B55"],
+      "materials": ["mosaico de bloques", "brillo de fósforo", "rejilla de emisión"],
+      "viewport": "Una portada 100 muestra los cinco juegos como canales numerados, con avance del destacado y acceso directo por teclado o toque.",
+      "case": "La numeración y REVELAR encajan muy bien con trivia; pierde cercanía con la alegría natural de Chairo.",
+      "risk": "La retícula rígida puede cansar y el lenguaje retro no será reconocible para todas las edades.",
+      "comp": ".impeccable/mocks/decision/challenger-teletext.png",
+      "hero": "https://impeccable.style/worlds/cards/broadcast-programming-teletext-service-hero.webp",
+      "board": "https://impeccable.style/worlds/cards/broadcast-programming-teletext-service.webp"
+    },
+    {
+      "id": "challenger-dive",
+      "label": "Buceo de descubrimientos",
+      "verdict": "competitive",
+      "lineage": "perfil de inmersión oceánica y centros interactivos de naturaleza",
+      "thesis": "Elegir juego es descender por niveles de descubrimiento hasta iluminar una experiencia.",
+      "palette": ["#06253E", "#0E7CA1", "#40D7DA", "#EAFBFF", "#9BE44B"],
+      "materials": ["agua profunda", "partículas luminosas", "vidrio mojado"],
+      "viewport": "Los juegos aparecen a distintas profundidades en un eje vertical; el enfocado ilumina su escena y muestra su tipo de reto.",
+      "case": "La exploración y el Frutiger Aero conectan con Chairo; el eje de profundidad explica peor que se trata de cinco juegos pares.",
+      "risk": "La metáfora beneficia especialmente a Buscando perlas y puede sesgar todo el producto hacia un solo juego.",
+      "comp": ".impeccable/mocks/decision/challenger-dive.png",
+      "hero": "https://impeccable.style/worlds/cards/rivers-tides-ocean-depths-mesophotic-deep-dive-hero.webp",
+      "board": "https://impeccable.style/worlds/cards/rivers-tides-ocean-depths-mesophotic-deep-dive.webp"
+    },
+    {
+      "id": "challenger-manual",
+      "label": "Manual de misión",
+      "verdict": "competitive",
+      "lineage": "manuales de software en caja y separadores escolares",
+      "thesis": "Cada juego abre una pestaña física con una hoja transparente que explica cómo se juega.",
+      "palette": ["#FFF8E8", "#FFC72C", "#F36E21", "#16A6A2", "#315FBA"],
+      "materials": ["acetato lechoso", "cartulina satinada", "tinta nítida"],
+      "viewport": "Una pestaña por juego recorre el borde; la activa despliega título, dinámica y botón de entrada sobre una lámina translúcida.",
+      "case": "Las pestañas hacen la colección muy clara; su tono de manual identifica peor una noche de juegos alegre.",
+      "risk": "Puede sentirse educativo o administrativo si la ilustración no domina la explicación.",
+      "comp": ".impeccable/mocks/decision/challenger-manual.png",
+      "hero": "https://impeccable.style/worlds/cards/rw-manual-acetate-tab-board-hero.webp",
+      "board": "https://impeccable.style/worlds/cards/rw-manual-acetate-tab-board.webp"
+    },
+    {
+      "id": "challenger-darkroom",
+      "label": "Registro de exposición",
+      "verdict": "declined",
+      "lineage": "hojas de prueba de cuarto oscuro",
+      "thesis": "Los juegos se comparan como exposiciones superpuestas y medibles.",
+      "palette": ["#111720", "#D7DEE4", "#E32D86"],
+      "materials": ["papel fotográfico", "acetato técnico"],
+      "viewport": "Hojas translúcidas apiladas organizan el catálogo por intensidad.",
+      "case": "La comparación es precisa, pero no comunica juego bíblico ni alegría compartida.",
+      "risk": "Demasiado técnico y adulto para una audiencia de todas las edades.",
+      "kept": "Estados superpuestos que siguen siendo legibles."
+    },
+    {
+      "id": "challenger-cyc",
+      "label": "Amanecer escénico",
+      "verdict": "declined",
+      "lineage": "cicloramas teatrales y hojas de cues",
+      "thesis": "Cada elección cambia la luz del escenario y prepara la siguiente partida.",
+      "palette": ["#07152C", "#2453B8", "#F07B8E", "#FFF8E9"],
+      "materials": ["luz escénica", "horizonte infinito"],
+      "viewport": "Cinco juegos se distribuyen por franjas de luz desde noche hasta día.",
+      "case": "La transición es memorable, pero el catálogo no gana una estructura propia suficiente.",
+      "risk": "Puede convertirse en un fondo vistoso con controles genéricos encima.",
+      "kept": "Una sola transición ambiental ligada a la selección."
+    },
+    {
+      "id": "challenger-pc98",
+      "label": "Campo de 16 colores",
+      "verdict": "declined",
+      "lineage": "interfaces PC-98 y gráficos por paleta",
+      "thesis": "El catálogo vive en una pantalla ilustrada donde el foco invierte celdas y abre cada juego.",
+      "palette": ["#0B1438", "#F5D998", "#D33E78", "#45CED1", "#A2D34E"],
+      "materials": ["píxel entero", "tramado ordenado"],
+      "viewport": "Una escena ilustrada y un menú inferior fijo presentan los cinco títulos.",
+      "case": "Es inequívocamente lúdico, pero contradice la estética renderizada y natural fijada para Chairo.",
+      "risk": "La nostalgia de nicho domina el contenido y reduce la legibilidad móvil.",
+      "kept": "Foco y disponibilidad inequívocos incluso sin color."
+    }
+  ],
+  "reroll": {"registers": ["safer", "bolder"]},
+  "buildPath": {"value": "comp", "toggle": true},
+  "canon": true,
+  "canonCard": {
+    "label": "Catálogo de tarjetas",
+    "thesis": "Una cuadrícula clara de juegos con filtros y un botón de entrada, ejecutada con gran oficio.",
+    "palette": ["#F7FAFC", "#172033", "#2BAE9B", "#FFD34E"],
+    "materials": ["tarjetas limpias", "ilustraciones de portada"],
+    "viewport": "Encabezado compacto, preferencia opcional de modalidad y cuadrícula responsiva de cinco juegos.",
+    "risk": "Funciona de inmediato, pero podría confundirse con cualquier catálogo de juegos casuales.",
+    "comp": ".impeccable/mocks/decision/canon.png"
+  },
+  "steer": true
+}

@@ -1,0 +1,46 @@
+{
+  "title": "¿Cómo debe sentirse Versículo o inventículo?",
+  "question": "Elige la composición que mejor equilibra lectura grande, respuesta rápida y juego desde el teléfono anfitrión.",
+  "options": [
+    {
+      "id": "tarjeta-escenario",
+      "label": "Tarjeta de escenario",
+      "kicker": "THE ROLL",
+      "lineage": "Tarjeta de conductor de concurso dentro del manual Chairo",
+      "thesis": "La frase ocupa casi toda la pantalla y los controles se repliegan sin cambiar de lenguaje cuando el anfitrión solo observa.",
+      "palette": ["#f3eadb", "#07266e", "#ffc61b", "#f36b22", "#20b9b9"],
+      "materials": ["papel marfil", "cartulina moldeada", "tinta azul", "anillos metálicos"],
+      "viewport": "Marcador angosto arriba, frase enorme en una sola tarjeta central y dos decisiones anchas pegadas al pulgar en el borde inferior.",
+      "risk": "La frase pierde autoridad si el marcador o el cronómetro crecen demasiado.",
+      "comp": ".impeccable/mocks/decision/versiculo-tarjeta-escenario.png"
+    },
+    {
+      "id": "expediente-sellado",
+      "label": "Expediente sellado",
+      "lineage": "Ficha de evidencia extraída del archivador Chairo",
+      "thesis": "Cada frase es un caso por resolver y la respuesta abre una tira de evidencia con veredicto, cita y explicación.",
+      "palette": ["#fff8e9", "#07266e", "#ffc61b", "#8262ce", "#54bd53"],
+      "materials": ["expediente de papel", "sellos de tinta", "acetato lechoso", "pestañas de archivo"],
+      "viewport": "Progreso en pestañas arriba, frase dentro del expediente central y dos sellos grandes que se estampan como respuesta.",
+      "risk": "Puede sentirse menos veloz si la metáfora de investigación domina al juego.",
+      "comp": ".impeccable/mocks/decision/versiculo-expediente-sellado.png"
+    },
+    {
+      "id": "marcador-vivo",
+      "label": "Marcador vivo",
+      "lineage": "Marcador de concurso traducido a papel, tinta y plástico Chairo",
+      "thesis": "El duelo y la velocidad están siempre visibles, mientras la frase conserva el centro y las respuestas funcionan como palancas de marcador.",
+      "palette": ["#061d5c", "#f3eadb", "#ffc61b", "#2775d9", "#f36b22"],
+      "materials": ["tablero azul", "dígitos impresos", "papel texturizado", "botones moldeados"],
+      "viewport": "Dos puntuaciones enfrentadas y un reloj dominante encabezan una hoja de pregunta; las respuestas forman una base de dos grandes placas.",
+      "risk": "El énfasis competitivo puede restar serenidad a frases largas o sensibles.",
+      "comp": ".impeccable/mocks/decision/versiculo-marcador-vivo.png"
+    }
+  ],
+  "reroll": true,
+  "steer": true,
+  "buildPath": {
+    "value": "comp",
+    "toggle": true
+  }
+}

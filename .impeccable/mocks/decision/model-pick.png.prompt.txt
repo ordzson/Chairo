@@ -1,0 +1,26 @@
+Use case: ui-mockup
+Asset type: one high-fidelity portrait mobile app concept comp, full phone viewport, shippable visual design
+
+Primary request: Design “Chairo — Centro de juegos” as a playful early-2000s family-console channel plaza blended with a friendly science-museum kiosk. This is the game-selection home screen: first choose a game, then choose its play mode inside; mode is never a blocking first step.
+
+Scene/backdrop: a luminous rendered blue sky with soft clouds, vivid green grass, a small reflective water ribbon, and warm sunlight, all integrated into the interface like an optimistic console plaza.
+
+Subject/layout: Portrait mobile screen. At top, a compact pearlescent/chrome Chairo wordmark and title “Centro de juegos”. Main interaction is a spatial carousel centered on a glossy pearlescent orb/pod. One focused channel grows prominently in front: “Jeopardy”, with one-line mechanic “Responde en forma de pregunta” and a tactile primary button “Entrar”. Five smaller distinctive channel satellites orbit around it in depth, visibly labeled exactly: “¿Versículo o inventículo?”, “El discípulo más perdido”, “Revelaciones”, “Buscando perlas”, “Trivia”. Use playful category symbols and chunky console-like forms, but keep text legible. Add subtle left/right carousel affordances or dots so spatial browsing is obvious. Near the bottom, include a small non-blocking pinned preference control reading “Modo fijado: Grupo en un teléfono” with a tiny pin icon and secondary “Cambiar”; visually subordinate, clearly optional, not a modal and not required before entering. Include a minimal bottom navigation with “Juegos” selected and only sensible compact icons.
+
+Style/medium: polished high-fidelity mobile UI screenshot, retrofuturist 3D interface inspired by turn-of-the-millennium family consoles and interactive science exhibits; warm, approachable for children, teens, and adults; charming but disciplined, practical tap targets, crisp hierarchy.
+
+Lighting/mood: optimistic golden sunlight, soft ambient reflections, playful discovery, family-friendly.
+
+Color palette: sky blue, grass green, warm sunshine yellow, coral accents, milky pearl white, restrained soft chrome.
+
+Materials/textures: molded pearlescent plastic, satin chrome trims, translucent colored resin used sparingly, subtle bevels and soft grounded shadows; no frosted glass panels.
+
+Text (verbatim): “Chairo”; “Centro de juegos”; “Jeopardy”; “Responde en forma de pregunta”; “Entrar”; “¿Versículo o inventículo?”; “El discípulo más perdido”; “Revelaciones”; “Buscando perlas”; “Trivia”; “Modo fijado: Grupo en un teléfono”; “Cambiar”; “Juegos”. Render all Spanish text verbatim with correct accents and punctuation. Do not invent slogans, statistics, ratings, claims, or extra game names.
+
+Composition/framing: single straight-on portrait phone viewport, approximately 9:19.5. No device hand, no surrounding marketing scene. Strong central depth and curved orbit paths; focused game clearly dominates while all five orbiting game names remain identifiable. Safe margins and mobile status-area spacing.
+
+Constraints: one coherent screen only; six total games: central focused Jeopardy plus five orbiting channels. The interface must communicate “choose a game first”; mode preference is optional and pinned, never a blocking decision. Avoid a generic card grid.
+
+Avoid: glassmorphism, modern SaaS dashboard style, flat card grid, dark cyberpunk, casino cues, church clip-art, excessive gradients, illegible microtext, random English copy, duplicate titles, fake badges, watermark, browser chrome, desktop layout.
+
+Final correction applied: remove all invented decorative writing and slogan text from the environmental scenery and architecture. Replace it with clean believable material or simple non-text decorative relief. Preserve the exact composition, environment, carousel, UI labels, colors, lighting, materials, and hierarchy. Add no replacement words or random text.

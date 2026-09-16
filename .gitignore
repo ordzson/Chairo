@@ -1,0 +1,17 @@
+node_modules/
+dist/
+.angular/
+test-results/
+playwright-report/
+*.log
+
+# Las capturas de revisión de impeccable pesan 104 MB y solo sirven mientras se
+# revisa. Los registros en texto —superficie, verificación, design.json— sí se
+# versionan, que es donde vive el porqué de cada decisión.
+.impeccable/**/*.png
+.impeccable/**/*.jpg
+.impeccable/**/*.jpeg
+.impeccable/**/*.webp
+
+# El ejecutable de la skill son 15 MB compilados: se instala, no se versiona.
+.agents/skills/impeccable/scripts/bin/

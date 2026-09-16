@@ -1,0 +1,10 @@
+Use case: stylized-concept
+Asset type: production raster plate for the selected-game preview in the Chairo Angular game center
+Primary request: Recreate the attached approved crop as a clean isolated game-show-stage illustration at high fidelity.
+Input images: Image 1 is the authoritative composition, subject, palette, and style reference.
+Subject: A cobalt-blue game-show backdrop with exactly three separate gold-trimmed podiums. The podiums show the exact white numbers 100, 200, and 300 from left to right.
+Style/medium: tactile early-2000s printed software-manual illustration, silkscreened blue brush edges, slight paper-print texture, crisp readable numerals.
+Composition/framing: preserve the reference's wide proportions, symmetrical three-podium arrangement, curved gold edge lines, blue tiled backdrop, and loose brushed lower edge. Center the full scene with a small safe margin.
+Color palette: vivid cobalt and ultramarine, warm golden yellow, white numerals.
+Text (verbatim): "100" "200" "300"
+Constraints: transparent PNG with genuine alpha outside the illustrated stage; no checkerboard; no white rectangle; exactly three podiums and exactly those three numbers; no people; no other text; no watermark.

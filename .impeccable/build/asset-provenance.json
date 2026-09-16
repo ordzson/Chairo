@@ -1,0 +1,127 @@
+{
+  "approvedComp": ".impeccable/mocks/manual-02-indice.png",
+  "date": "2026-09-15",
+  "records": [
+    {
+      "id": "paper",
+      "plate": "assets/plates/paper.png",
+      "requestedBackground": "opaque-paper",
+      "deliveredBackground": "opaque-paper",
+      "score": "unscored",
+      "acceptance": "accepted",
+      "composition": "repeat/mirrored-tile",
+      "reference": ".impeccable/build/crops/paper-reference.png",
+      "comp": ".impeccable/mocks/manual-02-indice.png",
+      "tool": "native image_gen__imagegen",
+      "generation": {
+        "source": "/home/ordson/.codex/generated_images/01a0a549-6afe-7b51-887d-ffe7bbc24db8/exec-e75c4517-c41a-433a-860f-d2ad811c9ca3.png",
+        "prompt": ".impeccable/build/asset-prompts/paper.txt"
+      },
+      "finalSource": "/home/ordson/.codex/generated_images/01a0a549-6afe-7b51-887d-ffe7bbc24db8/exec-e75c4517-c41a-433a-860f-d2ad811c9ca3.png",
+      "finalPrompt": ".impeccable/build/asset-prompts/paper.txt",
+      "processing": "Centered 1024x256 crop of generated texture, resized 330x84, mirrored horizontally then vertically for seamless 660x168 repeat."
+    },
+    {
+      "id": "brand",
+      "plate": "assets/plates/brand.png",
+      "requestedBackground": "transparent",
+      "deliveredBackground": "transparent",
+      "score": "unscored",
+      "acceptance": "accepted",
+      "composition": "transparent raster over the paper surface",
+      "reference": ".impeccable/build/crops/brand-reference.png",
+      "comp": ".impeccable/mocks/manual-02-indice.png",
+      "tool": "native image_gen__imagegen",
+      "generation": {
+        "source": "/home/ordson/.codex/generated_images/01a0a549-6afe-7b51-887d-ffe7bbc24db8/exec-2b4c92f5-1342-4218-834c-6d92b180e07a.png",
+        "prompt": ".impeccable/build/asset-prompts/brand.txt"
+      },
+      "alphaRetry": {
+        "source": "/home/ordson/.codex/generated_images/01a0a549-6afe-7b51-887d-ffe7bbc24db8/exec-1342f929-c904-44ed-94bc-5a025d8e9cd6.png",
+        "prompt": ".impeccable/build/asset-prompts/brand-v2.txt",
+        "result": "RGB with painted checkerboard; rejected"
+      },
+      "finalSource": "/home/ordson/.codex/generated_images/01a0a71b-9b53-7312-8e71-39f8cf1a0075/exec-aa6774e7-be63-4996-b81b-07a3b88b01dd.png",
+      "finalPrompt": ".impeccable/build/asset-prompts/brand-raw-v3.txt",
+      "processing": "Native Imagegen output resized to 902x324; genuine alpha preserved; exact prompt embedded.",
+      "caveat": "Earlier opaque-background attempts remain recorded as generation history but are not shipped."
+    },
+    {
+      "id": "ring",
+      "plate": "assets/plates/ring.png",
+      "requestedBackground": "transparent",
+      "deliveredBackground": "opaque-white",
+      "score": "unscored",
+      "acceptance": "accepted",
+      "composition": "CSS mix-blend-mode:multiply as authorized by parent after native alpha failures",
+      "reference": ".impeccable/build/crops/ring-reference.png",
+      "comp": ".impeccable/mocks/manual-02-indice.png",
+      "tool": "native image_gen__imagegen",
+      "generation": {
+        "source": "/home/ordson/.codex/generated_images/01a0a549-6afe-7b51-887d-ffe7bbc24db8/exec-c5f0b3a2-8138-4d39-b80a-a4b396c939b9.png",
+        "prompt": ".impeccable/build/asset-prompts/ring.txt"
+      },
+      "alphaRetry": {
+        "source": "/home/ordson/.codex/generated_images/01a0a549-6afe-7b51-887d-ffe7bbc24db8/exec-6fe3a40e-2db8-417a-8031-6b54d2ba33d3.png",
+        "prompt": ".impeccable/build/asset-prompts/ring-v2.txt",
+        "result": "RGB with painted checkerboard; rejected"
+      },
+      "finalSource": "/home/ordson/.codex/generated_images/01a0a549-6afe-7b51-887d-ffe7bbc24db8/exec-93619e99-effd-4488-ac56-430eb6e12b2a.png",
+      "finalPrompt": ".impeccable/build/asset-prompts/ring-white.txt",
+      "processing": "Resized for 2x region delivery. No extraction or color key.",
+      "caveat": "Native tool returned RGB with painted checkerboard on both alpha attempts. Parent authorized native white-background edit and multiply composition. Whites in foreground take the underlying paper tone under multiply."
+    },
+    {
+      "id": "brush",
+      "plate": "assets/plates/brush.png",
+      "requestedBackground": "transparent",
+      "deliveredBackground": "transparent",
+      "score": "unscored",
+      "acceptance": "accepted",
+      "composition": "transparent raster behind the preference card",
+      "reference": ".impeccable/build/crops/brush-reference.png",
+      "comp": ".impeccable/mocks/manual-02-indice.png",
+      "tool": "native image_gen__imagegen",
+      "generation": {
+        "source": "/home/ordson/.codex/generated_images/01a0a549-6afe-7b51-887d-ffe7bbc24db8/exec-9c1aa2e7-61c0-41ea-abdf-89715880c4d1.png",
+        "prompt": ".impeccable/build/asset-prompts/brush.txt"
+      },
+      "alphaRetry": {
+        "source": "/home/ordson/.codex/generated_images/01a0a549-6afe-7b51-887d-ffe7bbc24db8/exec-f21adcd4-c005-439c-912d-416523fb6bd2.png",
+        "prompt": ".impeccable/build/asset-prompts/brush-v2.txt",
+        "result": "RGB with painted checkerboard; rejected"
+      },
+      "finalSource": "/home/ordson/.codex/generated_images/01a0a71b-9b53-7312-8e71-39f8cf1a0075/exec-e09e9423-5f1b-4aa2-8bdd-aaf158c169fb.png",
+      "finalPrompt": ".impeccable/build/asset-prompts/brush-raw-v3.txt",
+      "processing": "Native Imagegen output resized to 1132x294; genuine alpha preserved; exact prompt embedded.",
+      "caveat": "Earlier opaque-background attempts remain recorded as generation history but are not shipped."
+    },
+    {
+      "id": "stage",
+      "plate": "assets/plates/stage.png",
+      "requestedBackground": "transparent",
+      "deliveredBackground": "transparent",
+      "score": "unscored",
+      "acceptance": "accepted",
+      "composition": "transparent raster inside the acetate detail panel",
+      "reference": ".impeccable/build/crops/stage-reference.png",
+      "comp": ".impeccable/mocks/manual-02-indice.png",
+      "tool": "native image_gen__imagegen",
+      "generation": {
+        "source": "/home/ordson/.codex/generated_images/01a0a549-6afe-7b51-887d-ffe7bbc24db8/exec-cfb0021a-1300-4a49-bc16-b581c3b9a69f.png",
+        "prompt": ".impeccable/build/asset-prompts/stage.txt"
+      },
+      "alphaRetry": {
+        "source": "/home/ordson/.codex/generated_images/01a0a549-6afe-7b51-887d-ffe7bbc24db8/exec-a03c57e7-c799-4d97-849f-03a649783ace.png",
+        "prompt": ".impeccable/build/asset-prompts/stage-v2.txt",
+        "result": "RGB with painted checkerboard; rejected"
+      },
+      "finalSource": "/home/ordson/.codex/generated_images/01a0a71b-9b53-7312-8e71-39f8cf1a0075/exec-7bc3a8d5-055b-49dc-a80c-719fb7163343.png",
+      "finalPrompt": ".impeccable/build/asset-prompts/stage-raw-v3.txt",
+      "processing": "Native Imagegen output resized to 1240x500; genuine alpha preserved; exact prompt embedded.",
+      "caveat": "Earlier opaque-background attempts remain recorded as generation history but are not shipped."
+    }
+  ],
+  "referenceCropNote": "impeccable comp-spec --crop returned constant dominant-color swatches. Real reference crops were produced with ImageMagick convert using the same spec px boxes.",
+  "provenance": "Exact final prompt embedded in every shipped PNG via impeccable embed-prompt; every generation and retry prompt preserved in asset-prompts; generated originals retained in the native tool output directory."
+}

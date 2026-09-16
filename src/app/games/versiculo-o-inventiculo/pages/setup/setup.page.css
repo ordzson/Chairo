@@ -1,0 +1,388 @@
+:host {
+  display: block;
+}
+
+.setup-shell {
+  --setup-blue: #0b49a7;
+  --setup-blue-deep: #062f82;
+  padding-block: clamp(0px, 2vw, 24px);
+}
+
+.setup-manual {
+  width: min(100%, 940px);
+  padding: clamp(16px, 3vw, 30px) clamp(16px, 4.2vw, 40px) clamp(30px, 4vw, 44px) clamp(42px, 6.4vw, 62px);
+}
+
+.game-title {
+  position: relative;
+  margin: 0 0 clamp(16px, 2.8vw, 26px);
+  padding: clamp(16px, 2.8vw, 24px) clamp(18px, 4vw, 36px);
+  color: #fff;
+  font-family: 'Lilita One', 'Cabin Condensed', sans-serif;
+  font-size: clamp(2.15rem, 6vw, 4.2rem);
+  font-weight: 400;
+  line-height: 0.98;
+  letter-spacing: -0.025em;
+  text-align: center;
+  text-wrap: balance;
+  background-color: var(--setup-blue);
+  background-image: url('../../../../../../assets/plates/paper.png');
+  background-blend-mode: multiply;
+  background-size: 330px 84px;
+  border: 2px solid var(--ink-deep);
+  border-radius: 14px 22px 13px 20px;
+  box-shadow: 0 10px 18px rgb(3 27 86 / 0.24), inset 0 2px 0 rgb(255 255 255 / 0.2);
+}
+
+.setup-form {
+  position: relative;
+  display: grid;
+  padding: clamp(20px, 3.4vw, 34px) clamp(14px, 3.7vw, 36px) clamp(26px, 4vw, 40px);
+  background: rgb(255 248 233 / 0.74);
+  border: 1px solid #cfba91;
+  border-radius: 16px;
+  box-shadow: 0 10px 22px rgb(63 40 3 / 0.17), inset 0 0 24px rgb(255 255 255 / 0.6);
+}
+
+.setup-section {
+  min-width: 0;
+  margin: 0;
+  padding: clamp(8px, 1.6vw, 14px) 0 clamp(28px, 4vw, 38px);
+  border: 0;
+  border-bottom: 1px solid rgb(7 38 110 / 0.25);
+}
+
+.setup-section + .setup-section {
+  padding-top: clamp(24px, 3.4vw, 34px);
+}
+
+.setup-section legend {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  width: 100%;
+  margin: 0 0 clamp(14px, 2.4vw, 22px);
+  padding: 0;
+  font-size: clamp(1.65rem, 4.2vw, 2.55rem);
+  font-weight: 700;
+  line-height: 1;
+}
+
+.setup-section legend .game-icon {
+  width: clamp(48px, 7vw, 66px);
+  flex: 0 0 auto;
+}
+
+.choice-row {
+  display: grid;
+  gap: clamp(8px, 1.5vw, 14px);
+  padding: clamp(10px, 1.6vw, 14px);
+  background: rgb(7 38 110 / 0.06);
+  border: 1px solid rgb(7 38 110 / 0.22);
+  border-radius: 16px;
+}
+
+.choice-row--difficulty {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.choice-row--role {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.choice-input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.choice-label {
+  --press-face: var(--paper-light);
+  --press-depth: 4px;
+  --press-lift: 2px;
+  display: grid;
+  place-items: center;
+  min-width: 0;
+  min-height: 64px;
+  padding: 0.7rem 0.45rem;
+  font-size: clamp(1.15rem, 3vw, 1.8rem);
+  font-weight: 700;
+  line-height: 1;
+  text-align: center;
+  background-color: var(--paper-light);
+  border: 2px solid rgb(7 38 110 / 0.24);
+  border-radius: 12px;
+  cursor: pointer;
+}
+
+.choice-label.is-selected {
+  --press-face: var(--yellow);
+  --press-depth: 7px;
+  background-color: var(--yellow);
+  border-color: var(--ink);
+  box-shadow: var(--press-shadow), 0 0 0 2px var(--ink);
+}
+
+.choice-input:focus-visible + .choice-label,
+.stepper-button:focus-visible,
+.create-room-button:focus-visible,
+.cancel-link:focus-visible {
+  outline: 4px solid var(--focus);
+  outline-offset: 3px;
+  box-shadow: 0 0 0 7px var(--ink), var(--press-shadow, 0 8px 18px rgb(3 20 65 / 0.25));
+}
+
+.stepper {
+  display: grid;
+  grid-template-columns: 74px minmax(120px, 230px) 74px;
+  gap: clamp(12px, 2.2vw, 22px);
+  justify-content: center;
+  align-items: center;
+}
+
+.stepper-button {
+  --press-face: var(--setup-blue);
+  --press-depth: 7px;
+  display: inline-grid;
+  place-items: center;
+  width: 68px;
+  min-height: 68px;
+  color: #fff;
+  background: var(--setup-blue);
+  border: 2px solid var(--ink-deep);
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.stepper-button .game-icon {
+  width: 30px;
+}
+
+.stepper-button:disabled {
+  --press-depth: 0px;
+  color: rgb(7 38 110 / 0.62);
+  background: #d7d3c7;
+  border-color: rgb(7 38 110 / 0.35);
+  box-shadow: inset 0 2px 7px rgb(3 20 65 / 0.12);
+  cursor: not-allowed;
+  filter: none;
+}
+
+.question-count {
+  display: grid;
+  place-items: center;
+  min-height: 76px;
+  padding: 0.25rem 1rem;
+  font-family: 'Lilita One', 'Cabin Condensed', sans-serif;
+  font-size: clamp(3rem, 7vw, 4.7rem);
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  background: var(--paper-light);
+  border: 2px solid #d3bd94;
+  border-radius: 16px;
+  box-shadow: inset 0 3px 8px rgb(55 37 4 / 0.08), 0 5px 10px rgb(55 37 4 / 0.12);
+}
+
+.section-help,
+.role-explanation {
+  margin: 1rem 0 0;
+  font-family: 'Kalam', cursive;
+  font-size: clamp(1rem, 2.8vw, 1.4rem);
+  line-height: 1.15;
+  text-align: center;
+}
+
+.role-choice {
+  grid-template-columns: auto minmax(0, auto);
+  gap: 10px;
+  min-height: 78px;
+  padding-inline: clamp(10px, 2.2vw, 20px);
+}
+
+.role-choice .game-icon {
+  width: clamp(38px, 5.2vw, 50px);
+}
+
+.fallback-note {
+  display: grid;
+  grid-template-columns: clamp(52px, 7vw, 68px) minmax(0, 1fr);
+  gap: clamp(12px, 2vw, 22px);
+  align-items: center;
+  margin: clamp(22px, 3.4vw, 34px) clamp(0px, 2vw, 20px) clamp(30px, 4vw, 42px);
+  padding: clamp(16px, 2.5vw, 24px) clamp(18px, 3vw, 30px);
+  background: var(--paper-light);
+  border-radius: 12px 16px 13px 15px;
+  box-shadow: 0 9px 16px rgb(63 40 3 / 0.19);
+  transform: rotate(-0.6deg);
+}
+
+.fallback-note .game-icon {
+  width: 100%;
+}
+
+.fallback-note p {
+  max-width: 42ch;
+  margin: 0;
+  font-family: 'Kalam', cursive;
+  font-size: clamp(1.15rem, 3.2vw, 1.75rem);
+  line-height: 1.18;
+}
+
+.create-room-button {
+  --press-face: var(--yellow);
+  --press-depth: 10px;
+  --press-lift: 4px;
+  display: flex;
+  gap: clamp(14px, 2.5vw, 24px);
+  align-items: center;
+  justify-content: center;
+  width: min(100%, 760px);
+  min-height: clamp(82px, 12vw, 112px);
+  margin: 0 auto;
+  padding: 0.8rem clamp(18px, 4vw, 42px);
+  color: var(--ink);
+  font-family: 'Lilita One', 'Cabin Condensed', sans-serif;
+  font-size: clamp(2rem, 5.4vw, 3.7rem);
+  font-weight: 400;
+  line-height: 0.95;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  background: var(--yellow);
+  border: 3px solid var(--ink);
+  border-radius: 16px;
+  cursor: pointer;
+}
+
+.create-room-button .game-icon {
+  width: clamp(42px, 7vw, 66px);
+  flex: 0 0 auto;
+}
+
+.create-room-button:disabled {
+  --press-depth: 0px;
+  color: #33447a;
+  background: #ded9cb;
+  border-color: rgb(7 38 110 / 0.4);
+  box-shadow: inset 0 3px 8px rgb(3 20 65 / 0.14);
+  cursor: progress;
+  filter: none;
+}
+
+.save-status {
+  min-height: 1.5em;
+  margin: 1.1rem 0 0;
+  font-family: 'Dosis', sans-serif;
+  font-size: clamp(1rem, 2.6vw, 1.35rem);
+  font-weight: 700;
+  text-align: center;
+}
+
+.cancel-link {
+  justify-self: center;
+  margin-top: 0.35rem;
+  padding: 0.4rem 0.7rem;
+  color: var(--ink);
+  font-family: 'Kalam', cursive;
+  font-size: clamp(1.35rem, 3.4vw, 2rem);
+  line-height: 1;
+  text-decoration-color: var(--yellow);
+  text-decoration-thickness: 4px;
+  text-underline-offset: 0.32em;
+}
+
+@media (max-width: 640px) {
+  .setup-manual {
+    padding-inline: 30px 10px;
+  }
+
+  .game-title {
+    font-size: clamp(2rem, 10.5vw, 3.1rem);
+  }
+
+  .setup-form {
+    padding-inline: 12px;
+  }
+
+  .choice-row--difficulty {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    row-gap: 12px;
+  }
+
+  .choice-row--role {
+    grid-template-columns: 1fr;
+  }
+
+  .choice-label {
+    min-height: 58px;
+  }
+
+  .stepper {
+    grid-template-columns: 58px minmax(94px, 1fr) 58px;
+    gap: 9px;
+  }
+
+  .stepper-button {
+    width: 54px;
+    min-height: 54px;
+  }
+
+  .question-count {
+    min-height: 64px;
+  }
+
+  .fallback-note {
+    margin-inline: 0;
+    padding-inline: 14px;
+  }
+
+  .create-room-button {
+    min-height: 78px;
+    font-size: clamp(1.75rem, 9vw, 2.6rem);
+  }
+}
+
+@media (max-width: 350px) {
+  .setup-manual {
+    padding-inline: 25px 5px;
+  }
+
+  .setup-form {
+    padding-inline: 8px;
+  }
+
+  .setup-section legend {
+    gap: 9px;
+  }
+
+  .setup-section legend .game-icon {
+    width: 42px;
+  }
+
+  .role-choice {
+    font-size: 1.1rem;
+  }
+
+  .fallback-note {
+    grid-template-columns: 44px minmax(0, 1fr);
+  }
+}
+
+@media (forced-colors: active) {
+  .game-title,
+  .setup-form,
+  .choice-row,
+  .choice-label,
+  .question-count,
+  .fallback-note,
+  .create-room-button {
+    forced-color-adjust: auto;
+  }
+
+  .choice-input:checked + .choice-label {
+    outline: 3px solid Highlight;
+    outline-offset: 2px;
+  }
+}

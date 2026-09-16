@@ -1,0 +1,8 @@
+{
+  "optionId": "expediente-sellado",
+  "seedKey": "faacbba6",
+  "approved": false,
+  "reference": ".impeccable/review/mobile.png",
+  "promptFile": "versiculo-expediente-sellado.png.prompt.txt",
+  "generator": "built-in imagegen"
+}

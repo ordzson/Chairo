@@ -1,0 +1,150 @@
+<a class="skip-link" href="#sala-panel">Ir a la sala</a>
+
+<main class="manual-shell room-shell">
+  <article class="mission-manual room-manual motion-rise" aria-labelledby="room-title">
+    <div class="binder-spine" aria-hidden="true"></div>
+    <chairo-manual-header
+      [backLabel]="backLabel()"
+      [note]="['¡La Biblia', 'también es', 'un gran juego!']"
+      (back)="exitRoom()"
+    />
+
+    <section class="room-band motion-slide-in">
+      <chairo-game-icon class="band-icon" name="users" />
+      <div class="band-copy">
+        <h1 id="room-title">{{ title() }}</h1>
+        @if (phase() === 'ready') {
+          @if (room(); as room) {
+            @if (isHost()) {
+              <p class="role-pill">
+                <chairo-game-icon [name]="room.setup.hostRole === 'player' ? 'person' : 'host'" />
+                <span>{{ roleLabel(room) }}</span>
+              </p>
+            } @else if (self(); as seat) {
+              <p class="role-pill">
+                <chairo-color-mark [color]="seat.color" [attr.data-color]="seat.color" />
+                <span>{{ seat.name }} · {{ colorName(seat) }}</span>
+              </p>
+            }
+          }
+        }
+      </div>
+    </section>
+
+    <div id="sala-panel" class="room-panel" tabindex="-1">
+      @switch (phase()) {
+        @case ('restoring') {
+          <p class="room-waiting motion-rise">Buscando la sala {{ spacedCode() }}…</p>
+        }
+        @case ('error') {
+          <section class="room-error motion-rise" aria-labelledby="room-error-title">
+            <chairo-game-icon name="note" />
+            <div>
+              <h2 id="room-error-title">No encontramos la sala {{ code }}</h2>
+              <p>La sala se cierra cuando el anfitrión la abandona. Crea una nueva y comparte el código otra vez.</p>
+            </div>
+            <button class="retry-button pressable" type="button" (click)="retry()">
+              <span>Reintentar</span>
+            </button>
+            <a class="cancel-link" [routerLink]="setupRoute">Volver a la configuración</a>
+          </section>
+        }
+        @default {
+          @if (room(); as room) {
+            @if (isHost()) {
+            <section class="invitation-card motion-rise" aria-labelledby="invitation-title">
+              <chairo-qr-code class="invitation-qr" [content]="joinUrl()" [label]="qrLabel()" />
+              <div class="invitation-copy">
+                <h2 id="invitation-title">Escanea o entra con el código</h2>
+                <p class="room-code">
+                  <span class="room-code-mark" aria-hidden="true"></span>
+                  <span class="room-code-value" aria-hidden="true">{{ room.code }}</span>
+                  <span class="sr-only">Código de sala: {{ spacedCode() }}</span>
+                </p>
+              </div>
+            </section>
+            }
+
+            <section class="participants motion-rise" aria-labelledby="participants-title">
+              <h2 id="participants-title" class="section-heading">
+                <span class="heading-marks" aria-hidden="true"></span>
+                <span>Participantes</span>
+                <span class="heading-marks heading-marks--end" aria-hidden="true"></span>
+              </h2>
+
+              <ul class="participant-list motion-stagger">
+                @for (participant of participants(); track participant.id) {
+                  <li class="participant-chip motion-rise">
+                    <chairo-game-icon [name]="participant.role === 'host' ? 'host' : 'person'" />
+                    <p class="participant-name">{{ participant.name }}</p>
+                    <p
+                      class="participant-tag"
+                      [class.participant-tag--host]="participant.role === 'host'"
+                      [class.participant-tag--ready]="participant.role === 'guest' && participant.status === 'ready'"
+                    >
+                      @if (participant.status === 'ready' && participant.role === 'guest') {
+                        <chairo-game-icon name="check" />
+                      }
+                      <span>· {{ statusLabel(participant) }}</span>
+                    </p>
+                  </li>
+                }
+                @if (hasFreeSeat()) {
+                  <li class="participant-slot motion-rise">
+                    <chairo-game-icon name="person" />
+                    <p>Esperando…</p>
+                  </li>
+                }
+              </ul>
+
+              <p class="sr-only" role="status" aria-atomic="true">{{ liveSummary() }}</p>
+            </section>
+
+            <p class="setup-strip motion-rise">
+              <chairo-game-icon name="gear" />
+              <span>{{ summary(room) }}</span>
+            </p>
+
+            @if (isHost()) {
+              <button
+                class="start-button pressable"
+                type="button"
+                [disabled]="!canStart()"
+                aria-describedby="start-help"
+                (click)="startMatch()"
+              >
+                <chairo-game-icon name="play" />
+                <span>Comenzar partida</span>
+              </button>
+              <p id="start-help" class="start-help">
+                {{ canStart() ? 'Cada participante responde desde su propio teléfono.' : 'Se activa cuando entre otra persona.' }}
+              </p>
+              <p class="live-status" role="status" aria-atomic="true">{{ startStatus() }}</p>
+
+              <button class="share-button pressable" type="button" (click)="shareInvitation()">
+                <chairo-game-icon name="share" />
+                <span>Compartir invitación</span>
+              </button>
+              <p class="live-status" role="status" aria-atomic="true">{{ shareStatus() }}</p>
+
+              @if (exitStatus(); as status) {
+                <p class="exit-note motion-rise" role="alert">{{ status }}</p>
+              }
+              <button class="cancel-link" type="button" (click)="exitRoom()">Cerrar sala</button>
+            } @else {
+              <p class="waiting-note motion-rise">
+                <chairo-game-icon name="host" />
+                <span>Esperando a que el anfitrión comience</span>
+              </p>
+
+              @if (exitStatus(); as status) {
+                <p class="exit-note motion-rise" role="alert">{{ status }}</p>
+              }
+              <button class="cancel-link" type="button" (click)="exitRoom()">Salir de la sala</button>
+            }
+          }
+        }
+      }
+    </div>
+  </article>
+</main>

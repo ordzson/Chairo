@@ -1,0 +1,8 @@
+Use case: stylized-concept
+Asset type: production yellow paint-swash raster plate behind a selected-game title in the Chairo Angular game center
+Primary request: Isolate and recreate only the long yellow painted brush swash from the attached approved crop.
+Input images: Image 1 is the authoritative shape, color, texture, and wide composition reference.
+Subject: one saturated golden-yellow horizontal paint stroke with irregular dry-brush bristles and silkscreen texture at both ends.
+Composition/framing: very wide and low, preserve the reference's tapered organic contour and slight upward energy, centered with a small safe margin.
+Style/medium: tactile early-2000s printed software-manual paint mark.
+Constraints: transparent PNG with genuine alpha outside the yellow paint; no words, no letters, no bulb, no icons, no blue marks, no paper rectangle, no checkerboard, no shadow, no watermark.

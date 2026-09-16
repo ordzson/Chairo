@@ -1,0 +1,44 @@
+{
+  "title": "Centro de juegos · Manual de misión",
+  "question": "Elige la composición que llevaremos a Angular. Puedes aprobar una, combinar detalles o indicar qué no encaja. Las tres respetarán seis juegos independientes, todos Próximamente, sin Entrar ni navegación, y modalidad opcional.",
+  "options": [
+    {
+      "id": "manual-original",
+      "label": "1 · Manual original",
+      "kicker": "COMPOSICIÓN APROBADA",
+      "lineage": "Manual de misión · software familiar de los 2000",
+      "thesis": "La hoja de acetato domina y los separadores recorren el borde derecho.",
+      "palette": ["#FFF8E8", "#FFC72C", "#F36E21", "#16A6A2", "#315FBA", "#72A847"],
+      "materials": ["acetato lechoso", "papel", "cartulina satinada"],
+      "viewport": "Conserva exactamente el comp elegido como referencia. Al implementar se separan Jeopardy y ¿Versículo o inventículo?, se elimina Entrar y se muestra Próximamente en los seis juegos.",
+      "risk": "Las pestañas largas requieren más espacio en móvil; el texto y los estados del comp se corregirán según tu encargo.",
+      "comp": ".impeccable/mocks/manual-01-original.png"
+    },
+    {
+      "id": "manual-indice",
+      "label": "2 · Índice primero",
+      "kicker": "VARIACIÓN",
+      "lineage": "La misma identidad · índice desplegado",
+      "thesis": "Los seis separadores se leen de un vistazo y la ficha aparece después.",
+      "palette": ["#FFF8E8", "#FFC72C", "#F36E21", "#16A6A2", "#315FBA", "#72A847"],
+      "materials": ["acetato lechoso", "papel", "cartulina satinada"],
+      "viewport": "Marca y título compactos, seis franjas de color con nombre completo y Próximamente, luego una ficha de acetato del juego seleccionado y la preferencia opcional.",
+      "risk": "La ilustración del juego queda más abajo a cambio de hacer visible toda la colección.",
+      "comp": ".impeccable/mocks/manual-02-indice.png"
+    },
+    {
+      "id": "manual-cabecera",
+      "label": "3 · Pestañas en cabecera",
+      "kicker": "VARIACIÓN",
+      "lineage": "La misma identidad · separadores superiores",
+      "thesis": "Dos hileras de pestañas dejan todo el ancho a la hoja de acetato.",
+      "palette": ["#FFF8E8", "#FFC72C", "#F36E21", "#16A6A2", "#315FBA", "#72A847"],
+      "materials": ["acetato lechoso", "papel", "cartulina satinada"],
+      "viewport": "Marca arriba, seis pestañas en dos hileras, una ficha amplia con ilustración del juego seleccionado y una etiqueta inferior para la preferencia opcional.",
+      "risk": "Los nombres largos ocupan varias líneas y necesitan pestañas de altura generosa.",
+      "comp": ".impeccable/mocks/manual-03-cabecera.png"
+    }
+  ],
+  "buildPath": {"value": "comp", "toggle": true},
+  "steer": true
+}

@@ -1,0 +1,25 @@
+Use case: ui-mockup
+Asset type: one high-fidelity portrait mobile app concept comp, full-screen UI screenshot only (no phone hardware frame)
+Primary request: Design “Chairo — Centro de juegos” in the art direction “Álbum de estampas vivas”: an immersive early-2000s Frutiger Aero collectible sticker album. The user chooses a game first; game mode is only a tiny optional pinned preference on the home screen, never a modal or blocking decision.
+Scene/backdrop: glossy laminated scrapbook world blending bright blue sky, puffy white clouds, vivid green grass, sparkling clean water, tiny bubbles and sunlit leaves. Feel tactile, joyful, nostalgic, premium, and shippable.
+Subject/UI: At top, compact playful logo/title “Chairo” and subtitle “Centro de juegos”. The main focus is ONE oversized featured die-cut collectible sticker for “Jeopardy”, tilted slightly, with thick white contour, glossy lamination, subtle foil rainbow edge, dimensional peel shadow, playful illustrated clue-board imagery, and a clear inviting affordance. Around and behind it, the rest of a six-game sticker collection peeks through naturally like overlapping album stickers and tabs rather than a card grid. Each game must be identifiable and all six exact names visible somewhere in the composition.
+Text (verbatim, preserve accents and punctuation exactly):
+“Chairo”
+“Centro de juegos”
+“Jeopardy”
+“¿Versículo o inventículo?”
+“El discípulo más perdido”
+“Revelaciones”
+“Buscando perlas”
+“Trivia”
+“Modo favorito”
+“En grupo”
+Style/medium: polished product-design UI mockup, early-2000s Frutiger Aero, skeuomorphic sticker album, editorial composition, charming bespoke game sticker illustrations, crisp mobile typography, rich but controlled visual detail.
+Composition/framing: portrait phone viewport around 9:19.5. Strong readable hierarchy. Featured sticker occupies roughly the central 45%; other five stickers form a lively layered collection peeking from sides/below, while all names remain legible. Use organic album paths, page tabs, foil seals, sticker edges, and laminated surfaces—no equal-sized generic cards. Keep safe margins for a real mobile UI.
+Lighting/mood: optimistic sunny daylight, glossy specular highlights, soft contact shadows, iridescent foil gleam, fresh and energetic.
+Color palette: aqua sky blue, grassy lime and emerald, clean white, sunny yellow, coral accents, iridescent cyan-magenta foil.
+Materials/textures: laminated paper, pearlescent foil, translucent colored plastic tabs, subtle embossed dots, wet-look bubbles.
+Constraints: Spanish UI; exact visible game names above; high legibility; game-first navigation; tiny optional pinned mode preference visible on main screen; no account controls; no login/avatar/profile; no blocking modal; no bottom-sheet; no generic card grid; no glassmorphism; no modern SaaS/dashboard styling; no extra marketing claims; no extra game titles; no watermark; no device mockup; no hands.
+Avoid: dark cyberpunk, flat corporate vector dashboard, muted beige minimalism, generic rounded-card grid, frosted glass panels, excessive text, fake status-bar gibberish.
+
+Final cleanup edit: Preserve the full composition and remove only unauthorized decorative phrases, filling those areas with matching background materials. Keep right-side tabs blank. Preserve all approved text verbatim and add no new text.

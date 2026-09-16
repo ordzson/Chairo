@@ -1,0 +1,11 @@
+Use case: ui-mockup
+Asset type: high-fidelity mobile multiplayer final-results screen reference, portrait phone viewport
+Primary request: Extend the approved “Marcador vivo” Chairo game UI into the final results screen for “¿Versículo o inventículo?”. The host played in the same match and sees the same ranking as the guest.
+Input images: Image 1 is the approved gameplay composition and strict visual/style reference. Preserve its ivory paper, dark binder-blue structure, mission-blue ink, tactile molded controls, hand-drawn line art, early-2000s educational-software joy and physical binder construction. Translate the scoreboard into a celebratory final page without introducing a new visual world.
+Scene/backdrop: one Chairo mission-manual page filling a 9:16 mobile viewport, no device frame, no browser chrome.
+Structure: 1) compact Chairo header and large hand-lettered title “¡Partida terminada!”; 2) a central winner plate made from layered ivory paper and yellow brush marks with a small trophy line icon, player name “Ana” and total “7,840 puntos”; 3) a clear two-row final ranking “1 · Ana · 7,840” and “2 · Leo · 6,910”; 4) a small performance note “8 de 10 correctas · respuesta media 2.1 s”; 5) one wide yellow molded primary button “JUGAR OTRA VEZ”; 6) secondary paper button “VOLVER AL CENTRO”; 7) tiny host status “Anfitrión · jugando”.
+Composition/framing: celebratory winner first, complete ranking second, actions in the bottom thumb zone; restrained paper streamers or painted rays may decorate empty edges but never cover text.
+Lighting/mood: warm shared victory, joyful and tactile, rewarding without looking childish.
+Color palette: Chairo ivory #f3eadb, mission blue #07266e, deep blue #031b56, joy yellow #ffc61b, orange #f36b22, turquoise #20b9b9, green #54bd53.
+Text (verbatim): “¡Partida terminada!”, “Ana”, “7,840 puntos”, “Clasificación final”, “1 · Ana · 7,840”, “2 · Leo · 6,910”, “8 de 10 correctas · respuesta media 2.1 s”, “JUGAR OTRA VEZ”, “VOLVER AL CENTRO”, “Anfitrión · jugando”.
+Constraints: production-quality mobile UI; preserve approved visual world; no generic podium illustration, no confetti over content, no social sharing, no fake rewards, no photography, no external branding, or watermark.

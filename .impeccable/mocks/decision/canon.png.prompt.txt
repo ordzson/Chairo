@@ -1,0 +1,8 @@
+Use case: ui-mockup
+Asset type: high-fidelity portrait mobile product UI direction comp
+Primary request: Design the category-standard version of “Chairo — Centro de juegos”: a polished, highly usable responsive catalog of biblical games. Compact header, subtle optional mode preference control, a clean illustrated grid/list of game cards, each with title, concise mechanic tag, and clear entry affordance.
+Text (verbatim): “Chairo”, “Centro de juegos”, “Jeopardy”, “¿Versículo o inventículo?”, “El discípulo más perdido”, “Revelaciones”, “Buscando perlas”, “Trivia”, “Entrar”.
+Composition/framing: portrait phone viewport, strong mobile hierarchy, compact header then five or six clean illustrated game tiles with one featured tile; mode setting visible but secondary and non-blocking.
+Color palette: white and very pale blue surfaces, dark navy text, teal primary, warm yellow accent.
+Materials/textures: crisp modern app surfaces and polished game cover illustrations.
+Constraints: Spanish; for all ages; accessible contrast; no account UI; no invented claims; no decorative excess; no glassmorphism; no watermark. This is intentionally conventional and impeccably executed.

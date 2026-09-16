@@ -1,0 +1,93 @@
+<a class="skip-link" href="#game-index" (click)="focusSelectedTab($event)">Ir a los juegos</a>
+
+<main class="manual-shell">
+  <article class="mission-manual motion-rise" aria-labelledby="page-title">
+    <div class="binder-spine" aria-hidden="true"></div>
+
+    <header class="manual-header">
+      <p class="margin-note margin-note--left motion-rise" aria-hidden="true">Buenas preguntas<br>grandes historias</p>
+      <div class="brand-lockup">
+        <img class="brand-plate motion-stamp" src="assets/plates/brand.png" alt="Chairo">
+        <h1 id="page-title" class="motion-rise">Centro de juegos</h1>
+        <span class="title-stroke motion-draw" aria-hidden="true"></span>
+      </div>
+      <p class="margin-note margin-note--right motion-rise" aria-hidden="true">Ideas<br>juegos<br>personas<br>un mundo mejor ♡</p>
+    </header>
+
+    <section class="game-index-section" aria-label="Juegos disponibles">
+      <div class="binder-rings motion-stagger" aria-hidden="true">
+        @for (ring of [0, 1, 2]; track ring) {
+          <img class="motion-rise" src="assets/plates/ring.png" alt="">
+        }
+      </div>
+
+      <div id="game-index" class="game-index motion-stagger" role="tablist" aria-label="Explorar juegos" aria-orientation="vertical">
+        @for (game of games; track game.id; let index = $index) {
+          <button
+            class="game-tab pressable motion-slide-in game-tab--{{ game.color }}"
+            [class.is-selected]="selectedIndex() === index"
+            type="button"
+            role="tab"
+            id="game-tab-{{ index }}"
+            [attr.aria-selected]="selectedIndex() === index"
+            [attr.aria-controls]="selectedIndex() === index ? 'selected-game-panel' : null"
+            [attr.tabindex]="selectedIndex() === index ? 0 : -1"
+            (click)="onGameTabClick(index)"
+            (keydown)="handleTabKey($event, index)"
+          >
+            <chairo-game-icon [name]="game.icon" />
+            <span class="tab-name">{{ game.name }}</span>
+            <span class="tab-rule" aria-hidden="true"></span>
+            <span class="tab-status">{{ game.status === 'available' ? 'Disponible' : 'Próximamente' }}</span>
+          </button>
+        }
+      </div>
+    </section>
+
+    <section
+      id="selected-game-panel"
+      class="game-sheet motion-rise"
+      role="tabpanel"
+      tabindex="0"
+      [attr.aria-labelledby]="'game-tab-' + selectedIndex()"
+    >
+      @for (game of [selectedGame()]; track game.id) {
+        <div class="sheet-render">
+          <div class="sheet-heading motion-rise">
+            <img class="brush-plate" src="assets/plates/brush.png" alt="">
+            <chairo-game-icon class="sheet-icon" [name]="game.icon" />
+            <h2>{{ game.name }}</h2>
+            <p class="sheet-status motion-stamp">{{ game.status === 'available' ? '¡A jugar!' : 'Próximamente' }}</p>
+          </div>
+          <!-- impeccable-disable-next-line broken-image: Angular binds a validated path from the typed game catalog. -->
+          <img class="stage-plate" [src]="game.preview" [alt]="game.previewAlt">
+          @if (game.route) {
+            <a class="game-start-link pressable motion-rise" [routerLink]="game.route" (click)="onStartGameClick()">
+              Preparar partida
+            </a>
+          } @else {
+            <p class="preparing-copy motion-rise"><span aria-hidden="true">—</span> Estamos preparando este juego. <span aria-hidden="true">—</span></p>
+          }
+        </div>
+      }
+    </section>
+
+    <section class="preference-sheet motion-rise" aria-labelledby="preference-label">
+      <div class="paper-holes" aria-hidden="true"><span></span><span></span></div>
+      <chairo-game-icon class="preference-icon" name="gear" />
+      <div class="preference-fields">
+        <label id="preference-label" for="play-preference">Modalidad preferida <span>(opcional)</span></label>
+        <span class="select-wrap">
+          <select id="play-preference" class="pressable" [value]="preference()" (input)="updatePreference($event)">
+            @for (option of preferences; track option.value) {
+              <option [value]="option.value" [selected]="preference() === option.value">{{ option.label }}</option>
+            }
+          </select>
+          <svg viewBox="0 0 20 12" aria-hidden="true"><path d="m2 2 8 8 8-8"/></svg>
+        </span>
+        <p>La modalidad se elegirá dentro de cada juego.</p>
+      </div>
+      <p class="footer-note" aria-hidden="true">Las mismas preguntas<br>más personas<br>más vida</p>
+    </section>
+  </article>
+</main>

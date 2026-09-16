@@ -1,0 +1,141 @@
+<a class="skip-link" href="#join-form">Ir al formulario de entrada</a>
+
+<main class="manual-shell join-shell">
+  <article class="mission-manual join-manual motion-rise" aria-labelledby="join-title">
+    <div class="binder-spine" aria-hidden="true"></div>
+    <chairo-manual-header
+      [backLink]="centerRoute"
+      backLabel="Volver al centro de juegos"
+      [note]="['Entra', 'a la partida']"
+    />
+
+    <h1 id="join-title" class="join-title motion-slide-in">Entrar a la sala</h1>
+
+    <form id="join-form" class="join-form motion-rise" (submit)="$event.preventDefault(); join()">
+      <fieldset class="join-section">
+        <legend>
+          <chairo-game-icon name="list" />
+          <span id="code-legend">Código de sala</span>
+        </legend>
+
+        <input
+          #codeField
+          id="room-code"
+          class="code-input"
+          type="text"
+          name="room-code"
+          inputmode="text"
+          autocapitalize="characters"
+          autocomplete="off"
+          spellcheck="false"
+          enterkeyhint="go"
+          [attr.size]="codeLength"
+          aria-labelledby="code-legend"
+          aria-describedby="code-help code-notice"
+          [value]="code()"
+          (input)="writeCode($any($event.target))"
+        >
+        <p id="code-help" class="section-help">
+          Cuatro caracteres, como los de la pantalla del anfitrión. Nunca lleva 0, 1, I ni O para que nadie los confunda al dictarlos.
+        </p>
+        <p id="code-notice" class="field-notice" role="status" aria-atomic="true">{{ codeNotice() }}</p>
+
+        @if (foundRoom()) {
+          <p class="room-found motion-rise">
+            <chairo-game-icon name="gear" />
+            <span>Sala encontrada · {{ roomSummary() }}</span>
+          </p>
+        }
+        <p class="sr-only" role="status" aria-atomic="true">{{ lookupStatus() }}</p>
+      </fieldset>
+
+      <fieldset class="join-section">
+        <legend>
+          <chairo-game-icon name="person" />
+          <span id="name-legend">Tu nombre</span>
+        </legend>
+
+        <input
+          #nameField
+          id="guest-name"
+          class="name-input"
+          type="text"
+          name="guest-name"
+          autocomplete="nickname"
+          enterkeyhint="go"
+          [attr.maxlength]="maxNameLength"
+          aria-labelledby="name-legend"
+          aria-describedby="name-help"
+          [value]="name()"
+          (input)="writeName($any($event.target))"
+        >
+        <p id="name-help" class="section-help">Así te verán los demás. Hasta {{ maxNameLength }} caracteres, sin cuenta ni registro.</p>
+      </fieldset>
+
+      <fieldset class="join-section">
+        <legend>
+          <chairo-game-icon name="users" />
+          <span>Tu color</span>
+        </legend>
+
+        <div class="color-row">
+          @for (option of colors; track option.value) {
+            <input
+              class="choice-input"
+              type="radio"
+              name="guest-color"
+              id="color-{{ option.value }}"
+              [value]="option.value"
+              [checked]="color() === option.value"
+              [disabled]="taken().has(option.value)"
+              (change)="chooseColor(option.value)"
+            >
+            <label
+              class="color-choice pressable"
+              [attr.data-color]="option.value"
+              [class.is-selected]="color() === option.value"
+              [class.is-taken]="taken().has(option.value)"
+              for="color-{{ option.value }}"
+            >
+              <chairo-color-mark [color]="option.value" />
+              <span class="color-name">{{ option.label }}</span>
+              <span class="color-state">
+                @if (taken().has(option.value)) {
+                  <span>No disponible</span>
+                } @else if (color() === option.value) {
+                  <chairo-game-icon name="check" />
+                  <span>Tu color</span>
+                }
+              </span>
+            </label>
+          }
+        </div>
+        <p class="section-help" aria-live="polite" aria-atomic="true">
+          @if (foundRoom()) {
+            {{ freeColors() === 1 ? 'Queda 1 color libre en esta sala.' : 'Quedan ' + freeColors() + ' colores libres en esta sala.' }}
+          } @else {
+            Cada color trae su forma y su nombre, para distinguirlos sin depender del color.
+          }
+        </p>
+      </fieldset>
+
+      <div class="join-alert" role="alert" aria-atomic="true">
+        @if (issue(); as issue) {
+          <section class="join-error motion-rise" aria-labelledby="join-error-title">
+            <chairo-game-icon name="note" />
+            <div>
+              <h2 id="join-error-title">{{ errorTitle() }}</h2>
+              <p>{{ errorDetail() }}</p>
+            </div>
+          </section>
+        }
+      </div>
+
+      <button class="join-button pressable" type="submit" [disabled]="joining()">
+        <chairo-game-icon name="play" />
+        <span>{{ joining() ? 'Entrando…' : 'Unirme' }}</span>
+      </button>
+      <a class="cancel-link" [routerLink]="centerRoute">Volver al centro de juegos</a>
+    </form>
+  </article>
+</main>
