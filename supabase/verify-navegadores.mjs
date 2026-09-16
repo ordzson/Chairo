@@ -6,6 +6,10 @@
 //   python3 -m http.server 4173 --bind 127.0.0.1 --directory dist &
 //   node supabase/verify-navegadores.mjs
 //
+// O contra el sitio ya publicado, que es lo único que comprueba el despliegue:
+//
+//   CHAIRO_URL=https://ordzson.github.io/Chairo/ node supabase/verify-navegadores.mjs
+//
 // Vive fuera de `tests/` a propósito: la suite de Playwright no toca la red.
 // Este guion sí, y por eso crea una sala de verdad y la borra al terminar,
 // pase lo que pase, para no dejar su código reservado.
@@ -17,7 +21,7 @@ import { chromium } from 'playwright';
 
 const local = `${homedir()}/.cache/ms-playwright/chromium-1208/chrome-linux64/chrome`;
 const executablePath = process.env.CHROMIUM_PATH ?? (existsSync(local) ? local : undefined);
-const BASE = 'http://127.0.0.1:4173/chairo/browser/';
+const BASE = process.env.CHAIRO_URL ?? 'http://127.0.0.1:4173/chairo/browser/';
 const config = JSON.parse(readFileSync(new URL('../public/supabase.json', import.meta.url), 'utf8'));
 
 let failures = 0;

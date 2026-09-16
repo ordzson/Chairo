@@ -229,3 +229,26 @@ El archivo ahora la retira del alcance de `anon` y `authenticated`. La aplicaci�
 Queda pendiente de mano lo único que un guion no puede hacer: escanear el QR con un teléfono de verdad.
 
 Disposición: **ship** para la etapa 3, ahora también contra el proyecto real.
+
+
+# Despliegue · GitHub Pages
+
+Fecha: 16 de septiembre de 2026
+
+Repositorio público `ordzson/Chairo`, sitio en **https://ordzson.github.io/Chairo/**. Cada empujón a `main` compila y publica con `.github/workflows/deploy.yml`. No hizo falta ninguna reescritura: el build usa `base-href ./` y el enrutado va por almohadilla, así que el sitio funciona bajo `/Chairo/` igual que en la raíz.
+
+Fuera del repositorio quedan 104 MB de capturas de revisión y el ejecutable de 15 MB de la skill, que se instala y no se versiona. Los registros en texto —superficie, verificación, `design.json`, prompts y procedencia— sí se versionan, que es donde vive el porqué de cada decisión. El árbol publicado son 27 MB.
+
+## Comprobado contra el sitio publicado, no contra localhost
+
+`verify-navegadores.mjs` acepta ahora `CHAIRO_URL`, así que la misma prueba sirve para la copia local y para el despliegue:
+
+```sh
+CHAIRO_URL=https://ordzson.github.io/Chairo/ node supabase/verify-navegadores.mjs
+```
+
+Con el servidor local apagado —comprobado, `curl` a 4173 devuelve `000`— las ocho comprobaciones pasan contra Pages: crear sala, QR, entrada del invitado desde otra sesión anónima, aparición sin recargar, espera sin mandos de anfitrión, recarga que no expulsa, salida que retira solo su asiento y cierre de sala.
+
+La invitación que reparte el sitio publicado se leyó del portapapeles y es absoluta y correcta: `https://ordzson.github.io/Chairo/#/juegos/versiculo-o-inventiculo/unirse/<código>`. El QR lleva esa misma URL, porque ambos salen de `joinUrl()`.
+
+Ninguna de estas pruebas dejó salas abiertas.
