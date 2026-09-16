@@ -39,6 +39,14 @@
 
 * { box-sizing: border-box; }
 
+/* La marca de asiento comparte el mismo catálogo en sala y partida. */
+.color-mark[data-color='yellow'] { color: var(--yellow); }
+.color-mark[data-color='orange'] { color: var(--orange); }
+.color-mark[data-color='turquoise'] { color: var(--turquoise); }
+.color-mark[data-color='blue'] { color: var(--blue); }
+.color-mark[data-color='green'] { color: var(--green); }
+.color-mark[data-color='violet'] { color: var(--violet); }
+
 html {
   min-width: 320px;
   background: #061d5c;

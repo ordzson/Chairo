@@ -1,11 +1,14 @@
 import { DOCUMENT } from '@angular/common';
-import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, effect, inject, signal } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 import { GameIconComponent } from '../../../../game-icon.component';
 import { SoundService } from '../../../../sound.service';
 import { buildInvitationMessage, buildJoinUrl } from '../../domain/join-link';
+import { GameError, GamePort } from '../../domain/game.port';
+import { selectQuestions } from '../../domain/match';
 import { MultiplayerError, MultiplayerPort } from '../../domain/multiplayer.port';
+import { QUESTION_BANK } from '../../domain/question-bank.generated';
 import {
   canStartMatch,
   colorLabel,
@@ -42,6 +45,7 @@ const EXIT_FAILURE: Readonly<Record<'host' | 'guest', string>> = {
 export class RoomPageComponent {
   private readonly document = inject(DOCUMENT);
   private readonly multiplayer = inject(MultiplayerPort);
+  private readonly game = inject(GamePort);
   private readonly router = inject(Router);
   private readonly sound = inject(SoundService);
 
@@ -51,6 +55,7 @@ export class RoomPageComponent {
   readonly room = this.multiplayer.room;
   readonly shareStatus = signal('');
   readonly startStatus = signal('');
+  readonly starting = signal(false);
   readonly exitStatus = signal('');
 
   readonly title = computed(() => {
@@ -99,6 +104,12 @@ export class RoomPageComponent {
   });
 
   constructor() {
+    effect(() => {
+      const room = this.room();
+      if (room?.status === 'playing' || room?.status === 'finished') {
+        void this.router.navigateByUrl(`/juegos/versiculo-o-inventiculo/partida/${room.code}`);
+      }
+    });
     void this.load();
   }
 
@@ -119,10 +130,23 @@ export class RoomPageComponent {
     void this.load();
   }
 
-  startMatch(): void {
-    if (!this.canStart()) return;
+  async startMatch(): Promise<void> {
+    const room = this.room();
+    if (!room || !this.canStart() || this.starting()) return;
     this.sound.playButtonClick();
-    this.startStatus.set('Todo listo. La cuenta regresiva llega en la próxima entrega de Chairo.');
+    this.starting.set(true);
+    this.startStatus.set('Preparando las frases para todos…');
+    try {
+      const questions = selectQuestions(QUESTION_BANK, room.setup.difficulty, room.setup.questionCount);
+      await this.game.startMatch(room.code, questions);
+      await this.router.navigateByUrl(`/juegos/versiculo-o-inventiculo/partida/${room.code}`);
+    } catch (error) {
+      const reason = error instanceof GameError ? error.reason : 'unavailable';
+      this.startStatus.set(reason === 'question-bank-insufficient'
+        ? 'No hay suficientes frases revisadas para esta configuración. Elige una cantidad menor.'
+        : 'No pudimos iniciar la partida. Revisa tu conexión y vuelve a intentarlo.');
+      this.starting.set(false);
+    }
   }
 
   colorName(participant: Participant): string {
@@ -190,6 +214,7 @@ export class RoomPageComponent {
   private async load(): Promise<void> {
     this.phase.set('restoring');
     this.startStatus.set('');
+    this.starting.set(false);
     this.shareStatus.set('');
     this.exitStatus.set('');
     if (!isRoomCode(this.code)) {

@@ -1,0 +1,11 @@
+Use case: ui-mockup
+Asset type: high-fidelity mobile-first synchronized countdown game screen reference, portrait 9:16 phone viewport
+Primary request: Create the 3-second pre-game countdown screen for Chairo’s Spanish Bible game “¿Versículo o inventículo?”. This is a new screen in the already approved Marcador vivo flow, immediately after the host starts the room and before round 1.
+Input images: Image 1 is a strict visual identity and composition reference, not an edit target. Preserve its warm ivory paper texture, binder spine and brass rings, mission-blue ink, yellow molded plastic, hand-drawn line icons, physical depth, Lilita One/Cabin Condensed/Kalam character, and joyful early-2000s educational-software tactility.
+Scene/backdrop: one Chairo mission-manual page filling the whole portrait viewport; no device frame and no browser chrome.
+Structure: compact Chairo brand lockup at top; beneath it, one calm ivory central sheet with a huge tactile yellow countdown disc showing “3”, three small sequence marks “3 · 2 · 1” with the first active, a handwritten note “Todos listos”, and the instruction “La primera frase llega enseguida”; at the bottom show the player’s identity as “Ana · Amarillo” and the role label “Anfitrión · jugando”. No scores yet, no quote, no answer buttons, no QR.
+Composition/framing: countdown disc is the dominant focal point; very clear vertical hierarchy; generous calm space; feels like turning from the waiting-room sheet into the live game sheet. Keep controls and content inside safe margins.
+Lighting/mood: anticipatory, joyful, shared, tactile; top-lit molded plastic on warm paper.
+Color palette: binder blue #061d5c, ivory #f3eadb, mission blue #07266e, deep blue #031b56, joy yellow #ffc61b, small orange #f36b22 and turquoise #20b9b9 accents only.
+Text (verbatim): “Chairo”, “Centro de juegos”, “¿Versículo o inventículo?”, “Todos listos”, “3”, “3 · 2 · 1”, “La primera frase llega enseguida”, “Ana · Amarillo”, “Anfitrión · jugando”. Render each exact phrase once; no extra text.
+Constraints: shippable mobile UI mockup, preserve the approved visual world, readable Spanish typography, no generic cards, no glassmorphism, no neon arcade styling, no photography, no character illustrations, no answer controls, no scoreboard, no external branding, no watermark.

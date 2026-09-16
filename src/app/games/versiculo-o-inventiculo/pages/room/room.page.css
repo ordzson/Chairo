@@ -89,13 +89,6 @@ chairo-manual-header {
 }
 
 /* El invitado se reconoce por su nombre, su forma y su color, los tres. */
-.role-pill .color-mark[data-color='yellow'] { color: var(--yellow); }
-.role-pill .color-mark[data-color='orange'] { color: var(--orange); }
-.role-pill .color-mark[data-color='turquoise'] { color: var(--turquoise); }
-.role-pill .color-mark[data-color='blue'] { color: var(--blue); }
-.role-pill .color-mark[data-color='green'] { color: var(--green); }
-.role-pill .color-mark[data-color='violet'] { color: var(--violet); }
-
 .room-panel:focus-visible {
   outline: 4px solid var(--focus);
   outline-offset: 4px;

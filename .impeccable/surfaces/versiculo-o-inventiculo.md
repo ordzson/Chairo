@@ -32,7 +32,7 @@ FORM: `Marcador vivo`, seed `faacbba6`, flujo comp-led. En juego, una banda azul
 
 INTERACTION: Cada selector se comporta como una pieza física del mismo sistema `.pressable`; selección, foco, pulsación, espera, bloqueo y revelación se distinguen también sin color. Movimiento reducido conserva exactamente la jerarquía final.
 
-FINISH: Cada pantalla se implementa y verifica por separado. La revisión integral, Supabase y la documentación final pertenecen a etapas posteriores; ninguna pantalla futura se anticipa dentro de la etapa actual.
+FINISH: Cada pantalla se implementa y verifica por separado. La partida conserva HTML accesible y responsivo; las referencias raster solo fijan composición y material.
 
 ## Etapas
 
@@ -52,7 +52,7 @@ Límites deliberados de la etapa: no existe la pantalla de unión —el QR ya ap
 
 Al llegar la etapa 3 se saldó la deuda de la cabecera: anillos, botón de vuelta y marca viven ahora en `ui/manual-header.component.ts`, que las tres pantallas comparten. Las capturas de configuración y sala se compararon antes y después: siete de las ocho son idénticas byte a byte y la restante difiere solo en el suavizado del rótulo, con la composición alineada al píxel.
 
-### 3. Entrada del invitado — etapa actual
+### 3. Entrada del invitado — terminada
 
 `#/juegos/versiculo-o-inventiculo/unirse/:codigo` para quien escanea el QR y `#/juegos/versiculo-o-inventiculo/unirse` para quien teclea el código. Campo de cuatro caracteres que filtra los ambiguos y explica cuál rechazó, nombre sin registro, color identificador con forma y nombre propios, y `Unirme` con estado de envío.
 
@@ -62,9 +62,23 @@ Dos huecos del puerto cerrados en esta etapa: `self`, el asiento de este disposi
 
 Piezas nuevas: `ui/manual-header.component.ts`, `ui/color-mark.component.ts`, `infrastructure/seat.store.ts` y `pages/join/`.
 
-Límites deliberados de la etapa: no hay cuenta regresiva, preguntas, revelación ni resultados; `room-started` está implementado y traducido pero solo es alcanzable contra Supabase, porque en memoria todavía no existe una partida empezada; y la lista de participantes de la sala conserva la composición aprobada en la etapa 2, sin mostrar el color de cada quien.
+Al llegar la etapa 4, `room-started` pasó a ser alcanzable también en memoria y la sala navega automáticamente a la partida cuando el anfitrión comienza. La lista de participantes conserva la composición aprobada en la etapa 2, sin mostrar el color de cada quien.
 
 Hallazgo cerrado: el propietario eligió bajar el tope a 6 en lugar de ampliar el catálogo de colores. `MAX_PARTICIPANTS` ya no se escribe aparte —es `PARTICIPANT_COLORS.length`, porque hay un asiento por color— y el disparador de `supabase/schema.sql` corta en 6. Los dos techos eran uno solo, así que la entrada del invitado perdió el caso «no quedan colores libres», que con seis colores y seis asientos no podía verse nunca: una sala sin colores libres es exactamente una sala llena.
+
+### 4. Partida completa — terminada en código
+
+`#/juegos/versiculo-o-inventiculo/partida/:codigo`. El anfitrión selecciona frases reales del banco revisado y comienza una cuenta regresiva sincronizada de tres segundos. La partida cubre pregunta, respuesta única y bloqueada, espera sin filtrar la solución, revelación con cita RVR1960, puntos y tiempo, avance automático, clasificación final, repetición y salida segura.
+
+Reglas fijadas para esta primera versión: 12 segundos por frase, 18 cuando supera 120 caracteres; acierto entre 200 y 1,000 puntos con `200 + redondear(800 × tiempo_restante / tiempo_total)`; error, ausencia o respuesta tardía valen cero; cinco segundos de revelación; y los empates permanecen como empates. El banco generado contiene 138 frases y ofrece al menos 30 por nivel; agota el nivel solicitado y solo después completa hacia abajo.
+
+La presentación depende de `GamePort`. El adaptador local replica el flujo y persiste en `localStorage`; Supabase guarda partida y respuestas en tablas privadas y expone tres RPC autenticadas. El servidor decide fases, reloj, bloqueo, solución visible y puntaje, de modo que una recarga recupera la ronda sin revelar respuestas antes de tiempo. El índice de códigos conserva una sala terminada hasta que el anfitrión la cierra, evitando dos salas abiertas con el mismo código.
+
+Verificación: `pnpm run build` aprobado, 62/62 pruebas Playwright, axe sin violaciones en móvil, detector con cero hallazgos no consultivos y revisión visual final `ship`. Evidencias: `.impeccable/review/partida-mobile.png` y `partida-desktop.png`. Las referencias `06-cuenta-regresiva.png` y `07-respuesta-enviada.png` se generaron con ImageGen y conservan sus prompts como archivo y metadatos.
+
+Despliegue pendiente: aplicar `supabase/schema.sql` completo en el SQL Editor del proyecto y repetir la prueba con dos sesiones reales. El PostgreSQL local del entorno no permitió ejecutar la validación transaccional por falta del rol de sistema `postgres`; el archivo no se declara desplegado ni verificado remotamente.
+
+Decisiones aplazadas para una siguiente ronda de reglas: pausa/continuación manual en modo Solo anfitrión, terminar una partida antes de tiempo, tolerancia específica a la ausencia prolongada del anfitrión y la doble apuesta opcional. La primera versión avanza automáticamente y permite reconectar mientras la sala siga abierta.
 
 ## Restricciones
 
@@ -73,6 +87,6 @@ Hallazgo cerrado: el propietario eligió bajar el tope a 6 en lugar de ampliar e
 - HTML/CSS semántico y responsivo desde 320 px; no usar los PNG como pantallas.
 - Áreas táctiles mínimas de 48 × 48 px, foco visible, teclado, lectores de pantalla, colores forzados y movimiento reducido.
 - El banco de preguntas, la partida, los resultados y el backend quedan fuera de las etapas 1 y 2.
-- La presentación solo conoce `MultiplayerPort`; el adaptador de Supabase entrará por `versiculo.routes.ts` sin tocar las pantallas.
+- La presentación solo conoce `MultiplayerPort` y `GamePort`; los adaptadores local y Supabase se eligen en `versiculo.routes.ts` sin bifurcar las pantallas.
 - La cabecera del manual ya es una pieza común, `ui/manual-header.component.ts`; las pantallas solo ajustan sus medidas por variables.
 - Deuda siguiente: la placa azul del rótulo está escrita tres veces —`game-title` en configuración, `room-band` en la sala y `join-title` en la entrada— con los mismos siete valores de material. Conviene extraer ese material antes de una cuarta pantalla.

@@ -68,7 +68,8 @@ export class InMemoryMultiplayerAdapter implements MultiplayerPort {
       code: this.nextCode(),
       setup,
       participants: [host],
-      createdAt: Date.now()
+      createdAt: Date.now(),
+      status: 'waiting'
     };
     this.takeSeat(room.code, host.id);
     this.commit(room);
@@ -87,6 +88,9 @@ export class InMemoryMultiplayerAdapter implements MultiplayerPort {
 
   async joinRoom(code: RoomCode, draft: ParticipantDraft): Promise<Participant> {
     const room = await this.restoreRoom(code);
+    if (room.status === 'playing' || room.status === 'finished') {
+      throw new MultiplayerError('room-started', 'La partida ya empezó.');
+    }
     if (isRoomFull(room)) throw new MultiplayerError('room-full', 'La sala ya está completa.');
 
     // Las mismas reglas que impone la base de datos en el adaptador remoto.

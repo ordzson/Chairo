@@ -109,12 +109,12 @@
               <button
                 class="start-button pressable"
                 type="button"
-                [disabled]="!canStart()"
+                [disabled]="!canStart() || starting()"
                 aria-describedby="start-help"
                 (click)="startMatch()"
               >
                 <chairo-game-icon name="play" />
-                <span>Comenzar partida</span>
+                <span>{{ starting() ? 'Preparando…' : 'Comenzar partida' }}</span>
               </button>
               <p id="start-help" class="start-help">
                 {{ canStart() ? 'Cada participante responde desde su propio teléfono.' : 'Se activa cuando entre otra persona.' }}

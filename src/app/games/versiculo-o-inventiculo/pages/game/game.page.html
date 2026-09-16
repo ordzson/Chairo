@@ -1,0 +1,197 @@
+<a class="skip-link" href="#partida-panel">Ir a la partida</a>
+
+<main class="manual-shell game-shell">
+  <article class="mission-manual game-manual" aria-labelledby="game-title">
+    <div class="binder-spine" aria-hidden="true"></div>
+    <chairo-manual-header
+      backLabel="Salir de la partida y volver al centro"
+      [note]="['¡La Biblia', 'también es', 'un gran juego!']"
+      (back)="leaveGame()"
+    />
+
+    <h1 id="game-title" class="sr-only">¿Versículo o inventículo?</h1>
+
+    <div id="partida-panel" class="game-panel" tabindex="-1">
+      @switch (loadPhase()) {
+        @case ('loading') {
+          <section class="loading-sheet" aria-live="polite">
+            <chairo-game-icon name="book" />
+            <p>Buscando la página de la partida…</p>
+          </section>
+        }
+        @case ('error') {
+          <section class="error-sheet" role="alert">
+            <chairo-game-icon name="note" />
+            <div>
+              <h2>No encontramos la partida</h2>
+              <p>{{ errorMessage() }}</p>
+            </div>
+            <a class="paper-action pressable" [routerLink]="['/juegos/versiculo-o-inventiculo/sala', code]">Volver a la sala</a>
+            <a class="text-action" routerLink="/">Volver al centro</a>
+          </section>
+        }
+        @default {
+          @if (match(); as match) {
+            @if (match.phase === 'countdown') {
+              <section class="countdown-screen" aria-labelledby="countdown-title">
+                <div class="game-name-band motion-slide-in">
+                  <span aria-hidden="true">¿</span>
+                  <h2 id="countdown-title">Versículo o inventículo</h2>
+                  <span aria-hidden="true">?</span>
+                </div>
+                <p class="hand-note motion-stamp">Todos listos</p>
+                <div class="countdown-disc motion-pop" aria-live="assertive" aria-atomic="true">
+                  {{ remainingSeconds() || 1 }}
+                </div>
+                <ol class="countdown-steps" aria-label="Cuenta regresiva">
+                  @for (step of [3, 2, 1]; track step) {
+                    <li [class.is-active]="remainingSeconds() === step">{{ step }}</li>
+                  }
+                </ol>
+                <div class="countdown-copy">
+                  <chairo-game-icon name="book" />
+                  <p>{{ match.roundNumber === 1 ? 'La primera frase llega enseguida' : 'La siguiente frase llega enseguida' }}</p>
+                </div>
+                <p class="identity-slip">
+                  <chairo-color-mark [color]="match.self.color" [attr.data-color]="match.self.color" />
+                  <span><strong>{{ match.self.name }} · {{ colorName(match) }}</strong><small>{{ roleLabel(match) }}</small></span>
+                </p>
+              </section>
+            } @else if (match.phase === 'finished') {
+              <section class="results-screen" aria-labelledby="results-title">
+                <h2 id="results-title">{{ tiedWinners() ? '¡Partida empatada!' : '¡Partida terminada!' }}</h2>
+                @if (winner(); as champion) {
+                  <div class="winner-sheet">
+                    <chairo-game-icon name="trophy" />
+                    <div>
+                      <p>{{ tiedWinners() ? 'Puntuación ganadora' : champion.name }}</p>
+                      <strong>{{ formatScore(champion.score) }} <small>puntos</small></strong>
+                    </div>
+                  </div>
+                }
+
+                <section class="ranking" aria-labelledby="ranking-title">
+                  <h3 id="ranking-title"><span aria-hidden="true">—</span> Clasificación final <span aria-hidden="true">—</span></h3>
+                  <ol>
+                    @for (standing of match.standings; track trackStanding($index, standing); let place = $index) {
+                      <li [class.is-winner]="standing.score === winner()?.score">
+                        <span class="rank-number">{{ place + 1 }}</span>
+                        <chairo-color-mark [color]="standing.color" [attr.data-color]="standing.color" />
+                        <span class="rank-name">{{ standing.name }}</span>
+                        <strong>{{ formatScore(standing.score) }}</strong>
+                      </li>
+                    }
+                  </ol>
+                </section>
+
+                @if (ownStanding(); as ownResult) {
+                  <p class="performance-note">
+                    {{ ownResult.correctCount }} de {{ match.totalRounds }} correctas ·
+                    {{ ownResult.averageResponseMs === null ? 'sin tiempo medio' : 'respuesta media ' + formatSeconds(ownResult.averageResponseMs) }}
+                  </p>
+                }
+
+                @if (match.self.role === 'host') {
+                  <button class="play-again pressable" type="button" (click)="playAgain()">
+                    <chairo-game-icon name="play" />
+                    <span>Jugar otra vez</span>
+                  </button>
+                }
+                <button class="home-action pressable" type="button" (click)="leaveGame()">
+                  <chairo-game-icon name="home" />
+                  <span>Volver al centro</span>
+                </button>
+              </section>
+            } @else {
+              <section class="scoreboard" aria-label="Marcador de la partida">
+                @for (player of scoreCards(); track player.participantId) {
+                  <div class="score-card">
+                    <chairo-color-mark [color]="player.color" [attr.data-color]="player.color" />
+                    <span>{{ player.name }}</span>
+                    <strong>{{ formatScore(player.score) }}</strong>
+                  </div>
+                }
+                <div class="timer-disc" [style.--time-progress]="timerProgress()" aria-live="off">
+                  <span>{{ remainingSeconds() }}</span>
+                </div>
+                <p>Ronda {{ match.roundNumber }}/{{ match.totalRounds }}</p>
+              </section>
+
+              <div class="round-track" aria-hidden="true">
+                @for (mark of progressMarks(); track mark.index) {
+                  <span [class.is-done]="mark.done"></span>
+                }
+              </div>
+
+              @if (match.question; as question) {
+                <section class="question-sheet" aria-labelledby="question-text">
+                  <chairo-game-icon name="book" />
+                  <p id="question-text">“{{ question.statement }}”</p>
+
+                  @if (match.phase === 'reveal' && match.solution; as solution) {
+                    <div class="verdict" [class.verdict--invented]="!solution.isVerse" role="status" aria-live="assertive">
+                      <chairo-game-icon [name]="solution.isVerse ? 'check' : 'question'" />
+                      <strong>{{ solution.isVerse ? 'Sí es versículo' : 'Es inventículo' }}</strong>
+                    </div>
+                    <div class="evidence">
+                      <chairo-game-icon name="book" />
+                      <div>
+                        <strong>{{ solution.reference ? solution.reference + ' · RVR1960' : 'No aparece como cita bíblica' }}</strong>
+                        <p>{{ solution.explanation }}</p>
+                      </div>
+                    </div>
+                  }
+                </section>
+              }
+
+              @if (match.phase === 'question') {
+                @if (!match.self.plays) {
+                  <div class="host-watch">
+                    <chairo-game-icon name="host" />
+                    <p><strong>Conduciendo la partida</strong><span>{{ match.answeredCount }} de {{ match.expectedAnswers }} respuestas recibidas</span></p>
+                  </div>
+                } @else if (match.selfChoice; as choice) {
+                  <div class="answer-locked" role="status" aria-live="polite">
+                    <chairo-game-icon [name]="choice === 'verse' ? 'book' : 'question'" />
+                    <p><strong>Respuesta enviada</strong><span>Elegiste {{ choice === 'verse' ? 'VERSÍCULO' : 'INVENTÍCULO' }}</span></p>
+                    <small>{{ waitingCopy() }}</small>
+                  </div>
+                } @else {
+                  <div class="answer-actions">
+                    <button class="answer-button answer-button--verse pressable" type="button" [disabled]="sending()" (click)="answer('verse')">
+                      <chairo-game-icon name="book" />
+                      <span>Versículo</span>
+                    </button>
+                    <button class="answer-button answer-button--invented pressable" type="button" [disabled]="sending()" (click)="answer('invented')">
+                      <chairo-game-icon name="question" />
+                      <span>Inventículo</span>
+                    </button>
+                  </div>
+                }
+              } @else if (match.phase === 'reveal') {
+                <section class="round-results" aria-label="Puntos de la ronda">
+                  @for (result of match.roundResults; track result.participantId) {
+                    <article [class.is-self]="result.participantId === match.self.id">
+                      <chairo-color-mark [color]="result.color" [attr.data-color]="result.color" />
+                      <strong>{{ result.name }}</strong>
+                      <span class="earned">+{{ formatScore(result.points) }}</span>
+                      <span class="speed"><chairo-game-icon name="timer" /> {{ formatSeconds(result.responseMs) }}</span>
+                    </article>
+                  }
+                </section>
+                <p class="next-round">{{ match.roundNumber === match.totalRounds ? 'Resultados finales en' : 'Siguiente pregunta en' }} {{ remainingSeconds() }}…</p>
+              }
+
+              <p class="role-slip">
+                <chairo-color-mark [color]="match.self.color" [attr.data-color]="match.self.color" />
+                <span>{{ roleLabel(match) }}</span>
+              </p>
+            }
+
+            <p class="connection-note" role="status" aria-live="polite">{{ connectionNote() }}</p>
+          }
+        }
+      }
+    </div>
+  </article>
+</main>

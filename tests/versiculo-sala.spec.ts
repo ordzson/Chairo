@@ -154,10 +154,9 @@ test('comenzar se habilita cuando entra otra persona lista', async ({ page, cont
   await expect(page.getByRole('listitem').filter({ hasText: 'Leo' })).toContainText('listo');
   await expect(page.locator('.sr-only[role="status"]')).toHaveText('2 participantes en la sala. Ya puedes comenzar la partida.');
 
-  // La partida todavía no arranca en esta etapa: solo se confirma que está lista.
   await start.click();
-  await expect(page.getByText('Todo listo. La cuenta regresiva llega en la próxima entrega de Chairo.')).toBeVisible();
-  await expect(page).toHaveURL(/sala\/ABCD$/);
+  await expect(page).toHaveURL(/partida\/ABCD$/);
+  await expect(page.getByText('Todos listos')).toBeVisible();
 });
 
 test('cerrar la sala vuelve a la configuración y la sala deja de existir', async ({ page }) => {

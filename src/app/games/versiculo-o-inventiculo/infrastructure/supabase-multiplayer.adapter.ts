@@ -310,7 +310,8 @@ function toRoom(row: RoomRow, participants: ParticipantRow[]): Room {
       hostRole: row.host_role
     },
     participants: participants.map(toParticipant),
-    createdAt: Date.parse(row.created_at)
+    createdAt: Date.parse(row.created_at),
+    status: row.status
   };
 }
 

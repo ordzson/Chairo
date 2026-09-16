@@ -35,7 +35,7 @@ export const MAX_PARTICIPANTS = PARTICIPANT_COLORS.length;
 export type RoomCode = string;
 export type ParticipantRole = 'host' | 'guest';
 export type ParticipantStatus = 'joining' | 'ready';
-export type RoomStatus = 'waiting' | 'ready-to-start';
+export type RoomStatus = 'waiting' | 'playing' | 'finished';
 
 export interface Participant {
   readonly id: string;
@@ -53,6 +53,8 @@ export interface Room {
   readonly setup: MatchSetup;
   readonly participants: readonly Participant[];
   readonly createdAt: number;
+  /** Ausente solo en instantáneas locales creadas antes de existir la partida. */
+  readonly status?: RoomStatus;
 }
 
 /** Deja pasar solo lo que puede formar un código, ya en mayúsculas. */
@@ -131,10 +133,6 @@ export function canStartMatch(room: Room): boolean {
   return guestsReady(room).length > 0;
 }
 
-export function roomStatus(room: Room): RoomStatus {
-  return canStartMatch(room) ? 'ready-to-start' : 'waiting';
-}
-
 export function isRoomFull(room: Room): boolean {
   return room.participants.length >= MAX_PARTICIPANTS;
 }
@@ -160,5 +158,6 @@ export function isRoom(value: unknown): value is Room {
     candidate.participants.length > 0 &&
     candidate.participants.length <= MAX_PARTICIPANTS &&
     candidate.participants.every(isParticipant) &&
-    typeof candidate.createdAt === 'number';
+    typeof candidate.createdAt === 'number' &&
+    (candidate.status === undefined || candidate.status === 'waiting' || candidate.status === 'playing' || candidate.status === 'finished');
 }

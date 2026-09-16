@@ -15,7 +15,9 @@ export type ChairoIcon = GameIcon |
   'minus' |
   'plus' |
   'share' |
-  'check';
+  'check' |
+  'timer' |
+  'home';
 
 @Component({
   selector: 'chairo-game-icon',
@@ -100,6 +102,13 @@ export type ChairoIcon = GameIcon |
         }
         @case ('check') {
           <path d="m12 34 14 14 26-32"/>
+        }
+        @case ('timer') {
+          <circle cx="32" cy="35" r="21"/>
+          <path d="M32 35V22M25 5h14M32 5v9M47 18l5-5M32 35l9 6"/>
+        }
+        @case ('home') {
+          <path d="m7 30 25-21 25 21v27H39V40H25v17H7V30Z"/>
         }
       }
     </svg>

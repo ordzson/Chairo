@@ -3,6 +3,12 @@ import { expect, test } from '@playwright/test';
 
 import { buildInvitationMessage, buildJoinUrl, JOIN_ROUTE } from '../src/app/games/versiculo-o-inventiculo/domain/join-link';
 import {
+  questionDuration,
+  scoreAnswer,
+  selectQuestions,
+  type GameQuestion
+} from '../src/app/games/versiculo-o-inventiculo/domain/match';
+import {
   canStartMatch,
   createRoomCode,
   hostParticipant,
@@ -80,4 +86,34 @@ test('la partida solo puede comenzar con otra persona lista', () => {
   } satisfies Room;
   expect(canStartMatch(ready)).toBe(true);
   expect(setupSummary(ready.setup)).toBe('Media · 10 preguntas');
+});
+
+test('la selección agota el nivel pedido antes de bajar y mezcla el resultado', () => {
+  const question = (id: string, difficulty: GameQuestion['difficulty']): GameQuestion => ({
+    id,
+    difficulty,
+    statement: id,
+    isVerse: true,
+    reference: 'Prueba 1:1',
+    explanation: 'Prueba.'
+  });
+  const bank = [
+    question('easy-1', 'easy'),
+    question('easy-2', 'easy'),
+    question('medium-1', 'medium'),
+    question('hard-1', 'hard'),
+    question('hard-2', 'hard')
+  ];
+
+  const selected = selectQuestions(bank, 'hard', 4, () => 0.4);
+  expect(selected.map(item => item.id)).toEqual(expect.arrayContaining(['hard-1', 'hard-2', 'medium-1']));
+  expect(selected.filter(item => item.difficulty === 'easy')).toHaveLength(1);
+});
+
+test('el reloj y los puntos respetan las reglas acordadas', () => {
+  expect(questionDuration('corta')).toBe(12);
+  expect(questionDuration('x'.repeat(121))).toBe(18);
+  expect(scoreAnswer(true, 0, 12)).toBe(1000);
+  expect(scoreAnswer(true, 12_000, 12)).toBe(200);
+  expect(scoreAnswer(false, 500, 12)).toBe(0);
 });

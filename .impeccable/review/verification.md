@@ -252,3 +252,37 @@ Con el servidor local apagado —comprobado, `curl` a 4173 devuelve `000`— las
 La invitación que reparte el sitio publicado se leyó del portapapeles y es absoluta y correcta: `https://ordzson.github.io/Chairo/#/juegos/versiculo-o-inventiculo/unirse/<código>`. El QR lleva esa misma URL, porque ambos salen de `joinUrl()`.
 
 Ninguna de estas pruebas dejó salas abiertas.
+
+
+# Etapa 4 · Partida de ¿Versículo o inventículo?
+
+Fecha: 16 de septiembre de 2026
+
+## Resultado
+
+- `pnpm run build`: aprobado. El CSS de la nueva pantalla queda dentro del presupuesto por componente; continúa el aviso inicial heredado, ahora en 267.12 kB frente a 250 kB.
+- `pnpm test`: **62/62** en Chromium, incluida la partida real, el bloqueo de respuesta, resultados, selección del banco, reglas de tiempo/puntos, accesibilidad y reflujo.
+- Detector de Impeccable sobre los archivos tocados: 54 avisos consultivos de la paleta/radios incumbentes, **0 hallazgos no consultivos**.
+- Metadatos de generación: **7 raster, 0 prompts ausentes**.
+- Revisión final independiente: **ship**, sin correcciones materiales.
+
+## Flujo verificado
+
+La sala comienza de verdad y todos navegan a `partida/:codigo`. La secuencia implementada es cuenta regresiva → pregunta → respuesta bloqueada/espera → revelación con evidencia y puntos → siguiente ronda → clasificación final. La vista Solo anfitrión conduce sin responder. Una recarga recupera el estado de la partida.
+
+El reloj y el puntaje tienen autoridad de servidor en Supabase: tablas privadas para partida/respuestas y RPC autenticadas para comenzar, leer y responder. La solución solo sale durante la revelación. El adaptador local conserva el mismo contrato para la suite sin red.
+
+## Evidencia visual
+
+- `.impeccable/review/partida-mobile.png`: pregunta a 390 px, con las dos decisiones completas dentro del flujo visible.
+- `.impeccable/review/partida-desktop.png`: la misma jerarquía a 1440 px.
+- `assets/versiculo-o-inventiculo/06-cuenta-regresiva.png`: concepto generado para la transición de 3 segundos.
+- `assets/versiculo-o-inventiculo/07-respuesta-enviada.png`: concepto generado para la espera sin revelar la solución.
+
+La primera captura móvil mostró «INVENTÍCULO» recortado dentro de su botón aunque la página no desbordaba. Se corrigió la escala tipográfica móvil y se recapturó antes del veredicto.
+
+## Supabase pendiente de despliegue
+
+`supabase/schema.sql` contiene la ampliación, pero esta sesión no la aplicó al proyecto remoto. La validación transaccional local tampoco pudo ejecutarse: la instancia exige el usuario de sistema `postgres` y el entorno no dispone de sudo sin contraseña. Por tanto, la etapa queda terminada en código y pruebas sin red; para habilitar partidas reales entre teléfonos hay que aplicar el archivo completo en el SQL Editor y repetir la prueba con dos sesiones anónimas distintas.
+
+Decisiones aplazadas: pausa/continuación manual, final anticipado, tratamiento especial de una ausencia prolongada del anfitrión y doble apuesta.

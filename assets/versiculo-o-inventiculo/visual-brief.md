@@ -50,7 +50,7 @@ Las imágenes de esta carpeta son referencias de composición, jerarquía y acab
 3. **Decisión:** dos controles del mismo tamaño y peso visual. Amarillo para Versículo y naranja para Inventículo, acompañados siempre por texto e icono.
 4. **Rol:** una nota pequeña confirma “Anfitrión · jugando” o “Solo anfitrión”.
 
-En Solo anfitrión la zona de respuestas desaparece, la hoja de frase crece y, durante la revelación, aparecen los controles Pausar/Continuar y Terminar partida. En También juego esos controles permanecen fuera del camino hasta la revelación.
+En Solo anfitrión la zona de respuestas desaparece y la pantalla indica cuántas respuestas faltan. La primera versión avanza automáticamente; Pausar/Continuar y Terminar partida antes de tiempo quedan como decisiones de una siguiente ronda de reglas.
 
 ## Adaptación responsiva
 
@@ -85,11 +85,13 @@ En Solo anfitrión la zona de respuestas desaparece, la hoja de frase crece y, d
 - [`03-pregunta-marcador-vivo.png`](03-pregunta-marcador-vivo.png): composición aprobada de la pregunta.
 - [`04-revelacion-puntos.png`](04-revelacion-puntos.png): evidencia, puntaje y velocidad.
 - [`05-resultados-finales.png`](05-resultados-finales.png): clasificación y repetición.
+- [`06-cuenta-regresiva.png`](06-cuenta-regresiva.png): transición sincronizada al juego.
+- [`07-respuesta-enviada.png`](07-respuesta-enviada.png): elección bloqueada mientras faltan participantes.
 
 Los prompts exactos están en [`prompts/`](prompts/) y también se incrustan como metadatos en cada PNG.
 
-## Límites
+## Límites de la primera versión
 
-- Esta fase define UX y dirección visual; no implementa Angular, Supabase ni generación real de QR.
-- Los QR de las referencias son ilustrativos. El producto debe generar códigos escaneables con la URL real de la sala.
+- Los PNG son referencias de diseño; la interfaz implementada sigue siendo HTML/CSS accesible y el QR se genera con la URL real de la sala.
 - El modo de doble apuesta del banco queda fuera de la primera versión multiteléfono: añadir libro, fuente o detalle cambiado exigiría una segunda interacción y otra regla de puntuación.
+- Pausa/continuación, final anticipado y una política especial de desconexión del anfitrión quedan para una siguiente iteración. La partida actual avanza por reloj de servidor y admite reconexión.

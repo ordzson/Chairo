@@ -2,8 +2,11 @@ import { inject, type Provider } from '@angular/core';
 import type { Routes } from '@angular/router';
 
 import { SUPABASE_CONFIG, supabaseBackendResolver } from '../../supabase.config';
+import { GamePort } from './domain/game.port';
 import { MultiplayerPort } from './domain/multiplayer.port';
+import { InMemoryGameAdapter } from './infrastructure/in-memory-game.adapter';
 import { InMemoryMultiplayerAdapter } from './infrastructure/in-memory-multiplayer.adapter';
+import { SupabaseGameAdapter } from './infrastructure/supabase-game.adapter';
 import { SupabaseMultiplayerAdapter } from './infrastructure/supabase-multiplayer.adapter';
 
 /**
@@ -22,6 +25,14 @@ const multiplayerProviders: Provider[] = [
     useFactory: (): MultiplayerPort => inject(SUPABASE_CONFIG) === null
       ? inject(InMemoryMultiplayerAdapter)
       : inject(SupabaseMultiplayerAdapter)
+  },
+  InMemoryGameAdapter,
+  SupabaseGameAdapter,
+  {
+    provide: GamePort,
+    useFactory: (): GamePort => inject(SUPABASE_CONFIG) === null
+      ? inject(InMemoryGameAdapter)
+      : inject(SupabaseGameAdapter)
   }
 ];
 
@@ -51,6 +62,11 @@ export const versiculoRoutes: Routes = [
         path: 'unirse',
         title: 'Entrar a ¿Versículo o inventículo? · Chairo',
         loadComponent: () => import('./pages/join/join.page').then(module => module.JoinPageComponent)
+      },
+      {
+        path: 'partida/:codigo',
+        title: 'Partida de ¿Versículo o inventículo? · Chairo',
+        loadComponent: () => import('./pages/game/game.page').then(module => module.GamePageComponent)
       }
     ]
   }
