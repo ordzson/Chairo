@@ -138,7 +138,7 @@
                     <div class="evidence">
                       <chairo-game-icon name="book" />
                       <div>
-                        <strong>{{ solution.reference ? solution.reference + ' · RVR1960' : 'No aparece como cita bíblica' }}</strong>
+                        <strong>{{ solution.reference ?? 'No aparece como cita bíblica' }}</strong>
                         <p>{{ solution.explanation }}</p>
                       </div>
                     </div>

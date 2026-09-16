@@ -21,7 +21,7 @@ Las imágenes de esta carpeta son referencias de composición, jerarquía y acab
 4. **Cuenta regresiva.** Todos reciben 3–2–1 sincronizado. El anfitrión que juega no obtiene vista previa ni ventaja.
 5. **Pregunta.** Misma frase, número de ronda y tiempo restante en todos los dispositivos. Cada jugador responde una vez; su elección queda bloqueada.
 6. **Espera breve.** Tras responder, los botones se sustituyen por “Respuesta enviada” y la opción elegida. No se revela la solución hasta que todos respondan o venza el tiempo.
-7. **Revelación.** Veredicto, cita RVR1960, explicación breve, puntos y tiempo de cada participante. Avance automático visible; en modo Solo anfitrión también existe Pausar/Continuar.
+7. **Revelación.** Veredicto, cita con su versión (RVR1960 o NTV), explicación breve, puntos y tiempo de cada participante. Avance automático visible; en modo Solo anfitrión también existe Pausar/Continuar.
 8. **Resultado final.** Ganador, clasificación completa, aciertos y tiempo medio. El anfitrión puede repetir con la misma configuración o volver al centro de juegos.
 
 ## Configuración y selección de preguntas

@@ -45,7 +45,7 @@ El nombre proviene del griego *chaírō*, “alegrarse”, y orienta el producto
 - La validación depende del juego. En general, después del turno se revela si la respuesta es correcta o falsa y se muestra el versículo de respaldo cuando existe.
 - Debe admitir partidas individuales, partidas grupales en un dispositivo y partidas grupales con varios teléfonos.
 - No se requieren cuentas de usuario.
-- El contenido bíblico preferido es Reina-Valera 1960 (RVR1960).
+- El contenido bíblico preferido es Reina-Valera 1960 (RVR1960). ¿Versículo o inventículo? también usa citas textuales de la Nueva Traducción Viviente (NTV), para que el español antiguo no delate cuáles frases son reales.
 - Existe un banco de preguntas aportado por el propietario, cuya selección y adaptación dependerán de cada juego.
 - La arquitectura y el despliegue deben ser compatibles con un frontend Angular alojado en GitHub Pages y servicios en Supabase.
 
