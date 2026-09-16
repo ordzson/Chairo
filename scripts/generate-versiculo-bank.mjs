@@ -29,12 +29,14 @@ for (const rawLine of markdown.split(/\r?\n/)) {
   if (!difficulty) continue;
 
   const line = rawLine.replace(/^✦\s*/, '');
-  const match = line.match(/^"(.+)"\s+—\s+\*\*(VERSÍCULO|INVENTÍCULO)(?:\s+como cita)?\.?\*\*\s*(.*)$/);
+  const match = line.match(/^"(.+)"\s+—\s+\*\*(VERSÍCULO|INVENTÍCULO)\.?\*\*(?:\s+como cita\.?)?\s*(.*)$/);
   if (!match) continue;
 
   const [, statement, verdict, remainder] = match;
   const referenceMatch = remainder.match(/^\(([^)]+)\)\s*(.*)$/);
-  const reference = referenceMatch?.[1] ?? null;
+  // Las citas son RV60 salvo las marcadas ", NTV" dentro del paréntesis.
+  const citation = referenceMatch?.[1].match(/^(.+?)(?:,\s*(NTV))?$/);
+  const reference = citation ? `${citation[1]} · ${citation[2] ?? 'RVR1960'}` : null;
   const explanation = (referenceMatch?.[2] ?? remainder)
     .replace(/^\s*[.!]\s*/, '')
     .trim() || (verdict === 'VERSÍCULO'

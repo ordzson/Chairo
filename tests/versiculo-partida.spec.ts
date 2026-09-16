@@ -50,7 +50,7 @@ test('la pantalla de pregunta conserva accesibilidad y no desborda en móvil', a
     difficulty: 'easy',
     statement: 'Mejor es perro vivo que león muerto.',
     isVerse: true,
-    reference: 'Ec 9:4',
+    reference: 'Ec 9:4 · RVR1960',
     explanation: 'Suena a refrán de pueblo.'
   };
   await page.addInitScript(
@@ -78,7 +78,7 @@ test('la partida conserva su jerarquía en móvil y escritorio', async ({ page }
       code: 'ABCD',
       questions: [{
         id: 'easy-01', difficulty: 'easy', statement: 'Mejor es perro vivo que león muerto.',
-        isVerse: true, reference: 'Ec 9:4', explanation: 'Suena a refrán de pueblo.'
+        isVerse: true, reference: 'Ec 9:4 · RVR1960', explanation: 'Suena a refrán de pueblo.'
       }],
       roundIndex: 0, phase: 'question', phaseStartedAt: now,
       phaseEndsAt: now + 12_000, answers: []
@@ -100,7 +100,7 @@ test('los resultados finales muestran clasificación, estadísticas y salida', a
   const now = Date.now();
   const question = {
     id: 'easy-01', difficulty: 'easy', statement: 'Mejor es perro vivo que león muerto.',
-    isVerse: true, reference: 'Ec 9:4', explanation: 'Suena a refrán de pueblo.'
+    isVerse: true, reference: 'Ec 9:4 · RVR1960', explanation: 'Suena a refrán de pueblo.'
   };
   const finishedRoom = { ...room, status: 'finished' };
   const finishedMatch = {
@@ -131,7 +131,7 @@ test('jugar otra vez reinicia la misma sala y la nueva partida llega a todos', a
   const now = Date.now();
   const question = {
     id: 'easy-01', difficulty: 'easy', statement: 'Mejor es perro vivo que león muerto.',
-    isVerse: true, reference: 'Ec 9:4', explanation: 'Suena a refrán de pueblo.'
+    isVerse: true, reference: 'Ec 9:4 · RVR1960', explanation: 'Suena a refrán de pueblo.'
   };
   await page.addInitScript(
     ([roomStorage, roomValue, matchStorage, matchValue]) => {
