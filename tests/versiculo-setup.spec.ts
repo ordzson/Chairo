@@ -23,7 +23,7 @@ for (const width of [320, 390, 941, 1440]) {
     await expect(page.getByRole('heading', { name: '¿Versículo o inventículo?' })).toBeVisible();
     await expect(page.getByRole('radio', { name: 'Media' })).toBeChecked();
     await expect(page.getByRole('radio', { name: 'También juego' })).toBeChecked();
-    await expect(page.getByRole('status')).toHaveText('10');
+    await expect(page.getByRole('status', { name: 'Preguntas' })).toHaveText('10');
 
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
     const a11y = await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa', 'wcag21aa', 'best-practice']).analyze();
@@ -43,10 +43,10 @@ for (const width of [320, 390, 941, 1440]) {
     const decrease = page.getByRole('button', { name: 'Quitar 5 preguntas' });
     const increase = page.getByRole('button', { name: 'Agregar 5 preguntas' });
     await decrease.click();
-    await expect(page.getByRole('status')).toHaveText('5');
+    await expect(page.getByRole('status', { name: 'Preguntas' })).toHaveText('5');
     await expect(decrease).toBeDisabled();
     await increase.click();
-    await expect(page.getByRole('status')).toHaveText('10');
+    await expect(page.getByRole('status', { name: 'Preguntas' })).toHaveText('10');
 
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
     expect(errors).toEqual([]);
@@ -64,13 +64,58 @@ test('setup choices persist and the host role explanation stays in sync', async 
   await expect(page).toHaveURL(/#\/juegos\/versiculo-o-inventiculo\/sala\/[2-9A-HJ-NP-Z]{4}$/);
 
   expect(await page.evaluate(key => localStorage.getItem(key), storageKey)).toBe(
-    JSON.stringify({ difficulty: 'extreme', questionCount: 20, hostRole: 'host-only' })
+    JSON.stringify({ difficulty: 'extreme', questionCount: 20, hostRole: 'host-only', questionSeconds: 12, revealSeconds: 5 })
   );
 
   await page.goto(setupUrl);
   await expect(page.getByRole('radio', { name: 'Extrema' })).toBeChecked();
-  await expect(page.getByRole('status')).toHaveText('20');
+  await expect(page.getByRole('status', { name: 'Preguntas' })).toHaveText('20');
   await expect(page.getByRole('radio', { name: 'Solo anfitrión' })).toBeChecked();
+});
+
+test('the host chooses how long to read each phrase and to see the answer', async ({ page }) => {
+  await page.goto(setupUrl);
+  const questionSeconds = page.getByRole('status', { name: 'Leer y responder' });
+  const revealSeconds = page.getByRole('status', { name: 'Ver la respuesta' });
+  await expect(questionSeconds).toHaveText('12 s');
+  await expect(revealSeconds).toHaveText('5 s');
+  await expect(page.getByText('Por frase. Las largas reciben 6 s más.')).toBeVisible();
+
+  const lessReading = page.getByRole('button', { name: 'Menos tiempo para leer y responder' });
+  for (const expected of ['10 s', '8 s', '5 s']) {
+    await lessReading.click();
+    await expect(questionSeconds).toHaveText(expected);
+  }
+  await expect(lessReading).toBeDisabled();
+
+  const moreReveal = page.getByRole('button', { name: 'Más tiempo para ver la respuesta' });
+  for (const expected of ['8 s', '10 s', '15 s', '20 s', '30 s', '45 s', '60 s']) {
+    await moreReveal.click();
+    await expect(revealSeconds).toHaveText(expected);
+  }
+  await expect(moreReveal).toBeDisabled();
+
+  await page.getByRole('button', { name: 'Crear sala' }).click();
+  await expect(page).toHaveURL(/#\/juegos\/versiculo-o-inventiculo\/sala\/[2-9A-HJ-NP-Z]{4}$/);
+  const stored = JSON.parse((await page.evaluate(key => localStorage.getItem(key), storageKey))!);
+  expect(stored).toMatchObject({ questionSeconds: 5, revealSeconds: 60 });
+  const room = JSON.parse((await page.evaluate(() => localStorage.getItem('chairo:versiculo-o-inventiculo:room')))!);
+  expect(room.setup).toMatchObject({ questionSeconds: 5, revealSeconds: 60 });
+
+  await page.goto(setupUrl);
+  await expect(page.getByRole('status', { name: 'Leer y responder' })).toHaveText('5 s');
+  await expect(page.getByRole('status', { name: 'Ver la respuesta' })).toHaveText('60 s');
+});
+
+test('a setup saved before timings existed keeps its choices', async ({ page }) => {
+  await page.addInitScript(key => {
+    localStorage.setItem(key, JSON.stringify({ difficulty: 'hard', questionCount: 25, hostRole: 'host-only' }));
+  }, storageKey);
+  await page.goto(setupUrl);
+  await expect(page.getByRole('radio', { name: 'Difícil' })).toBeChecked();
+  await expect(page.getByRole('status', { name: 'Preguntas' })).toHaveText('25');
+  await expect(page.getByRole('status', { name: 'Leer y responder' })).toHaveText('12 s');
+  await expect(page.getByRole('status', { name: 'Ver la respuesta' })).toHaveText('5 s');
 });
 
 test('the center opens setup and setup returns to the center', async ({ page }) => {

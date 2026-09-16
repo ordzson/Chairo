@@ -36,7 +36,7 @@ Las imágenes de esta carpeta son referencias de composición, jerarquía y acab
 
 ## Tiempo y puntos
 
-- Tiempo base: 12 segundos; frases de más de 120 caracteres reciben 18 segundos. Todos los clientes calculan el reloj desde una marca de tiempo del servidor.
+- El anfitrión elige en la configuración el tiempo para leer y responder (de 5 a 60 segundos; 12 por omisión) y cuánto queda en pantalla la respuesta correcta (de 3 a 60 segundos; 5 por omisión). Las frases de más de 120 caracteres reciben 6 segundos más. Todos los clientes calculan el reloj desde una marca de tiempo del servidor.
 - Respuesta correcta: entre 200 y 1,000 puntos según rapidez.
 - Fórmula propuesta: `200 + redondear(800 × tiempo_restante / tiempo_total)`.
 - Respuesta incorrecta, sin respuesta o fuera de tiempo: 0 puntos.

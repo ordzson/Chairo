@@ -23,6 +23,8 @@ interface RoomRow {
   readonly difficulty: Difficulty;
   readonly question_count: number;
   readonly host_role: HostRole;
+  readonly question_seconds: number;
+  readonly reveal_seconds: number;
   readonly status: 'waiting' | 'playing' | 'finished';
   readonly created_at: string;
 }
@@ -38,7 +40,7 @@ interface ParticipantRow {
   readonly joined_at: string;
 }
 
-const ROOM_COLUMNS = 'id, code, difficulty, question_count, host_role, status, created_at';
+const ROOM_COLUMNS = 'id, code, difficulty, question_count, host_role, question_seconds, reveal_seconds, status, created_at';
 const PARTICIPANT_COLUMNS = 'id, user_id, name, color, role, status, plays, joined_at';
 const CODE_ATTEMPTS = 12;
 const UNIQUE_VIOLATION = '23505';
@@ -88,7 +90,9 @@ export class SupabaseMultiplayerAdapter implements MultiplayerPort {
           code: createRoomCode(Math.random),
           difficulty: setup.difficulty,
           question_count: setup.questionCount,
-          host_role: setup.hostRole
+          host_role: setup.hostRole,
+          question_seconds: setup.questionSeconds,
+          reveal_seconds: setup.revealSeconds
         })
         .select(ROOM_COLUMNS)
         .single<RoomRow>();
@@ -175,7 +179,9 @@ export class SupabaseMultiplayerAdapter implements MultiplayerPort {
       p_code: code,
       p_difficulty: setup.difficulty,
       p_question_count: setup.questionCount,
-      p_host_role: setup.hostRole
+      p_host_role: setup.hostRole,
+      p_question_seconds: setup.questionSeconds,
+      p_reveal_seconds: setup.revealSeconds
     });
 
     if (error) {
@@ -334,7 +340,9 @@ function toRoom(row: RoomRow, participants: ParticipantRow[]): Room {
     setup: {
       difficulty: row.difficulty,
       questionCount: row.question_count,
-      hostRole: row.host_role
+      hostRole: row.host_role,
+      questionSeconds: row.question_seconds,
+      revealSeconds: row.reveal_seconds
     },
     participants: participants.map(toParticipant),
     createdAt: Date.parse(row.created_at),

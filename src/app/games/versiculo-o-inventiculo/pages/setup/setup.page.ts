@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, signal, type WritableSignal } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 import { GameIconComponent } from '../../../../game-icon.component';
@@ -7,7 +7,10 @@ import { MultiplayerError, MultiplayerPort } from '../../domain/multiplayer.port
 import { isRoomCode, type RoomCode } from '../../domain/room';
 import {
   DIFFICULTIES,
+  LONG_STATEMENT_EXTRA_SECONDS,
   QUESTION_COUNTS,
+  QUESTION_SECONDS,
+  REVEAL_SECONDS,
   type Difficulty,
   type HostRole,
   type MatchSetup
@@ -33,9 +36,14 @@ export class SetupPageComponent {
 
   readonly difficulties = DIFFICULTIES;
   readonly questionCounts = QUESTION_COUNTS;
+  readonly questionSecondsOptions = QUESTION_SECONDS;
+  readonly revealSecondsOptions = REVEAL_SECONDS;
+  readonly longStatementExtraSeconds = LONG_STATEMENT_EXTRA_SECONDS;
   readonly difficulty = signal<Difficulty>(this.initial.difficulty);
   readonly questionCount = signal(this.initial.questionCount);
   readonly hostRole = signal<HostRole>(this.initial.hostRole);
+  readonly questionSeconds = signal(this.initial.questionSeconds);
+  readonly revealSeconds = signal(this.initial.revealSeconds);
   readonly creating = signal(false);
   readonly createError = signal('');
 
@@ -70,14 +78,15 @@ export class SetupPageComponent {
   }
 
   changeQuestionCount(direction: -1 | 1): void {
-    const index = this.questionCounts.indexOf(this.questionCount() as (typeof QUESTION_COUNTS)[number]);
-    const nextIndex = Math.min(this.questionCounts.length - 1, Math.max(0, index + direction));
-    const nextValue = this.questionCounts[nextIndex];
-    if (nextValue === undefined || nextValue === this.questionCount()) return;
-    this.sound.playButtonClick();
-    this.touched = true;
-    this.questionCount.set(nextValue);
-    this.createError.set('');
+    this.step(this.questionCount, this.questionCounts, direction);
+  }
+
+  changeQuestionSeconds(direction: -1 | 1): void {
+    this.step(this.questionSeconds, this.questionSecondsOptions, direction);
+  }
+
+  changeRevealSeconds(direction: -1 | 1): void {
+    this.step(this.revealSeconds, this.revealSecondsOptions, direction);
   }
 
   /**
@@ -89,7 +98,9 @@ export class SetupPageComponent {
     const setup: MatchSetup = {
       difficulty: this.difficulty(),
       questionCount: this.questionCount(),
-      hostRole: this.hostRole()
+      hostRole: this.hostRole(),
+      questionSeconds: this.questionSeconds(),
+      revealSeconds: this.revealSeconds()
     };
     this.sound.playButtonClick();
     this.drafts.write(setup);
@@ -128,9 +139,22 @@ export class SetupPageComponent {
       this.difficulty.set(room.setup.difficulty);
       this.questionCount.set(room.setup.questionCount);
       this.hostRole.set(room.setup.hostRole);
+      this.questionSeconds.set(room.setup.questionSeconds);
+      this.revealSeconds.set(room.setup.revealSeconds);
     } catch (error) {
       if (error instanceof MultiplayerError && error.reason === 'room-not-found') this.forgetRoom(code);
     }
+  }
+
+  /** Avanza un paso dentro de las opciones permitidas, sin salirse de los extremos. */
+  private step(value: WritableSignal<number>, options: readonly number[], direction: -1 | 1): void {
+    const index = options.indexOf(value());
+    const nextValue = options[Math.min(options.length - 1, Math.max(0, index + direction))];
+    if (nextValue === undefined || nextValue === value()) return;
+    this.sound.playButtonClick();
+    this.touched = true;
+    value.set(nextValue);
+    this.createError.set('');
   }
 
   private forgetRoom(code: RoomCode): void {

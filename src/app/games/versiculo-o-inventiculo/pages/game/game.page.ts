@@ -46,7 +46,7 @@ export class GamePageComponent {
   readonly timerProgress = computed(() => {
     const match = this.match();
     if (!match?.phaseEndsAt) return '0deg';
-    const total = match.phase === 'question' ? (match.question?.totalSeconds ?? 12) : match.phase === 'reveal' ? 5 : 3;
+    const total = match.phase === 'question' ? (match.question?.totalSeconds ?? 12) : match.phase === 'reveal' ? match.revealSeconds : 3;
     return `${Math.max(0, Math.min(360, 360 * this.remainingSeconds() / total))}deg`;
   });
 

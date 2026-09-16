@@ -1,5 +1,5 @@
 import type { GameColor } from '../../../game';
-import { DIFFICULTIES, isDifficulty, isHostRole, isQuestionCount, type HostRole, type MatchSetup } from './setup-config';
+import { DIFFICULTIES, isMatchSetup, type HostRole, type MatchSetup } from './setup-config';
 
 /**
  * Códigos de sala de cuatro caracteres. Se excluyen `0`, `O`, `1` e `I`: el
@@ -151,9 +151,8 @@ export function isParticipant(value: unknown): value is Participant {
 export function isRoom(value: unknown): value is Room {
   if (!value || typeof value !== 'object') return false;
   const candidate = value as Partial<Room>;
-  const setup = candidate.setup as Partial<MatchSetup> | undefined;
   return isRoomCode(candidate.code) &&
-    !!setup && isDifficulty(setup.difficulty) && isQuestionCount(setup.questionCount) && isHostRole(setup.hostRole) &&
+    isMatchSetup(candidate.setup) &&
     Array.isArray(candidate.participants) &&
     candidate.participants.length > 0 &&
     candidate.participants.length <= MAX_PARTICIPANTS &&

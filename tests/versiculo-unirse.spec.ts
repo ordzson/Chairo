@@ -17,7 +17,7 @@ const host: Seat = { id: 'host', name: 'Tú', role: 'host', status: 'ready', col
 
 const openRoom = {
   code: 'ABCD',
-  setup: { difficulty: 'medium', questionCount: 10, hostRole: 'player' },
+  setup: { difficulty: 'medium', questionCount: 10, hostRole: 'player', questionSeconds: 12, revealSeconds: 5 },
   participants: [host],
   createdAt: 1_758_000_000_000
 };

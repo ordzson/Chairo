@@ -21,6 +21,12 @@ create table if not exists public.rooms (
   difficulty text not null check (difficulty in ('easy', 'medium', 'hard', 'extreme')),
   question_count integer not null check (question_count in (5, 10, 15, 20, 25, 30)),
   host_role text not null check (host_role in ('player', 'host-only')),
+  -- Tiempos elegidos por el anfitrión, en segundos. Las listas repiten
+  -- QUESTION_SECONDS y REVEAL_SECONDS de `setup-config.ts`.
+  question_seconds integer not null default 12
+    check (question_seconds in (5, 8, 10, 12, 15, 20, 30, 45, 60)),
+  reveal_seconds integer not null default 5
+    check (reveal_seconds in (3, 5, 8, 10, 15, 20, 30, 45, 60)),
   status text not null default 'waiting' check (status in ('waiting', 'playing', 'finished')),
   created_at timestamptz not null default now(),
   started_at timestamptz,
@@ -37,6 +43,15 @@ create unique index rooms_open_code_key
   where closed_at is null;
 
 create index if not exists rooms_created_at_idx on public.rooms (created_at);
+
+-- Instalaciones anteriores a los tiempos configurables: `create table if not
+-- exists` no toca una tabla que ya existe, así que las columnas se agregan
+-- aquí. Las salas abiertas reciben los tiempos de siempre.
+alter table public.rooms
+  add column if not exists question_seconds integer not null default 12
+    check (question_seconds in (5, 8, 10, 12, 15, 20, 30, 45, 60)),
+  add column if not exists reveal_seconds integer not null default 5
+    check (reveal_seconds in (3, 5, 8, 10, 15, 20, 30, 45, 60));
 
 create table if not exists public.participants (
   id uuid primary key default gen_random_uuid(),
@@ -136,13 +151,18 @@ as $$ select now() $$;
 
 -- ---------------------------------------------------------- partida RPC ---
 
-create or replace function public.versiculo_question_seconds(question jsonb)
+-- La versión anterior tenía un solo argumento y un tiempo fijo.
+drop function if exists public.versiculo_question_seconds(jsonb);
+
+-- `base_seconds` es el tiempo de la sala; las frases largas reciben seis
+-- segundos más, igual que `questionDuration` en `match.ts`.
+create or replace function public.versiculo_question_seconds(question jsonb, base_seconds integer)
 returns integer
 language sql
 immutable
 set search_path = public
 as $$
-  select case when char_length(coalesce(question->>'statement', '')) > 120 then 18 else 12 end
+  select case when char_length(coalesce(question->>'statement', '')) > 120 then base_seconds + 6 else base_seconds end
 $$;
 
 -- Avanza como máximo una fase. Si alguien vuelve tras una desconexión larga,
@@ -155,6 +175,7 @@ set search_path = public
 as $$
 declare
   game public.versiculo_matches%rowtype;
+  timing record;
   now_at timestamptz := clock_timestamp();
   expected integer;
   received integer;
@@ -162,6 +183,7 @@ declare
 begin
   select * into game from public.versiculo_matches where room_id = target_room_id for update;
   if not found or game.phase = 'finished' then return; end if;
+  select question_seconds, reveal_seconds into timing from public.rooms where id = target_room_id;
 
   if game.phase = 'question' then
     select count(*) into expected from public.participants where room_id = target_room_id and plays;
@@ -171,7 +193,7 @@ begin
     if now_at < game.phase_ends_at and received < expected then return; end if;
 
     update public.versiculo_matches
-      set phase = 'reveal', phase_started_at = now_at, phase_ends_at = now_at + interval '5 seconds'
+      set phase = 'reveal', phase_started_at = now_at, phase_ends_at = now_at + make_interval(secs => timing.reveal_seconds)
       where room_id = target_room_id;
     return;
   end if;
@@ -179,7 +201,7 @@ begin
   if game.phase_ends_at is null or now_at < game.phase_ends_at then return; end if;
 
   if game.phase = 'countdown' then
-    seconds := public.versiculo_question_seconds(game.questions->game.current_round);
+    seconds := public.versiculo_question_seconds(game.questions->game.current_round, timing.question_seconds);
     update public.versiculo_matches
       set phase = 'question', phase_started_at = now_at, phase_ends_at = now_at + make_interval(secs => seconds)
       where room_id = target_room_id;
@@ -288,13 +310,14 @@ begin
     'question', case when game.phase in ('question', 'reveal') then jsonb_build_object(
       'id', question->>'id',
       'statement', question->>'statement',
-      'totalSeconds', public.versiculo_question_seconds(question)
+      'totalSeconds', public.versiculo_question_seconds(question, room.question_seconds)
     ) else null end,
     'solution', case when game.phase = 'reveal' then jsonb_build_object(
       'isVerse', (question->>'isVerse')::boolean,
       'reference', question->'reference',
       'explanation', question->>'explanation'
     ) else null end,
+    'revealSeconds', room.reveal_seconds,
     'self', jsonb_build_object(
       'id', seat.id, 'name', seat.name, 'role', seat.role, 'status', seat.status,
       'color', seat.color, 'plays', seat.plays
@@ -388,7 +411,7 @@ begin
   ) then raise exception 'answer-locked'; end if;
 
   question := game.questions->game.current_round;
-  total_ms := public.versiculo_question_seconds(question) * 1000;
+  total_ms := public.versiculo_question_seconds(question, room.question_seconds) * 1000;
   elapsed := greatest(0, least(total_ms, round(extract(epoch from (now_at - game.phase_started_at)) * 1000)::integer));
   is_correct := (p_choice = 'verse') = ((question->>'isVerse')::boolean);
   awarded := case when is_correct then 200 + round(800 * (total_ms - elapsed)::numeric / total_ms)::integer else 0 end;
@@ -410,11 +433,19 @@ $$;
 -- partida anterior se borra entera —preguntas, respuestas y puntos— para que
 -- la siguiente empiece desde cero para todos. Una partida en curso no se
 -- puede reiniciar a espaldas de quien está respondiendo.
+--
+-- La versión anterior no recibía tiempos. Se retira porque convivir con esta
+-- haría ambigua la llamada de cuatro argumentos; los valores por omisión
+-- mantienen funcionando un cliente que aún no los envía.
+drop function if exists public.reopen_versiculo_room(text, text, integer, text);
+
 create or replace function public.reopen_versiculo_room(
   p_code text,
   p_difficulty text,
   p_question_count integer,
-  p_host_role text
+  p_host_role text,
+  p_question_seconds integer default 12,
+  p_reveal_seconds integer default 5
 )
 returns void
 language plpgsql
@@ -439,7 +470,9 @@ begin
         started_at = null,
         difficulty = p_difficulty,
         question_count = p_question_count,
-        host_role = p_host_role
+        host_role = p_host_role,
+        question_seconds = p_question_seconds,
+        reveal_seconds = p_reveal_seconds
     where id = room.id;
   update public.participants
     set plays = (p_host_role = 'player')
@@ -458,15 +491,15 @@ alter table public.versiculo_answers enable row level security;
 -- inspeccionar la solución antes de la revelación ni escribir sus puntos.
 revoke all on public.versiculo_matches, public.versiculo_answers from anon, authenticated;
 revoke all on function public.advance_versiculo_match(uuid) from public, anon, authenticated;
-revoke all on function public.versiculo_question_seconds(jsonb) from public, anon, authenticated;
+revoke all on function public.versiculo_question_seconds(jsonb, integer) from public, anon, authenticated;
 revoke all on function public.start_versiculo_match(text, jsonb) from public, anon;
 revoke all on function public.get_versiculo_match(text) from public, anon;
 revoke all on function public.submit_versiculo_answer(text, text) from public, anon;
-revoke all on function public.reopen_versiculo_room(text, text, integer, text) from public, anon;
+revoke all on function public.reopen_versiculo_room(text, text, integer, text, integer, integer) from public, anon;
 grant execute on function public.start_versiculo_match(text, jsonb) to authenticated;
 grant execute on function public.get_versiculo_match(text) to authenticated;
 grant execute on function public.submit_versiculo_answer(text, text) to authenticated;
-grant execute on function public.reopen_versiculo_room(text, text, integer, text) to authenticated;
+grant execute on function public.reopen_versiculo_room(text, text, integer, text, integer, integer) to authenticated;
 
 -- Este archivo es la única fuente de las políticas de estas dos tablas, así
 -- que cualquier otra se retira antes de crear las suyas. `drop policy if

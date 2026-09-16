@@ -14,7 +14,7 @@ const joinUrl = (code: string): string =>
 
 const openRoom = {
   code: 'ABCD',
-  setup: { difficulty: 'medium', questionCount: 10, hostRole: 'player' },
+  setup: { difficulty: 'medium', questionCount: 10, hostRole: 'player', questionSeconds: 12, revealSeconds: 5 },
   participants: [{ id: 'host', name: 'Tú', role: 'host', status: 'ready', color: 'yellow', plays: true }],
   createdAt: 1_758_000_000_000
 };
@@ -66,7 +66,7 @@ test('crear sala guarda la configuración, genera un código válido y abre la s
 
   const stored = JSON.parse((await page.evaluate(key => localStorage.getItem(key), roomKey))!) as typeof openRoom;
   expect(stored.code).toBe(code);
-  expect(stored.setup).toEqual({ difficulty: 'hard', questionCount: 10, hostRole: 'player' });
+  expect(stored.setup).toEqual({ difficulty: 'hard', questionCount: 10, hostRole: 'player', questionSeconds: 12, revealSeconds: 5 });
   expect(stored.participants).toHaveLength(1);
 
   // La sala sobrevive a una recarga: el código compartido sigue siendo válido.
@@ -185,7 +185,7 @@ test('un código imposible no deja la sala cargando', async ({ page }) => {
 test('la sala salta desde el anfitrión que solo conduce', async ({ page }) => {
   await withOpenRoom(page, {
     ...openRoom,
-    setup: { difficulty: 'extreme', questionCount: 30, hostRole: 'host-only' },
+    setup: { difficulty: 'extreme', questionCount: 30, hostRole: 'host-only', questionSeconds: 12, revealSeconds: 5 },
     participants: [{ ...openRoom.participants[0]!, plays: false }]
   });
   await page.goto(roomUrl('ABCD'));
