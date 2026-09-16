@@ -12,7 +12,7 @@ const host = { id: 'host', name: 'Tú', role: 'host', status: 'ready', color: 'y
 const guest = { id: 'guest-1', name: 'Leo', role: 'guest', status: 'ready', color: 'orange', plays: true };
 const room = {
   code: 'ABCD',
-  setup: { difficulty: 'easy', questionCount: 5, hostRole: 'player' },
+  setup: { difficulty: 'easy', questionCount: 5, hostRole: 'player', questionSeconds: 12, revealSeconds: 5 },
   participants: [host, guest],
   createdAt: 1_758_000_000_000,
   status: 'waiting'
@@ -40,6 +40,42 @@ test('el anfitrión inicia y todos reciben una pregunta real', async ({ page }) 
   await expect(page.getByText('Respuesta enviada')).toBeVisible();
   await expect(page.getByText('Esperando 1 respuesta más…')).toBeVisible();
   await expect(page.getByText('Sí es versículo')).toHaveCount(0);
+});
+
+test('la partida usa los tiempos que eligió el anfitrión', async ({ page }) => {
+  const now = Date.now();
+  const question = {
+    id: 'easy-01', difficulty: 'easy', statement: 'Mejor es perro vivo que león muerto.',
+    isVerse: true, reference: 'Ec 9:4 · RVR1960', explanation: 'Suena a refrán de pueblo.'
+  };
+  const timedRoom = { ...room, setup: { ...room.setup, questionSeconds: 45, revealSeconds: 30 }, status: 'playing' };
+  // La cuenta regresiva ya venció: al cargar pasa a la pregunta con su reloj.
+  await page.addInitScript(
+    ([roomStorage, roomValue, matchStorage, matchValue]) => {
+      localStorage.setItem(roomStorage!, roomValue!);
+      if (!sessionStorage.getItem('seeded')) {
+        localStorage.setItem(matchStorage!, matchValue!);
+        sessionStorage.setItem('seeded', 'yes');
+      }
+    },
+    [roomKey, JSON.stringify(timedRoom), matchKey, JSON.stringify({
+      code: 'ABCD', questions: [question, { ...question, id: 'easy-02' }], roundIndex: 0, phase: 'countdown',
+      phaseStartedAt: now - 3_000, phaseEndsAt: now - 1, answers: []
+    })] as const
+  );
+
+  await page.goto(gameUrl);
+  await expect(page.getByRole('button', { name: 'Versículo' })).toBeVisible();
+  await expect(page.locator('.timer-disc')).toHaveText(/^\s*(4[45])\s*$/);
+
+  await page.getByRole('button', { name: 'Versículo' }).click();
+  const stored = JSON.parse((await page.evaluate(key => localStorage.getItem(key), matchKey))!);
+  const expired = { ...stored, phaseStartedAt: Date.now() - 45_000, phaseEndsAt: Date.now() - 1 };
+  await page.evaluate(([key, value]) => localStorage.setItem(key!, value!), [matchKey, JSON.stringify(expired)] as const);
+  await page.reload();
+
+  await expect(page.getByText('Sí es versículo')).toBeVisible();
+  await expect(page.getByText(/Siguiente pregunta en (29|30)…/)).toBeVisible();
 });
 
 test('la pantalla de pregunta conserva accesibilidad y no desborda en móvil', async ({ page }) => {
@@ -138,7 +174,7 @@ test('jugar otra vez reinicia la misma sala y la nueva partida llega a todos', a
       localStorage.setItem(roomStorage!, roomValue!);
       localStorage.setItem(matchStorage!, matchValue!);
     },
-    [roomKey, JSON.stringify({ ...room, status: 'finished' }), matchKey, JSON.stringify({
+    [roomKey, JSON.stringify({ ...room, setup: { ...room.setup, questionSeconds: 20, revealSeconds: 8 }, status: 'finished' }), matchKey, JSON.stringify({
       code: 'ABCD', questions: [question], roundIndex: 0, phase: 'finished',
       phaseStartedAt: now, phaseEndsAt: null,
       answers: [
@@ -164,7 +200,9 @@ test('jugar otra vez reinicia la misma sala y la nueva partida llega a todos', a
   await page.getByRole('button', { name: 'Jugar otra vez' }).click();
   await expect(page).toHaveURL(/sala\/ABCD\/configurar$/);
   await expect(page.getByRole('radio', { name: 'Fácil' })).toBeChecked();
-  await expect(page.locator('.question-count')).toHaveText('5');
+  await expect(page.getByRole('status', { name: 'Preguntas' })).toHaveText('5');
+  await expect(page.getByRole('status', { name: 'Leer y responder' })).toHaveText('20 s');
+  await expect(page.getByRole('status', { name: 'Ver la respuesta' })).toHaveText('8 s');
   await page.getByRole('button', { name: 'Reiniciar sala' }).click();
 
   await expect(page).toHaveURL(/sala\/ABCD$/);

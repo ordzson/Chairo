@@ -23,6 +23,7 @@ interface RpcSnapshot {
   readonly totalRounds: number;
   readonly question: { readonly id: string; readonly statement: string; readonly totalSeconds: number } | null;
   readonly solution: { readonly isVerse: boolean; readonly reference: string | null; readonly explanation: string } | null;
+  readonly revealSeconds: number;
   readonly self: Participant;
   readonly selfChoice: AnswerChoice | null;
   readonly answeredCount: number;

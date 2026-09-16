@@ -22,7 +22,7 @@ import { encodeQrCode } from '../src/app/games/versiculo-o-inventiculo/infrastru
 
 const room: Room = {
   code: 'ABCD',
-  setup: { difficulty: 'medium', questionCount: 10, hostRole: 'player' },
+  setup: { difficulty: 'medium', questionCount: 10, hostRole: 'player', questionSeconds: 12, revealSeconds: 5 },
   participants: [hostParticipant('player')],
   createdAt: 0
 };
@@ -111,8 +111,10 @@ test('la selección agota el nivel pedido antes de bajar y mezcla el resultado',
 });
 
 test('el reloj y los puntos respetan las reglas acordadas', () => {
-  expect(questionDuration('corta')).toBe(12);
-  expect(questionDuration('x'.repeat(121))).toBe(18);
+  expect(questionDuration('corta', 12)).toBe(12);
+  expect(questionDuration('x'.repeat(121), 12)).toBe(18);
+  expect(questionDuration('corta', 30)).toBe(30);
+  expect(questionDuration('x'.repeat(121), 30)).toBe(36);
   expect(scoreAnswer(true, 0, 12)).toBe(1000);
   expect(scoreAnswer(true, 12_000, 12)).toBe(200);
   expect(scoreAnswer(false, 500, 12)).toBe(0);

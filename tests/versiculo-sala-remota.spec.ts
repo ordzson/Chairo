@@ -46,6 +46,8 @@ function deniedBackend(userId: string): StubbedBackend {
       difficulty: 'medium',
       question_count: 10,
       host_role: 'player',
+      question_seconds: 12,
+      reveal_seconds: 5,
       status: 'waiting',
       created_at: '2026-09-15T10:00:00Z'
     },

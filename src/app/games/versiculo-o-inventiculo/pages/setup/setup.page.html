@@ -40,7 +40,7 @@
       <fieldset class="setup-section question-section">
         <legend>
           <chairo-game-icon name="list" />
-          <span>Preguntas</span>
+          <span id="question-title">Preguntas</span>
         </legend>
         <div class="stepper" aria-describedby="question-range">
           <button
@@ -53,7 +53,7 @@
           >
             <chairo-game-icon name="minus" />
           </button>
-          <output class="question-count" aria-live="polite" for="question-minus question-plus">{{ questionCount() }}</output>
+          <output class="question-count" aria-live="polite" aria-labelledby="question-title" for="question-minus question-plus">{{ questionCount() }}</output>
           <button
             id="question-plus"
             class="stepper-button pressable"
@@ -66,6 +66,80 @@
           </button>
         </div>
         <p id="question-range" class="section-help">De 5 a 30, en pasos de 5.</p>
+      </fieldset>
+
+      <fieldset class="setup-section timing-section">
+        <legend>
+          <chairo-game-icon name="timer" />
+          <span>Tiempos</span>
+        </legend>
+        <div class="timing-grid">
+          <div class="timing-field" role="group" aria-labelledby="question-seconds-title" aria-describedby="question-seconds-help">
+            <p id="question-seconds-title" class="timing-title">Leer y responder</p>
+            <div class="stepper stepper--timing">
+              <button
+                id="question-seconds-minus"
+                class="stepper-button pressable"
+                type="button"
+                aria-label="Menos tiempo para leer y responder"
+                [disabled]="questionSeconds() === questionSecondsOptions[0]"
+                (click)="changeQuestionSeconds(-1)"
+              >
+                <chairo-game-icon name="minus" />
+              </button>
+              <output
+                class="question-count timing-value"
+                aria-live="polite"
+                aria-labelledby="question-seconds-title"
+                for="question-seconds-minus question-seconds-plus"
+              >{{ questionSeconds() }} s</output>
+              <button
+                id="question-seconds-plus"
+                class="stepper-button pressable"
+                type="button"
+                aria-label="Más tiempo para leer y responder"
+                [disabled]="questionSeconds() === questionSecondsOptions[questionSecondsOptions.length - 1]"
+                (click)="changeQuestionSeconds(1)"
+              >
+                <chairo-game-icon name="plus" />
+              </button>
+            </div>
+            <p id="question-seconds-help" class="section-help">Por frase. Las largas reciben {{ longStatementExtraSeconds }} s más.</p>
+          </div>
+
+          <div class="timing-field" role="group" aria-labelledby="reveal-seconds-title" aria-describedby="reveal-seconds-help">
+            <p id="reveal-seconds-title" class="timing-title">Ver la respuesta</p>
+            <div class="stepper stepper--timing">
+              <button
+                id="reveal-seconds-minus"
+                class="stepper-button pressable"
+                type="button"
+                aria-label="Menos tiempo para ver la respuesta"
+                [disabled]="revealSeconds() === revealSecondsOptions[0]"
+                (click)="changeRevealSeconds(-1)"
+              >
+                <chairo-game-icon name="minus" />
+              </button>
+              <output
+                class="question-count timing-value"
+                aria-live="polite"
+                aria-labelledby="reveal-seconds-title"
+                for="reveal-seconds-minus reveal-seconds-plus"
+              >{{ revealSeconds() }} s</output>
+              <button
+                id="reveal-seconds-plus"
+                class="stepper-button pressable"
+                type="button"
+                aria-label="Más tiempo para ver la respuesta"
+                [disabled]="revealSeconds() === revealSecondsOptions[revealSecondsOptions.length - 1]"
+                (click)="changeRevealSeconds(1)"
+              >
+                <chairo-game-icon name="plus" />
+              </button>
+            </div>
+            <p id="reveal-seconds-help" class="section-help">La solución y su explicación, antes de la siguiente frase.</p>
+          </div>
+        </div>
       </fieldset>
 
       <fieldset class="setup-section role-section">

@@ -1,6 +1,6 @@
 import type { GameColor } from '../../../game';
 import type { Participant, RoomCode } from './room';
-import type { Difficulty } from './setup-config';
+import { LONG_STATEMENT_EXTRA_SECONDS, type Difficulty } from './setup-config';
 
 export type AnswerChoice = 'verse' | 'invented';
 export type MatchPhase = 'countdown' | 'question' | 'reveal' | 'finished';
@@ -55,6 +55,8 @@ export interface MatchSnapshot {
   readonly totalRounds: number;
   readonly question: VisibleQuestion | null;
   readonly solution: QuestionSolution | null;
+  /** Cuánto dura la revelación en esta partida, para dibujar su reloj. */
+  readonly revealSeconds: number;
   readonly self: Participant;
   readonly selfChoice: AnswerChoice | null;
   readonly answeredCount: number;
@@ -65,8 +67,9 @@ export interface MatchSnapshot {
 
 const DIFFICULTY_ORDER: readonly Difficulty[] = ['easy', 'medium', 'hard', 'extreme'];
 
-export function questionDuration(statement: string): number {
-  return statement.length > 120 ? 18 : 12;
+/** `baseSeconds` es el tiempo elegido para la partida; `schema.sql` repite la regla. */
+export function questionDuration(statement: string, baseSeconds: number): number {
+  return statement.length > 120 ? baseSeconds + LONG_STATEMENT_EXTRA_SECONDS : baseSeconds;
 }
 
 /**
