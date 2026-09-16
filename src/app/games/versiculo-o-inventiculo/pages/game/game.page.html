@@ -96,6 +96,8 @@
                     <chairo-game-icon name="play" />
                     <span>Jugar otra vez</span>
                   </button>
+                } @else {
+                  <p class="rematch-note">Si el anfitrión prepara otra partida, te llevaremos a la sala automáticamente.</p>
                 }
                 <button class="home-action pressable" type="button" (click)="leaveGame()">
                   <chairo-game-icon name="home" />

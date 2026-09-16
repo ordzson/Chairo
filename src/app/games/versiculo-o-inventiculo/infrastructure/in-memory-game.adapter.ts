@@ -65,7 +65,7 @@ export class InMemoryGameAdapter implements GamePort {
     const room = this.requireRoom(code);
     const self = this.multiplayer.self();
     if (!self) throw new GameError('match-not-found', 'Este dispositivo no ocupa un asiento en la partida.');
-    const current = this.state() ?? this.matches.read();
+    const current = this.matches.read();
     if (!current || current.code !== code) {
       throw new GameError('match-not-found', 'La partida todavía no existe.');
     }
@@ -81,7 +81,7 @@ export class InMemoryGameAdapter implements GamePort {
     const room = this.requireRoom(code);
     const self = this.multiplayer.self();
     if (!self?.plays) throw new GameError('not-playing', 'Este dispositivo conduce la partida sin responder.');
-    const current = this.state() ?? this.matches.read();
+    const current = this.matches.read();
     if (!current || current.code !== code) throw new GameError('match-not-found', 'La partida no existe.');
 
     const synced = syncPhase(current);

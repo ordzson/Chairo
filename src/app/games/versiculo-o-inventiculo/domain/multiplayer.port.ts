@@ -48,6 +48,14 @@ export abstract class MultiplayerPort {
 
   abstract joinRoom(code: RoomCode, draft: ParticipantDraft): Promise<Participant>;
 
+  /**
+   * «Jugar otra vez»: la misma sala vuelve a la espera con la configuración
+   * nueva. Quienes siguen dentro conservan su asiento y la partida anterior se
+   * descarta entera, así que la siguiente empieza desde cero para todos. Solo
+   * el anfitrión puede pedirlo.
+   */
+  abstract reopenRoom(code: RoomCode, setup: MatchSetup): Promise<Room>;
+
   /** Cierra la sala para todos. Es la salida del anfitrión. */
   abstract closeRoom(code: RoomCode): Promise<void>;
 

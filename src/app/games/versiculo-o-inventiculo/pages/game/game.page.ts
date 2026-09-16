@@ -166,23 +166,18 @@ export class GamePageComponent {
     await this.router.navigateByUrl('/');
   }
 
+  /**
+   * La sala sigue abierta con todos dentro: el anfitrión solo vuelve a la
+   * configuración, y la sala se reinicia cuando la confirma.
+   */
   async playAgain(): Promise<void> {
     const self = this.match()?.self;
     if (self?.role !== 'host') {
       await this.router.navigateByUrl('/');
       return;
     }
-    this.connectionNote.set('Cerrando esta sala…');
-    try {
-      await this.multiplayer.closeRoom(this.code);
-    } catch (error) {
-      const reason = error instanceof MultiplayerError ? error.reason : 'unavailable';
-      if (reason !== 'room-not-found') {
-        this.connectionNote.set('No pudimos cerrar esta sala. Revisa tu conexión y vuelve a intentarlo.');
-        return;
-      }
-    }
-    await this.router.navigateByUrl('/juegos/versiculo-o-inventiculo');
+    this.sound.playButtonClick();
+    await this.router.navigateByUrl(`/juegos/versiculo-o-inventiculo/sala/${this.code}/configurar`);
   }
 
   private async load(): Promise<void> {
@@ -197,6 +192,7 @@ export class GamePageComponent {
       this.loadPhase.set('ready');
     } catch (error) {
       const reason = error instanceof GameError ? error.reason : 'unavailable';
+      if (reason === 'match-not-found' && await this.followReopenedRoom()) return;
       this.fail(reason === 'match-not-found'
         ? 'La partida todavía no comenzó o ya terminó de cerrarse.'
         : 'No pudimos recuperar la partida. Revisa tu conexión e inténtalo otra vez.');
@@ -210,11 +206,29 @@ export class GamePageComponent {
       const snapshot = await this.game.restoreMatch(this.code);
       this.applyClock(snapshot);
       this.connectionNote.set('');
-    } catch {
+    } catch (error) {
+      if (error instanceof GameError && error.reason === 'match-not-found' && await this.followReopenedRoom()) return;
       this.connectionNote.set('Reconectando con la partida…');
     } finally {
       this.refreshing = false;
     }
+  }
+
+  /**
+   * «Jugar otra vez» descarta la partida y devuelve la sala a la espera. Quien
+   * sigue en los resultados pasa a la sala y entra en la siguiente partida con
+   * los demás. Se decide al leer, no con el aviso en tiempo real: el sondeo ya
+   * llega a todos los teléfonos, con conexión en vivo o sin ella.
+   */
+  private async followReopenedRoom(): Promise<boolean> {
+    try {
+      const room = await this.multiplayer.restoreRoom(this.code);
+      if (room.status !== 'waiting') return false;
+    } catch {
+      return false;
+    }
+    await this.router.navigateByUrl(`/juegos/versiculo-o-inventiculo/sala/${this.code}`);
+    return true;
   }
 
   private applyClock(snapshot: MatchSnapshot): void {

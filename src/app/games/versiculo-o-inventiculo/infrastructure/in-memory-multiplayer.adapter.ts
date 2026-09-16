@@ -15,6 +15,7 @@ import {
   type RoomCode
 } from '../domain/room';
 import type { MatchSetup } from '../domain/setup-config';
+import { MatchSnapshotStore } from './match-snapshot.store';
 import { RoomSnapshotStore } from './room-snapshot.store';
 import { SeatStore } from './seat.store';
 
@@ -31,6 +32,7 @@ const CODE_ATTEMPTS = 12;
 export class InMemoryMultiplayerAdapter implements MultiplayerPort {
   private readonly document = inject(DOCUMENT);
   private readonly snapshots = inject(RoomSnapshotStore);
+  private readonly matches = inject(MatchSnapshotStore);
   private readonly seats = inject(SeatStore);
   private readonly state = signal<Room | null>(this.snapshots.read());
   private readonly seat = signal(this.seats.read());
@@ -77,7 +79,9 @@ export class InMemoryMultiplayerAdapter implements MultiplayerPort {
   }
 
   async restoreRoom(code: RoomCode): Promise<Room> {
-    const current = this.state() ?? this.snapshots.read();
+    // La copia guardada manda: la partida en memoria cambia el estado de la
+    // sala escribiendo ahí, sin pasar por esta señal.
+    const current = this.snapshots.read();
     if (!current || current.code !== code) {
       throw new MultiplayerError('room-not-found', `La sala ${code} ya no está abierta.`);
     }
@@ -114,6 +118,28 @@ export class InMemoryMultiplayerAdapter implements MultiplayerPort {
     this.takeSeat(room.code, participant.id);
     this.commit({ ...room, participants: [...room.participants, participant] });
     return participant;
+  }
+
+  async reopenRoom(code: RoomCode, setup: MatchSetup): Promise<Room> {
+    const room = await this.restoreRoom(code);
+    if (this.self()?.role !== 'host') {
+      throw new MultiplayerError('room-not-found', `La sala ${code} no es de este dispositivo.`);
+    }
+    if (room.status === 'playing') throw new MultiplayerError('room-started', 'La partida sigue en curso.');
+
+    const reopened: Room = {
+      ...room,
+      setup,
+      status: 'waiting',
+      participants: room.participants.map(participant => participant.role === 'host'
+        ? { ...participant, plays: setup.hostRole === 'player' }
+        : participant)
+    };
+    // La partida en memoria vive junto a la sala; reabrirla la descarta, igual
+    // que `reopen_versiculo_room` en la base.
+    this.matches.write(null);
+    this.commit(reopened);
+    return reopened;
   }
 
   async closeRoom(code: RoomCode): Promise<void> {

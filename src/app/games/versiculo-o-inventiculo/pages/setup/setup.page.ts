@@ -1,9 +1,10 @@
-import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
-import { Router, RouterLink } from '@angular/router';
+import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 import { GameIconComponent } from '../../../../game-icon.component';
 import { SoundService } from '../../../../sound.service';
-import { MultiplayerPort } from '../../domain/multiplayer.port';
+import { MultiplayerError, MultiplayerPort } from '../../domain/multiplayer.port';
+import { isRoomCode, type RoomCode } from '../../domain/room';
 import {
   DIFFICULTIES,
   QUESTION_COUNTS,
@@ -23,10 +24,12 @@ import { ManualHeaderComponent } from '../../ui/manual-header.component';
 })
 export class SetupPageComponent {
   private readonly drafts = inject(SetupDraftStore);
+  private readonly route = inject(ActivatedRoute);
   private readonly multiplayer = inject(MultiplayerPort);
   private readonly router = inject(Router);
   private readonly sound = inject(SoundService);
   private readonly initial = this.drafts.read();
+  private touched = false;
 
   readonly difficulties = DIFFICULTIES;
   readonly questionCounts = QUESTION_COUNTS;
@@ -36,14 +39,32 @@ export class SetupPageComponent {
   readonly creating = signal(false);
   readonly createError = signal('');
 
+  /**
+   * Con código en la ruta la pantalla viene de «Jugar otra vez»: no abre otra
+   * sala, reinicia esa para quienes ya estaban dentro. Si la sala se cerró
+   * entretanto, vuelve a ser la configuración de siempre.
+   */
+  readonly reopenCode = signal<RoomCode | null>(this.routeCode());
+  readonly resultsRoute = computed(() => {
+    const code = this.reopenCode();
+    return code ? `/juegos/versiculo-o-inventiculo/partida/${code}` : '/';
+  });
+
+  constructor() {
+    const code = this.reopenCode();
+    if (code) void this.loadRoom(code);
+  }
+
   chooseDifficulty(difficulty: Difficulty): void {
     this.sound.playButtonClick();
+    this.touched = true;
     this.difficulty.set(difficulty);
     this.createError.set('');
   }
 
   chooseHostRole(role: HostRole): void {
     this.sound.playButtonClick();
+    this.touched = true;
     this.hostRole.set(role);
     this.createError.set('');
   }
@@ -54,11 +75,15 @@ export class SetupPageComponent {
     const nextValue = this.questionCounts[nextIndex];
     if (nextValue === undefined || nextValue === this.questionCount()) return;
     this.sound.playButtonClick();
+    this.touched = true;
     this.questionCount.set(nextValue);
     this.createError.set('');
   }
 
-  /** Guarda la configuración, abre la sala y entrega el código al anfitrión. */
+  /**
+   * Guarda la configuración y abre la sala, o reinicia la que ya estaba
+   * abierta, y entrega el código al anfitrión.
+   */
   async createRoom(): Promise<void> {
     if (this.creating()) return;
     const setup: MatchSetup = {
@@ -70,13 +95,51 @@ export class SetupPageComponent {
     this.drafts.write(setup);
     this.creating.set(true);
     this.createError.set('');
+    const code = this.reopenCode();
     try {
-      const room = await this.multiplayer.createRoom(setup);
+      const room = code
+        ? await this.multiplayer.reopenRoom(code, setup)
+        : await this.multiplayer.createRoom(setup);
       await this.router.navigate(['/juegos/versiculo-o-inventiculo/sala', room.code]);
-    } catch {
-      this.createError.set('No pudimos abrir la sala. Vuelve a intentarlo.');
+    } catch (error) {
+      if (!code) {
+        this.createError.set('No pudimos abrir la sala. Vuelve a intentarlo.');
+        return;
+      }
+      const reason = error instanceof MultiplayerError ? error.reason : 'unavailable';
+      if (reason === 'room-not-found') this.forgetRoom(code);
+      else this.createError.set(reason === 'room-started'
+        ? 'La partida de esta sala sigue en curso. Espera a que termine.'
+        : 'No pudimos reiniciar la sala. Vuelve a intentarlo.');
     } finally {
       this.creating.set(false);
     }
+  }
+
+  /** Parte de la configuración que ya tenía la sala, salvo que ya se haya tocado. */
+  private async loadRoom(code: RoomCode): Promise<void> {
+    try {
+      const room = await this.multiplayer.restoreRoom(code);
+      if (this.multiplayer.self()?.role !== 'host') {
+        this.forgetRoom(code);
+        return;
+      }
+      if (this.touched) return;
+      this.difficulty.set(room.setup.difficulty);
+      this.questionCount.set(room.setup.questionCount);
+      this.hostRole.set(room.setup.hostRole);
+    } catch (error) {
+      if (error instanceof MultiplayerError && error.reason === 'room-not-found') this.forgetRoom(code);
+    }
+  }
+
+  private forgetRoom(code: RoomCode): void {
+    this.reopenCode.set(null);
+    this.createError.set(`La sala ${code} ya no está abierta. Toca «Crear sala» para abrir una nueva.`);
+  }
+
+  private routeCode(): RoomCode | null {
+    const code = (this.route.snapshot.paramMap.get('codigo') ?? '').toUpperCase();
+    return isRoomCode(code) ? code : null;
   }
 }

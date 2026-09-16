@@ -126,3 +126,58 @@ test('los resultados finales muestran clasificación, estadísticas y salida', a
   await expect(page.getByRole('button', { name: 'Jugar otra vez' })).toBeVisible();
   await expect(page.getByRole('button', { name: 'Volver al centro', exact: true })).toBeVisible();
 });
+
+test('jugar otra vez reinicia la misma sala y la nueva partida llega a todos', async ({ page, context }) => {
+  const now = Date.now();
+  const question = {
+    id: 'easy-01', difficulty: 'easy', statement: 'Mejor es perro vivo que león muerto.',
+    isVerse: true, reference: 'Ec 9:4', explanation: 'Suena a refrán de pueblo.'
+  };
+  await page.addInitScript(
+    ([roomStorage, roomValue, matchStorage, matchValue]) => {
+      localStorage.setItem(roomStorage!, roomValue!);
+      localStorage.setItem(matchStorage!, matchValue!);
+    },
+    [roomKey, JSON.stringify({ ...room, status: 'finished' }), matchKey, JSON.stringify({
+      code: 'ABCD', questions: [question], roundIndex: 0, phase: 'finished',
+      phaseStartedAt: now, phaseEndsAt: null,
+      answers: [
+        { participantId: 'host', roundIndex: 0, choice: 'verse', answeredAt: now, responseMs: 1_000, correct: true, points: 933 },
+        { participantId: 'guest-1', roundIndex: 0, choice: 'invented', answeredAt: now, responseMs: 2_000, correct: false, points: 0 }
+      ]
+    })] as const
+  );
+  await page.goto(gameUrl);
+  await expect(page.getByRole('heading', { name: '¡Partida terminada!' })).toBeVisible();
+
+  // Leo mira los resultados desde otra pestaña, que hace de su teléfono.
+  const guestPage = await context.newPage();
+  await withoutBackend(guestPage);
+  await guestPage.addInitScript(() => sessionStorage.setItem(
+    'chairo:versiculo-o-inventiculo:seat',
+    JSON.stringify({ code: 'ABCD', participantId: 'guest-1' })
+  ));
+  await guestPage.goto(gameUrl);
+  await expect(guestPage.getByText('Si el anfitrión prepara otra partida, te llevaremos a la sala automáticamente.')).toBeVisible();
+  await expect(guestPage.getByRole('button', { name: 'Jugar otra vez' })).toHaveCount(0);
+
+  await page.getByRole('button', { name: 'Jugar otra vez' }).click();
+  await expect(page).toHaveURL(/sala\/ABCD\/configurar$/);
+  await expect(page.getByRole('radio', { name: 'Fácil' })).toBeChecked();
+  await expect(page.locator('.question-count')).toHaveText('5');
+  await page.getByRole('button', { name: 'Reiniciar sala' }).click();
+
+  await expect(page).toHaveURL(/sala\/ABCD$/);
+  await expect(page.getByRole('listitem').filter({ hasText: 'Leo' })).toBeVisible();
+  await expect(guestPage).toHaveURL(/sala\/ABCD$/);
+  await expect(guestPage.getByText('Esperando a que el anfitrión comience', { exact: true })).toBeVisible();
+
+  await page.getByRole('button', { name: 'Comenzar partida' }).click();
+  await expect(page).toHaveURL(/partida\/ABCD$/);
+  await expect(guestPage).toHaveURL(/partida\/ABCD$/);
+  for (const phone of [page, guestPage]) {
+    await expect(phone.getByRole('button', { name: 'Versículo' })).toBeVisible({ timeout: 5_000 });
+    await expect(phone.getByText('Ronda 1/5')).toBeVisible();
+    await expect(phone.getByText('933', { exact: true })).toHaveCount(0);
+  }
+});

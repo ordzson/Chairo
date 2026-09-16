@@ -405,6 +405,48 @@ exception when unique_violation then
 end;
 $$;
 
+-- «Jugar otra vez» sin abrir otra sala: la misma vuelve a la espera con la
+-- configuración nueva. Quienes siguen dentro conservan su asiento, y la
+-- partida anterior se borra entera —preguntas, respuestas y puntos— para que
+-- la siguiente empiece desde cero para todos. Una partida en curso no se
+-- puede reiniciar a espaldas de quien está respondiendo.
+create or replace function public.reopen_versiculo_room(
+  p_code text,
+  p_difficulty text,
+  p_question_count integer,
+  p_host_role text
+)
+returns void
+language plpgsql
+security definer
+set search_path = public
+as $$
+declare
+  room public.rooms%rowtype;
+begin
+  select * into room from public.rooms
+    where code = upper(p_code) and closed_at is null and host_id = auth.uid()
+    for update;
+  if not found then raise exception 'room-not-found'; end if;
+  if room.status = 'playing' then raise exception 'room-started'; end if;
+
+  delete from public.versiculo_answers where room_id = room.id;
+  delete from public.versiculo_matches where room_id = room.id;
+
+  -- Los `check` de la tabla rechazan una configuración que no existe.
+  update public.rooms
+    set status = 'waiting',
+        started_at = null,
+        difficulty = p_difficulty,
+        question_count = p_question_count,
+        host_role = p_host_role
+    where id = room.id;
+  update public.participants
+    set plays = (p_host_role = 'player')
+    where room_id = room.id and role = 'host';
+end;
+$$;
+
 -- ------------------------------------------------------------------- RLS ---
 
 alter table public.rooms enable row level security;
@@ -420,9 +462,11 @@ revoke all on function public.versiculo_question_seconds(jsonb) from public, ano
 revoke all on function public.start_versiculo_match(text, jsonb) from public, anon;
 revoke all on function public.get_versiculo_match(text) from public, anon;
 revoke all on function public.submit_versiculo_answer(text, text) from public, anon;
+revoke all on function public.reopen_versiculo_room(text, text, integer, text) from public, anon;
 grant execute on function public.start_versiculo_match(text, jsonb) to authenticated;
 grant execute on function public.get_versiculo_match(text) to authenticated;
 grant execute on function public.submit_versiculo_answer(text, text) to authenticated;
+grant execute on function public.reopen_versiculo_room(text, text, integer, text) to authenticated;
 
 -- Este archivo es la única fuente de las políticas de estas dos tablas, así
 -- que cualquier otra se retira antes de crear las suyas. `drop policy if

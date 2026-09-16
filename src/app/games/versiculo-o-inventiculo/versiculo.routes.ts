@@ -48,6 +48,12 @@ export const versiculoRoutes: Routes = [
         loadComponent: () => import('./pages/setup/setup.page').then(module => module.SetupPageComponent)
       },
       {
+        // «Jugar otra vez»: la misma configuración, pero reinicia la sala abierta.
+        path: 'sala/:codigo/configurar',
+        title: 'Configurar ¿Versículo o inventículo? · Chairo',
+        loadComponent: () => import('./pages/setup/setup.page').then(module => module.SetupPageComponent)
+      },
+      {
         path: 'sala/:codigo',
         title: 'Sala de ¿Versículo o inventículo? · Chairo',
         loadComponent: () => import('./pages/room/room.page').then(module => module.RoomPageComponent)

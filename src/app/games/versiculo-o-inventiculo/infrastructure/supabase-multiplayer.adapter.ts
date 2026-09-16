@@ -164,6 +164,33 @@ export class SupabaseMultiplayerAdapter implements MultiplayerPort {
   }
 
   /**
+   * La base comprueba que la sala es de esta sesión, descarta la partida y
+   * devuelve la sala a la espera en una sola transacción. Leerla después deja
+   * la señal en `waiting` antes de que la pantalla de sala la observe: con el
+   * estado anterior esa pantalla devolvería al anfitrión a los resultados.
+   */
+  async reopenRoom(code: RoomCode, setup: MatchSetup): Promise<Room> {
+    const client = await this.connect();
+    const { error } = await client.rpc('reopen_versiculo_room', {
+      p_code: code,
+      p_difficulty: setup.difficulty,
+      p_question_count: setup.questionCount,
+      p_host_role: setup.hostRole
+    });
+
+    if (error) {
+      if (error.message.includes('room-not-found')) {
+        throw new MultiplayerError('room-not-found', `La sala ${code} ya no está abierta.`);
+      }
+      if (error.message.includes('room-started')) {
+        throw new MultiplayerError('room-started', 'La partida sigue en curso.');
+      }
+      throw new MultiplayerError('unavailable', 'No pudimos reiniciar la sala.');
+    }
+    return this.restoreRoom(code);
+  }
+
+  /**
    * Cierre de la sala por el anfitrión. Un fallo aquí no puede pasar en
    * silencio: la sala seguiría abierta reteniendo su código y la pantalla
    * habría vuelto a la configuración como si todo hubiera ido bien.

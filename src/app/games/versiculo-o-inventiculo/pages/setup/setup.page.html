@@ -4,9 +4,9 @@
   <article class="mission-manual setup-manual motion-rise" aria-labelledby="setup-title">
     <div class="binder-spine" aria-hidden="true"></div>
     <chairo-manual-header
-      backLink="/"
-      backLabel="Volver al centro de juegos"
-      [note]="['Prepara', 'la partida']"
+      [backLink]="resultsRoute()"
+      [backLabel]="reopenCode() ? 'Volver a los resultados' : 'Volver al centro de juegos'"
+      [note]="reopenCode() ? ['Otra partida,', 'misma sala'] : ['Prepara', 'la partida']"
     />
 
     <h1 id="setup-title" class="game-title motion-slide-in">¿Versículo o inventículo?</h1>
@@ -114,10 +114,14 @@
 
       <button class="create-room-button pressable" type="submit" [disabled]="creating()">
         <chairo-game-icon name="play" />
-        <span>{{ creating() ? 'Creando sala…' : 'Crear sala' }}</span>
+        @if (reopenCode()) {
+          <span>{{ creating() ? 'Reiniciando sala…' : 'Reiniciar sala' }}</span>
+        } @else {
+          <span>{{ creating() ? 'Creando sala…' : 'Crear sala' }}</span>
+        }
       </button>
       <p class="save-status" aria-live="polite" aria-atomic="true">{{ createError() }}</p>
-      <a class="cancel-link" routerLink="/">Cancelar</a>
+      <a class="cancel-link" [routerLink]="resultsRoute()">Cancelar</a>
     </form>
   </article>
 </main>
