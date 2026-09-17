@@ -8,7 +8,7 @@ Sitio publicado: **https://ordzson.github.io/Chairo/**
 
 - **Centro de juegos**: terminado. Índice, ficha de acetato y preferencia de modalidad guardada en el navegador.
 - **¿Versículo o inventículo?**: jugable hasta la sala de espera. Configuración, sala con QR y entrada del invitado desde su propio teléfono, sincronizadas por Supabase. La cuenta regresiva, las preguntas, la revelación y los resultados llegan en etapas posteriores.
-- **Jeopardy**: jugable. Tablero de 3 × 3 a 8 × 8, sala con QR para hasta cuatro jugadores —el anfitrión conduce y juzga, y solo juega si nadie más entra—, turnos, robos que suman o restan, dos apuestas especiales, casillas dobles y «Jugar otra vez» en la misma sala. Con Supabase la partida la arbitra la base de datos y la respuesta solo la ve el anfitrión mientras juzga.
+- **Jeopardy**: jugable. Tablero de 3 × 3 a 8 × 8, sala con QR para hasta cuatro jugadores —el anfitrión conduce y juzga, y solo juega si nadie más entra—, turnos, robo abierto a todos —se lo queda quien lo pide primero, y suma o resta—, dos apuestas especiales, casillas dobles y «Jugar otra vez» en la misma sala. El anfitrión puede dar diez segundos o terminar el turno cuando quiera, y ver la pregunta y la respuesta de cualquier casilla. Con Supabase la partida la arbitra la base de datos y ninguna respuesta llega a los jugadores.
 - Los otros cuatro juegos: **Próximamente**.
 
 ## Ejecutar

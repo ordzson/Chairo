@@ -1,7 +1,9 @@
 import {
+  COUNTDOWN_SECONDS,
   JEOPARDY_COLORS,
   MAX_PLAYERS,
   SPECIAL_COUNT,
+  TURN_PHASES,
   cellId,
   cellPoints,
   cellValue,
@@ -11,6 +13,7 @@ import {
   playingPlayers,
   stealOrder,
   wagerLimit,
+  type JeopardyAnswerKey,
   type JeopardyCell,
   type JeopardyPhase,
   type JeopardyPlayer,
@@ -37,9 +40,11 @@ export interface JeopardyState {
   readonly turnPlayerId: string | null;
   readonly activeCellId: string | null;
   readonly attemptPlayerId: string | null;
-  /** Quienes todavía pueden robar la casilla abierta; el primero decide. */
+  /** Quienes todavía pueden robar la casilla abierta; se la queda quien lo pida primero. */
   readonly stealQueue: readonly string[];
   readonly wager: number | null;
+  /** Fin de la cuenta regresiva del anfitrión, en milisegundos; `null` sin cuenta. */
+  readonly deadline: number | null;
   readonly message: string;
   readonly cells: readonly JeopardyCell[];
 }
@@ -58,6 +63,7 @@ export function openRoom(code: string, setup: JeopardySetup, hostId: string, hos
     attemptPlayerId: null,
     stealQueue: [],
     wager: null,
+    deadline: null,
     message: 'Sala abierta.',
     cells: []
   };
@@ -110,6 +116,7 @@ export function startGame(state: JeopardyState, selfId: string | null, cells: re
     attemptPlayerId: null,
     stealQueue: [],
     wager: null,
+    deadline: null,
     message: `Turno de ${first.name}.`
   };
 }
@@ -126,6 +133,7 @@ export function selectCell(state: JeopardyState, selfId: string | null, id: stri
     attemptPlayerId: self.id,
     stealQueue: [],
     wager: null,
+    deadline: null,
     phase: cell.special ? 'wager' : 'question',
     message: cell.special
       ? `${self.name} encontró una apuesta especial.`
@@ -138,14 +146,14 @@ export function placeWager(state: JeopardyState, selfId: string | null, value: n
   if (state.phase !== 'wager') throw new JeopardyError('invalid-move');
   if (state.turnPlayerId !== self.id) throw new JeopardyError('not-your-turn');
   const wager = normalizeWager(value, wagerLimit(self.score, state.cells));
-  return { ...state, wager, phase: 'question', message: `${self.name} apuesta ${wager} puntos.` };
+  return { ...state, wager, phase: 'question', deadline: null, message: `${self.name} apuesta ${wager} puntos.` };
 }
 
 export function markAnswered(state: JeopardyState, selfId: string | null): JeopardyState {
   const self = requireSeat(state, selfId);
   if (state.phase !== 'question') throw new JeopardyError('invalid-move');
   if (state.attemptPlayerId !== self.id) throw new JeopardyError('not-your-turn');
-  return { ...state, phase: 'judging', message: `${self.name} dio su respuesta. El anfitrión decide.` };
+  return { ...state, phase: 'judging', deadline: null, message: `${self.name} dio su respuesta. El anfitrión decide.` };
 }
 
 /** Cada intento suma o resta lo que está en juego, también al robar. */
@@ -162,37 +170,91 @@ export function judgeAnswer(state: JeopardyState, selfId: string | null, correct
     : player);
   if (correct) return closeClue({ ...state, players }, `${attempt.name} acertó y suma ${points}.`);
 
-  // Con cola ya abierta falló quien robaba, que es el primero de la cola.
-  const queue = state.stealQueue.length > 0 ? state.stealQueue.slice(1) : stealOrder(players, attempt.id);
+  // Si falló quien eligió la casilla, el robo se abre a todos los demás; si
+  // falló quien robaba, siguen quienes todavía no lo intentaron.
+  const queue = attempt.id === state.turnPlayerId ? stealOrder(players, attempt.id) : state.stealQueue;
   if (queue.length === 0) return closeClue({ ...state, players }, `${attempt.name} falló y pierde ${points}.`);
 
-  const next = players.find(player => player.id === queue[0]);
   return {
     ...state,
     players,
     phase: 'steal',
     stealQueue: queue,
     attemptPlayerId: null,
-    message: `${attempt.name} pierde ${points}. ${next?.name ?? ''} puede robar.`
+    deadline: null,
+    message: `${attempt.name} pierde ${points}. Roba quien lo pida primero.`
   };
 }
 
+/** Todos los que pueden robar lo piden a la vez: el primero se queda el intento y lo gasta. */
 export function acceptSteal(state: JeopardyState, selfId: string | null): JeopardyState {
   const self = requireSeat(state, selfId);
-  if (state.phase !== 'steal') throw new JeopardyError('invalid-move');
-  if (state.stealQueue[0] !== self.id) throw new JeopardyError('not-your-turn');
+  if (state.phase !== 'steal') {
+    const stolen = (state.phase === 'question' || state.phase === 'judging') && state.attemptPlayerId !== state.turnPlayerId;
+    throw new JeopardyError(stolen ? 'steal-taken' : 'invalid-move');
+  }
+  if (!state.stealQueue.includes(self.id)) throw new JeopardyError('not-your-turn');
   const points = cellPoints(activeCell(state), state.wager);
-  return { ...state, phase: 'question', attemptPlayerId: self.id, message: `${self.name} intenta robar por ${points} puntos.` };
+  return {
+    ...state,
+    phase: 'question',
+    attemptPlayerId: self.id,
+    stealQueue: state.stealQueue.filter(id => id !== self.id),
+    deadline: null,
+    message: `${self.name} intenta robar por ${points} puntos.`
+  };
 }
 
+/** Quien no quiere robar se retira; si ya no queda nadie, la casilla se cierra. */
 export function passSteal(state: JeopardyState, selfId: string | null): JeopardyState {
   const self = requireSeat(state, selfId);
   if (state.phase !== 'steal') throw new JeopardyError('invalid-move');
-  if (state.stealQueue[0] !== self.id) throw new JeopardyError('not-your-turn');
-  const queue = state.stealQueue.slice(1);
+  if (!state.stealQueue.includes(self.id)) throw new JeopardyError('not-your-turn');
+  const queue = state.stealQueue.filter(id => id !== self.id);
   if (queue.length === 0) return closeClue(state, `${self.name} dejó pasar el robo.`);
-  const next = state.players.find(player => player.id === queue[0]);
-  return { ...state, stealQueue: queue, message: `${self.name} pasa. ${next?.name ?? ''} puede robar.` };
+  return { ...state, stealQueue: queue, message: `${self.name} pasa.` };
+}
+
+/**
+ * Diez segundos para quien tiene la jugada: elegir, apostar, responder o
+ * robar. Al vencer, el turno termina como si lo terminara el anfitrión.
+ * Mientras juzga no hay nada que apurar. Pedirla otra vez la reinicia.
+ */
+export function startCountdown(state: JeopardyState, selfId: string | null, now: number): JeopardyState {
+  requireHost(state, selfId);
+  if (!TURN_PHASES.includes(state.phase) || state.phase === 'judging') throw new JeopardyError('invalid-move');
+  return { ...state, deadline: now + COUNTDOWN_SECONDS * 1000, message: `El anfitrión dio ${COUNTDOWN_SECONDS} segundos.` };
+}
+
+/** El anfitrión termina el turno en cualquier momento, con o sin casilla abierta. */
+export function endTurn(state: JeopardyState, selfId: string | null): JeopardyState {
+  requireHost(state, selfId);
+  if (!TURN_PHASES.includes(state.phase)) throw new JeopardyError('invalid-move');
+  return finishTurn(state, 'El anfitrión terminó el turno.');
+}
+
+/** Aplica la cuenta vencida. Sin cuenta, o sin vencer, devuelve el mismo estado. */
+export function expireCountdown(state: JeopardyState, now: number): JeopardyState {
+  const deadline = state.deadline ?? null;
+  if (deadline === null || now < deadline) return state;
+  return finishTurn(state, 'Se acabó el tiempo.');
+}
+
+/** Pregunta y respuesta de cualquier casilla, usada o no. Solo para el anfitrión. */
+export function answerKey(state: JeopardyState, selfId: string | null, id: string): JeopardyAnswerKey {
+  requireHost(state, selfId);
+  const cell = state.cells.find(item => item.id === id);
+  if (!cell) throw new JeopardyError('invalid-move');
+  return {
+    id: cell.id,
+    category: cell.question.category,
+    value: cell.value,
+    special: cell.special,
+    double: cell.double,
+    prompt: cell.question.prompt,
+    answer: cell.question.answer,
+    reference: cell.question.reference || null
+  };
 }
 
 /**
@@ -218,6 +280,7 @@ export function reopenRoom(state: JeopardyState, selfId: string | null, setup: J
     attemptPlayerId: null,
     stealQueue: [],
     wager: null,
+    deadline: null,
     message: 'Sala lista para otra ronda.'
   };
 }
@@ -239,7 +302,7 @@ export function leaveRoom(state: JeopardyState, selfId: string | null): Jeopardy
 export function viewRoom(state: JeopardyState, selfId: string | null): JeopardyRoom {
   const self = state.players.find(player => player.id === selfId) ?? null;
   const cell = self ? state.cells.find(item => item.id === state.activeCellId) ?? null : null;
-  const judging = self?.isHost === true && state.phase === 'judging';
+  const hostView = self?.isHost === true && state.phase !== 'wager';
   return {
     code: state.code,
     status: state.status,
@@ -251,6 +314,7 @@ export function viewRoom(state: JeopardyState, selfId: string | null): JeopardyR
     attemptPlayerId: state.attemptPlayerId,
     stealQueue: state.stealQueue,
     wager: state.wager,
+    deadline: state.deadline ?? null,
     message: state.message,
     board: state.cells.map(({ id, column, row, category, value, used }) => ({ id, column, row, category, value, used })),
     clue: cell ? {
@@ -261,8 +325,8 @@ export function viewRoom(state: JeopardyState, selfId: string | null): JeopardyR
       special: cell.special,
       double: cell.double,
       prompt: state.phase === 'wager' ? null : cell.question.prompt,
-      answer: judging ? cell.question.answer : null,
-      reference: judging ? cell.question.reference || null : null
+      answer: hostView ? cell.question.answer : null,
+      reference: hostView ? cell.question.reference || null : null
     } : null
   };
 }
@@ -282,12 +346,20 @@ export function isJeopardyState(value: unknown): value is JeopardyState {
 /** Cierra la casilla y pasa el turno a quien sigue a quien la eligió, aunque la haya ganado otro. */
 function closeClue(state: JeopardyState, result: string): JeopardyState {
   const cells = state.cells.map(cell => cell.id === state.activeCellId ? { ...cell, used: true } : cell);
-  const cleared = { ...state, cells, activeCellId: null, attemptPlayerId: null, stealQueue: [], wager: null };
+  const cleared = { ...state, cells, activeCellId: null, attemptPlayerId: null, stealQueue: [], wager: null, deadline: null };
   if (cells.every(cell => cell.used)) {
     return { ...cleared, status: 'finished', phase: 'finished', turnPlayerId: null, message: `${result} Tablero completo.` };
   }
   const next = nextPlayerAfter(state.players, state.turnPlayerId);
   return { ...cleared, phase: 'board', turnPlayerId: next?.id ?? null, message: `${result} Turno de ${next?.name ?? ''}.` };
+}
+
+/** Sin casilla abierta pasa al siguiente jugador; con una abierta la cierra sin puntos. */
+function finishTurn(state: JeopardyState, result: string): JeopardyState {
+  if (!TURN_PHASES.includes(state.phase)) return { ...state, deadline: null };
+  if (state.phase !== 'board') return closeClue(state, result);
+  const next = nextPlayerAfter(state.players, state.turnPlayerId);
+  return { ...state, turnPlayerId: next?.id ?? null, deadline: null, message: `${result} Turno de ${next?.name ?? ''}.` };
 }
 
 function activeCell(state: JeopardyState): JeopardyCell {

@@ -4,7 +4,15 @@ import { createClient, type RealtimeChannel, type SupabaseClient } from '@supaba
 
 import type { GameColor } from '../../../game';
 import { SUPABASE_CONFIG } from '../../../supabase.config';
-import type { JeopardyCell, JeopardyClue, JeopardyPlayer, JeopardyRoom, JeopardySetup, JeopardyTile } from '../domain/jeopardy';
+import type {
+  JeopardyAnswerKey,
+  JeopardyCell,
+  JeopardyClue,
+  JeopardyPlayer,
+  JeopardyRoom,
+  JeopardySetup,
+  JeopardyTile
+} from '../domain/jeopardy';
 import { JeopardyError, JeopardyPort, jeopardyErrorFrom, type JeopardySeatDraft } from '../domain/jeopardy.port';
 
 /** Respaldo del aviso en tiempo real: si el websocket se cae, la sala sigue al día. */
@@ -104,6 +112,19 @@ export class SupabaseJeopardyAdapter implements JeopardyPort {
     return this.call('pass_jeopardy_steal', { p_code: code });
   }
 
+  startCountdown(code: string): Promise<JeopardyRoom> {
+    return this.call('start_jeopardy_countdown', { p_code: code });
+  }
+
+  endTurn(code: string): Promise<JeopardyRoom> {
+    return this.call('end_jeopardy_turn', { p_code: code });
+  }
+
+  /** Solo lee: no cuenta como jugada, así no descarta la sala que se está refrescando. */
+  async revealCell(code: string, cellId: string): Promise<JeopardyAnswerKey> {
+    return parseAnswerKey(await this.rpc('get_jeopardy_cell', { p_code: code, p_cell_id: cellId }));
+  }
+
   reopenRoom(code: string, setup: JeopardySetup): Promise<JeopardyRoom> {
     return this.call('reopen_jeopardy_room', {
       p_code: code,
@@ -131,8 +152,12 @@ export class SupabaseJeopardyAdapter implements JeopardyPort {
   }
 
   private async run(name: string, parameters: Record<string, unknown>): Promise<unknown> {
-    const client = await this.connect();
     this.writes += 1;
+    return this.rpc(name, parameters);
+  }
+
+  private async rpc(name: string, parameters: Record<string, unknown>): Promise<unknown> {
+    const client = await this.connect();
     const { data, error } = await client.rpc(name, parameters);
     if (error) {
       const failure = jeopardyErrorFrom(error.message);
@@ -227,6 +252,10 @@ function parseSnapshot(value: unknown): Snapshot {
     throw new JeopardyError('unavailable', 'La sala devolvió un estado inválido.');
   }
   const clue = raw['clue'] as Record<string, unknown> | null;
+  // La cuenta llega en el reloj del servidor; se traslada al de este teléfono.
+  const deadline = typeof raw['deadline'] === 'string'
+    ? Date.now() + Date.parse(raw['deadline']) - Date.parse(String(raw['serverNow']))
+    : null;
   return {
     roomId: raw['roomId'],
     room: {
@@ -251,6 +280,7 @@ function parseSnapshot(value: unknown): Snapshot {
       attemptPlayerId: optionalString(raw['attemptPlayerId']),
       stealQueue: Array.isArray(raw['stealQueue']) ? raw['stealQueue'].map(String) : [],
       wager: raw['wager'] === null || raw['wager'] === undefined ? null : Number(raw['wager']),
+      deadline: deadline !== null && Number.isFinite(deadline) ? deadline : null,
       message: String(raw['message'] ?? ''),
       board: (raw['board'] as Record<string, unknown>[]).map((tile): JeopardyTile => ({
         id: String(tile['id']),
@@ -272,6 +302,23 @@ function parseSnapshot(value: unknown): Snapshot {
         reference: optionalString(clue['reference'])
       } satisfies JeopardyClue : null
     }
+  };
+}
+
+function parseAnswerKey(value: unknown): JeopardyAnswerKey {
+  const raw = (value ?? {}) as Record<string, unknown>;
+  if (typeof raw['id'] !== 'string' || typeof raw['prompt'] !== 'string' || typeof raw['answer'] !== 'string') {
+    throw new JeopardyError('unavailable', 'La casilla devolvió un estado inválido.');
+  }
+  return {
+    id: raw['id'],
+    category: String(raw['category'] ?? ''),
+    value: Number(raw['value']),
+    special: Boolean(raw['special']),
+    double: Boolean(raw['double']),
+    prompt: raw['prompt'],
+    answer: raw['answer'],
+    reference: optionalString(raw['reference'])
   };
 }
 

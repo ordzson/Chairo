@@ -1,7 +1,7 @@
 import type { Signal } from '@angular/core';
 
 import type { GameColor } from '../../../game';
-import type { JeopardyCell, JeopardyRoom, JeopardySetup } from './jeopardy';
+import type { JeopardyAnswerKey, JeopardyCell, JeopardyRoom, JeopardySetup } from './jeopardy';
 
 export type JeopardyErrorReason =
   | 'room-not-found'
@@ -13,6 +13,7 @@ export type JeopardyErrorReason =
   | 'not-host'
   | 'not-seated'
   | 'not-your-turn'
+  | 'steal-taken'
   | 'invalid-move'
   | 'unavailable';
 
@@ -27,6 +28,7 @@ export const JEOPARDY_ERROR_REASONS: readonly JeopardyErrorReason[] = [
   'not-host',
   'not-seated',
   'not-your-turn',
+  'steal-taken',
   'invalid-move'
 ];
 
@@ -62,8 +64,15 @@ export abstract class JeopardyPort {
   abstract setWager(code: string, wager: number): Promise<JeopardyRoom>;
   abstract markAnswered(code: string): Promise<JeopardyRoom>;
   abstract judge(code: string, correct: boolean): Promise<JeopardyRoom>;
+  /** Roba quien lo pida primero; a los demás les llega `steal-taken`. */
   abstract acceptSteal(code: string): Promise<JeopardyRoom>;
   abstract passSteal(code: string): Promise<JeopardyRoom>;
+  /** Diez segundos para quien tiene la jugada; al vencer, el turno termina. Solo el anfitrión. */
+  abstract startCountdown(code: string): Promise<JeopardyRoom>;
+  /** Termina el turno ya: sin casilla abierta pasa al siguiente; con una, la cierra sin puntos. */
+  abstract endTurn(code: string): Promise<JeopardyRoom>;
+  /** Pregunta y respuesta de una casilla. Solo el anfitrión. */
+  abstract revealCell(code: string, cellId: string): Promise<JeopardyAnswerKey>;
   /** «Jugar otra vez»: la misma sala vuelve a la espera con el tablero nuevo. */
   abstract reopenRoom(code: string, setup: JeopardySetup): Promise<JeopardyRoom>;
   /** Cierra la sala para todos. Solo el anfitrión. */

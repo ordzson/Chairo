@@ -2,10 +2,13 @@ import { DOCUMENT } from '@angular/common';
 import { computed, DestroyRef, inject, Injectable, signal } from '@angular/core';
 
 import { createRoomCode } from '../../versiculo-o-inventiculo/domain/room';
-import type { JeopardyCell, JeopardyRoom, JeopardySetup } from '../domain/jeopardy';
+import type { JeopardyAnswerKey, JeopardyCell, JeopardyRoom, JeopardySetup } from '../domain/jeopardy';
 import { JeopardyError, JeopardyPort, type JeopardySeatDraft } from '../domain/jeopardy.port';
 import {
   acceptSteal,
+  answerKey,
+  endTurn,
+  expireCountdown,
   isJeopardyState,
   joinRoom,
   judgeAnswer,
@@ -16,6 +19,7 @@ import {
   placeWager,
   reopenRoom,
   selectCell,
+  startCountdown,
   startGame,
   viewRoom,
   type JeopardyState
@@ -103,6 +107,18 @@ export class InMemoryJeopardyAdapter implements JeopardyPort {
     return this.apply(code, (state, self) => passSteal(state, self));
   }
 
+  startCountdown(code: string): Promise<JeopardyRoom> {
+    return this.apply(code, (state, self) => startCountdown(state, self, Date.now()));
+  }
+
+  endTurn(code: string): Promise<JeopardyRoom> {
+    return this.apply(code, (state, self) => endTurn(state, self));
+  }
+
+  async revealCell(code: string, cellId: string): Promise<JeopardyAnswerKey> {
+    return answerKey(this.load(code), this.seatId(), cellId);
+  }
+
   reopenRoom(code: string, setup: JeopardySetup): Promise<JeopardyRoom> {
     return this.apply(code, (state, self) => reopenRoom(state, self, setup));
   }
@@ -122,13 +138,19 @@ export class InMemoryJeopardyAdapter implements JeopardyPort {
     this.forget(state.code);
   }
 
-  /** Lee la sala más reciente y reconoce el asiento; si no existe, lo dice. */
+  /**
+   * Lee la sala más reciente y reconoce el asiento; si no existe, lo dice. Una
+   * cuenta regresiva vencida se aplica aquí, así la cierra la primera pestaña
+   * que mire la sala después.
+   */
   private load(code: string): JeopardyState {
-    const state = this.read(code);
-    if (!state) {
+    const stored = this.read(code);
+    if (!stored) {
       this.state.set(null);
       throw new JeopardyError('room-not-found');
     }
+    const state = expireCountdown(stored, Date.now());
+    if (state !== stored) this.write(state);
     this.seatId.set(this.readSeat(state.code));
     this.state.set(state);
     return state;

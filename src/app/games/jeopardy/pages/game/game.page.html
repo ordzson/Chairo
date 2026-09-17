@@ -20,11 +20,30 @@
       </header>
 
       <p class="turn-announcement" aria-live="polite">{{ currentRoom.message }}</p>
+      @if (remaining() !== null || hostControls()) {
+        <div class="turn-tools">
+          @if (remaining() !== null) {
+            <p class="countdown" role="timer" [class.is-urgent]="(remaining() ?? 0) <= 3">
+              <span>Quedan</span> <strong>{{ remaining() }}</strong> <span>{{ remaining() === 1 ? 'segundo' : 'segundos' }}</span>
+            </p>
+          }
+          @if (hostControls()) {
+            <div class="host-controls" role="group" aria-label="Controles del anfitrión">
+              @if (currentRoom.phase !== 'judging') {
+                <button class="timer-button pressable" type="button" [disabled]="busy()" (click)="countdown()">
+                  {{ remaining() === null ? 'Dar ' + countdownSeconds + ' segundos' : 'Reiniciar a ' + countdownSeconds }}
+                </button>
+              }
+              <button class="end-turn-button pressable" type="button" [disabled]="busy()" (click)="endTurn()">Terminar turno</button>
+            </div>
+          }
+        </div>
+      }
       @if (error()) { <p class="game-error" role="alert">{{ error() }}</p> }
 
       @if (currentRoom.phase === 'board') {
         <section class="board-region" aria-label="Tablero de preguntas">
-          <p class="board-instruction">{{ myTurn() ? 'Tu turno: elige una casilla.' : 'Solo ' + current()?.name + ' puede elegir.' }}</p>
+          <p class="board-instruction">{{ boardInstruction() }}</p>
           <div class="board-scroll" tabindex="0">
             <div class="jeopardy-board" [style.--board-columns]="currentRoom.setup.columns">
               @for (column of columns(); track $index) {
@@ -35,9 +54,9 @@
                       class="clue-tile pressable"
                       type="button"
                       [class.is-used]="question.used"
-                      [disabled]="question.used || !myTurn() || busy()"
-                      [attr.aria-label]="question.used ? column.name + ', usada' : column.name + ', ' + question.value + ' puntos'"
-                      (click)="select(question.id)"
+                      [disabled]="!conducts() && (question.used || !myTurn() || busy())"
+                      [attr.aria-label]="tileLabel(column.name, question)"
+                      (click)="conducts() ? reveal(question.id) : select(question.id)"
                     >
                       @if (!question.used) { <span>{{ question.value }}</span> } @else { <span class="tile-mark" aria-hidden="true"></span> }
                     </button>
@@ -89,12 +108,21 @@
               @if (activeClue.double) { <p class="double-stamp">Valor doble</p> }
               @if (activeClue.special) { <p class="special-stamp">Apuesta especial</p> }
               <h2>{{ activeClue.prompt }}</h2>
+              @if (activeClue.answer !== null) {
+                @if (currentRoom.phase !== 'judging') {
+                  <button class="reveal-button pressable" type="button" [attr.aria-expanded]="showAnswer()" (click)="toggleAnswer()">
+                    {{ showAnswer() ? 'Ocultar respuesta' : 'Ver respuesta' }}
+                  </button>
+                }
+                @if (showAnswer() || currentRoom.phase === 'judging') {
+                  <div class="answer-key">
+                    <span>Respuesta</span>
+                    <strong>{{ activeClue.answer }}</strong>
+                    @if (activeClue.reference) { <small>{{ activeClue.reference }}</small> }
+                  </div>
+                }
+              }
               @if (currentRoom.phase === 'judging' && isHost()) {
-                <div class="answer-key">
-                  <span>Respuesta</span>
-                  <strong>{{ activeClue.answer }}</strong>
-                  @if (activeClue.reference) { <small>{{ activeClue.reference }}</small> }
-                </div>
                 <div class="judge-actions">
                   <button class="wrong-button pressable" type="button" [disabled]="busy()" (click)="judge(false)">No acertó · −{{ activeClue.points }}</button>
                   <button class="right-button pressable" type="button" [disabled]="busy()" (click)="judge(true)">Acertó · +{{ activeClue.points }}</button>
@@ -102,13 +130,13 @@
               } @else if (currentRoom.phase === 'judging') {
                 <p class="waiting-copy">El anfitrión está comprobando la respuesta.</p>
               } @else if (currentRoom.phase === 'steal') {
-                @if (mySteal()) {
-                  <div class="steal-callout"><strong>Puedes robar</strong><span>Tu intento también vale ±{{ activeClue.points }}.</span></div>
+                @if (canSteal()) {
+                  <div class="steal-callout"><strong>Puedes robar</strong><span>Roba quien lo pida primero. Tu intento también vale ±{{ activeClue.points }}.</span></div>
                   <div class="steal-actions">
                     <button class="pass-button pressable" type="button" [disabled]="busy()" (click)="pass()">Paso</button>
                     <button class="primary-action pressable" type="button" [disabled]="busy()" (click)="steal()">Intentar robar</button>
                   </div>
-                } @else { <p class="waiting-copy">Esperando la decisión de {{ stealerName() }}.</p> }
+                } @else { <p class="waiting-copy">{{ stealWaiting() }}</p> }
               } @else if (myAttempt()) {
                 <p class="speak-note">Responde en voz alta. Cuando termines, avisa al anfitrión.</p>
                 <button class="primary-action pressable" type="button" [disabled]="busy()" (click)="answered()">Ya respondí</button>
@@ -122,5 +150,25 @@
         <p class="waiting-copy">Toma un puesto en la sala para ver la pregunta.</p>
       }
     }
+
+    <dialog #previewDialog class="answer-preview" aria-labelledby="preview-title" (close)="preview.set(null)">
+      <header class="clue-heading">
+        <p id="preview-title">{{ preview()?.category ?? 'Casilla' }}</p>
+        @if (preview(); as key) { <strong>{{ key.value }} puntos</strong> }
+      </header>
+      <div class="preview-body">
+        @if (preview(); as key) {
+          @if (key.double) { <p class="double-stamp">Valor doble</p> }
+          @if (key.special) { <p class="special-stamp">Apuesta especial</p> }
+          <h2>{{ key.prompt }}</h2>
+          <div class="answer-key">
+            <span>Respuesta</span>
+            <strong>{{ key.answer }}</strong>
+            @if (key.reference) { <small>{{ key.reference }}</small> }
+          </div>
+        }
+        <button class="close-button pressable" type="button" (click)="closePreview()">Cerrar</button>
+      </div>
+    </dialog>
   </article>
 </main>

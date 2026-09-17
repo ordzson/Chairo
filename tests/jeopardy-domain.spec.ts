@@ -17,6 +17,9 @@ import {
 import { JeopardyError, jeopardyErrorFrom } from '../src/app/games/jeopardy/domain/jeopardy.port';
 import {
   acceptSteal,
+  answerKey,
+  endTurn,
+  expireCountdown,
   joinRoom,
   judgeAnswer,
   leaveRoom,
@@ -26,6 +29,7 @@ import {
   placeWager,
   reopenRoom,
   selectCell,
+  startCountdown,
   startGame,
   viewRoom,
   type JeopardyState
@@ -94,22 +98,27 @@ test('una ronda completa: fallos, robos, apuesta especial y doble', () => {
   expect(reason(() => selectCell(state, 'ana', '0-0'))).toBe('not-your-turn');
   expect(reason(() => selectCell(state, 'leo', '0-0'))).toBe('not-your-turn');
 
-  // Rut falla, Leo roba y falla, Eva pasa.
+  // Rut falla, el robo se abre a Leo y Eva, Leo lo pide primero y falla, Eva pasa.
   state = selectCell(state, 'rut', '0-0');
   expect(viewRoom(state, 'rut').clue).toMatchObject({ prompt: 'P00', answer: null });
-  state = markAnswered(state, 'rut');
+  // El anfitrión tiene la respuesta desde que la pregunta está a la vista.
   expect(viewRoom(state, 'ana').clue).toMatchObject({ answer: 'A00', reference: 'Ref 00' });
+  state = markAnswered(state, 'rut');
   expect(viewRoom(state, 'leo').clue).toMatchObject({ prompt: 'P00', answer: null, reference: null });
   expect(viewRoom(state, null).clue).toBeNull();
   expect(reason(() => judgeAnswer(state, 'rut', true))).toBe('not-host');
   state = judgeAnswer(state, 'ana', false);
   expect(state.stealQueue).toEqual(['leo', 'eva']);
-  expect(state.message).toBe('Rut pierde 100. Leo puede robar.');
-  expect(reason(() => acceptSteal(state, 'eva'))).toBe('not-your-turn');
-  state = markAnswered(acceptSteal(state, 'leo'), 'leo');
-  state = judgeAnswer(state, 'ana', false);
-  expect(player(state, 'leo').score).toBe(-100);
+  expect(state.message).toBe('Rut pierde 100. Roba quien lo pida primero.');
+  expect(reason(() => acceptSteal(state, 'rut'))).toBe('not-your-turn');
+  state = acceptSteal(state, 'leo');
   expect(state.stealQueue).toEqual(['eva']);
+  expect(reason(() => acceptSteal(state, 'eva'))).toBe('steal-taken');
+  state = judgeAnswer(markAnswered(state, 'leo'), 'ana', false);
+  expect(player(state, 'leo').score).toBe(-100);
+  expect(state.phase).toBe('steal');
+  expect(state.stealQueue).toEqual(['eva']);
+  expect(reason(() => acceptSteal(state, 'leo'))).toBe('not-your-turn');
   state = passSteal(state, 'eva');
   expect(state.phase).toBe('board');
   expect(state.turnPlayerId).toBe('leo');
@@ -124,7 +133,7 @@ test('una ronda completa: fallos, robos, apuesta especial y doble', () => {
   expect(player(state, 'leo').score).toBe(200);
   expect(state.turnPlayerId).toBe('eva');
 
-  // Eva falla la doble; roba Rut, que es quien sigue a Eva.
+  // Eva falla la doble; Rut roba y acierta.
   state = selectCell(state, 'eva', '1-0');
   expect(viewRoom(state, 'eva').clue?.points).toBe(200);
   state = judgeAnswer(markAnswered(state, 'eva'), 'ana', false);
@@ -144,6 +153,65 @@ test('una ronda completa: fallos, robos, apuesta especial y doble', () => {
   expect(state.message).toMatch(/ Tablero completo\.$/);
   expect(player(state, 'ana').score).toBe(0);
   expect(reason(() => reopenRoom(state, 'rut', setup))).toBe('not-host');
+});
+
+test('si fallan todos los que roban, la casilla se cierra sola', () => {
+  let state = startGame(withPlayers(), 'ana', fixedBoard());
+  state = judgeAnswer(markAnswered(selectCell(state, 'rut', '0-0'), 'rut'), 'ana', false);
+  state = judgeAnswer(markAnswered(acceptSteal(state, 'eva'), 'eva'), 'ana', false);
+  state = judgeAnswer(markAnswered(acceptSteal(state, 'leo'), 'leo'), 'ana', false);
+  expect(state.phase).toBe('board');
+  expect(state.message).toBe('Leo falló y pierde 100. Turno de Leo.');
+  expect(state.players.map(item => item.score)).toEqual([0, -100, -100, -100]);
+});
+
+test('el anfitrión apura con diez segundos o termina el turno cuando quiere', () => {
+  let state = startGame(withPlayers(), 'ana', fixedBoard());
+  expect(reason(() => startCountdown(state, 'rut', 0))).toBe('not-host');
+  expect(reason(() => endTurn(state, 'rut'))).toBe('not-host');
+
+  // En el tablero, la cuenta vencida pasa el turno sin gastar casillas.
+  state = startCountdown(state, 'ana', 1_000);
+  expect(state).toMatchObject({ deadline: 11_000, message: 'El anfitrión dio 10 segundos.' });
+  expect(viewRoom(state, 'leo').deadline).toBe(11_000);
+  expect(expireCountdown(state, 10_999)).toBe(state);
+  state = expireCountdown(state, 11_000);
+  expect(state).toMatchObject({ phase: 'board', turnPlayerId: 'leo', deadline: null, message: 'Se acabó el tiempo. Turno de Leo.' });
+  expect(state.cells.some(cell => cell.used)).toBe(false);
+
+  // Con la casilla abierta, terminar la cierra sin puntos.
+  state = startCountdown(selectCell(state, 'leo', '0-0'), 'ana', 0);
+  state = endTurn(state, 'ana');
+  expect(state).toMatchObject({ phase: 'board', turnPlayerId: 'eva', deadline: null, message: 'El anfitrión terminó el turno. Turno de Eva.' });
+  expect(state.cells.find(cell => cell.id === '0-0')?.used).toBe(true);
+  expect(state.players.every(item => item.score === 0)).toBe(true);
+
+  // Responder a tiempo retira la cuenta; juzgando no hay nada que apurar.
+  state = startCountdown(selectCell(state, 'eva', '0-2'), 'ana', 0);
+  state = markAnswered(state, 'eva');
+  expect(state.deadline).toBeNull();
+  expect(reason(() => startCountdown(state, 'ana', 0))).toBe('invalid-move');
+
+  // En el robo la cuenta sigue aunque alguien pase, y al vencer se cierra.
+  state = startCountdown(judgeAnswer(state, 'ana', false), 'ana', 0);
+  state = passSteal(state, 'rut');
+  expect(state.deadline).toBe(10_000);
+  state = expireCountdown(state, 10_000);
+  expect(state).toMatchObject({ phase: 'board', turnPlayerId: 'rut', message: 'Se acabó el tiempo. Turno de Rut.' });
+
+  state = { ...state, status: 'finished', phase: 'finished' };
+  expect(reason(() => endTurn(state, 'ana'))).toBe('invalid-move');
+});
+
+test('el anfitrión mira la pregunta y la respuesta de cualquier casilla', () => {
+  const state = startGame(withPlayers(), 'ana', fixedBoard());
+  expect(answerKey(state, 'ana', '2-2')).toEqual({
+    id: '2-2', category: 'Q2', value: 300, special: true, double: false, prompt: 'P22', answer: 'A22', reference: 'Ref 22'
+  });
+  expect(reason(() => answerKey(state, 'rut', '2-2'))).toBe('not-host');
+  expect(reason(() => answerKey(state, 'ana', '9-9'))).toBe('invalid-move');
+  // Mientras se apuesta nadie lee la pregunta, tampoco el anfitrión.
+  expect(viewRoom(selectCell(state, 'rut', '0-1'), 'ana').clue).toMatchObject({ prompt: null, answer: null });
 });
 
 test('el anfitrión conduce: caben cuatro invitados y ninguno más', () => {
@@ -215,5 +283,6 @@ test('el banco arma tableros con dos especiales y las dobles pedidas', () => {
 test('los errores de la base se traducen por su texto', () => {
   expect(jeopardyErrorFrom('not-your-turn').reason).toBe('not-your-turn');
   expect(jeopardyErrorFrom('P0001: room-full').reason).toBe('room-full');
+  expect(jeopardyErrorFrom('steal-taken').reason).toBe('steal-taken');
   expect(jeopardyErrorFrom('TypeError: Failed to fetch').reason).toBe('unavailable');
 });

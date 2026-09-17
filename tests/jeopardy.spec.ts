@@ -24,14 +24,20 @@ async function openGuest(context: BrowserContext, code: string, name: string, co
   return guest;
 }
 
-/** Quien tiene el turno abre la primera casilla libre y el anfitrión le da el punto. */
-async function playTurn(chooser: Page, host: Page): Promise<void> {
+/** Quien tiene el turno abre la primera casilla libre, apuesta si toca, y queda respondiendo. */
+async function openClue(chooser: Page): Promise<void> {
   await chooser.locator('.clue-tile:enabled').first().click();
   const wager = chooser.getByRole('button', { name: /Confirmar/ });
   const answered = chooser.getByRole('button', { name: 'Ya respondí' });
   await expect(wager.or(answered)).toBeVisible();
   if (await wager.isVisible()) await wager.click();
-  await answered.click();
+  await expect(answered).toBeVisible();
+}
+
+/** Quien tiene el turno abre la primera casilla libre y el anfitrión le da el punto. */
+async function playTurn(chooser: Page, host: Page): Promise<void> {
+  await openClue(chooser);
+  await chooser.getByRole('button', { name: 'Ya respondí' }).click();
   await host.getByRole('button', { name: /^Acertó/ }).click();
 }
 
@@ -63,23 +69,30 @@ test('el anfitrión conduce, los turnos se sincronizan, se puntúa y se roba', a
     await expect(phone.getByRole('region', { name: 'Tablero de preguntas' })).toBeVisible();
   }
   await expect(page.locator('.score-list li')).toHaveCount(2);
-  await expect(page.locator('.clue-tile:enabled')).toHaveCount(0);
   await expect(leo.locator('.clue-tile:enabled')).toHaveCount(0);
   await expect(rut.locator('.clue-tile:enabled')).toHaveCount(9);
 
-  await rut.locator('.clue-tile:enabled').first().click();
-  if (await rut.getByRole('heading', { name: 'Apuesta especial' }).isVisible().catch(() => false)) {
-    await rut.getByRole('button', { name: /Confirmar/ }).click();
-  }
-  await rut.getByRole('button', { name: 'Ya respondí' }).click();
+  // El anfitrión conduce: tocar una casilla le enseña pregunta y respuesta sin abrirla.
+  await expect(page.locator('.clue-tile:enabled')).toHaveCount(9);
+  await page.locator('.clue-tile').first().click();
+  const preview = page.getByRole('dialog');
+  await expect(preview.getByText('Respuesta', { exact: true })).toBeVisible();
+  await preview.getByRole('button', { name: 'Cerrar' }).click();
+  await expect(preview).toBeHidden();
+  await expect(rut.locator('.clue-tile:enabled')).toHaveCount(9);
+
+  // Mientras Rut responde, el anfitrión destapa la respuesta; los jugadores nunca la ven.
+  await openClue(rut);
+  await expect(leo.getByRole('button', { name: 'Ver respuesta' })).toHaveCount(0);
+  await page.getByRole('button', { name: 'Ver respuesta' }).click();
   await expect(page.getByText('Respuesta', { exact: true })).toBeVisible();
-  // Quien no juzga nunca ve la respuesta.
+  await rut.getByRole('button', { name: 'Ya respondí' }).click();
   await expect(leo.getByText('El anfitrión está comprobando la respuesta.')).toBeVisible();
   await expect(leo.getByText('Respuesta', { exact: true })).toHaveCount(0);
   await page.getByRole('button', { name: /No acertó/ }).click();
 
   await expect(leo.getByText('Puedes robar')).toBeVisible();
-  await expect(rut.getByText('Esperando la decisión de Leo.')).toBeVisible();
+  await expect(rut.getByText('Leo puede robar.')).toBeVisible();
   await leo.getByRole('button', { name: 'Intentar robar' }).click();
   await leo.getByRole('button', { name: 'Ya respondí' }).click();
   await page.getByRole('button', { name: /^Acertó/ }).click();
@@ -88,6 +101,49 @@ test('el anfitrión conduce, los turnos se sincronizan, se puntúa y se roba', a
 
   const a11y = await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa', 'wcag21aa']).analyze();
   expect(a11y.violations).toEqual([]);
+});
+
+test('el robo se abre a todos y el anfitrión apura o termina el turno', async ({ context, page }) => {
+  // Reloj falso solo en el anfitrión: adelantarlo vence la cuenta en su pestaña,
+  // que la aplica y la comparte con las demás.
+  await page.clock.install();
+  await page.goto('./#/juegos/jeopardy');
+  await page.getByRole('button', { name: 'Quitar una categoría' }).click({ clickCount: 2 });
+  await page.getByRole('button', { name: 'Quitar una fila' }).click();
+  const code = await createRoom(page);
+  const rut = await openGuest(context, code, 'Rut', /Naranja/);
+  const leo = await openGuest(context, code, 'Leo', /Turquesa/);
+  const eva = await openGuest(context, code, 'Eva', /Violeta/);
+  await page.getByRole('button', { name: 'Abrir el tablero' }).click();
+  await expect(rut.locator('.clue-tile:enabled')).toHaveCount(9);
+  await expect(rut.getByRole('group', { name: 'Controles del anfitrión' })).toHaveCount(0);
+
+  // Diez segundos para elegir: al vencer, el turno pasa sin gastar casillas.
+  await page.getByRole('button', { name: 'Dar 10 segundos' }).click();
+  await expect(rut.getByRole('timer')).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Reiniciar a 10' })).toBeVisible();
+  await page.clock.fastForward(11_000);
+  for (const phone of [page, rut, leo]) await expect(phone.getByText('Se acabó el tiempo. Turno de Leo.')).toBeVisible();
+  await expect(rut.getByRole('timer')).toHaveCount(0);
+  await expect(leo.locator('.clue-tile:enabled')).toHaveCount(9);
+
+  // Leo falla: Rut y Eva pueden robar a la vez y se lo queda quien lo pide primero.
+  await openClue(leo);
+  await leo.getByRole('button', { name: 'Ya respondí' }).click();
+  await page.getByRole('button', { name: /No acertó/ }).click();
+  await expect(rut.getByText('Puedes robar')).toBeVisible();
+  await expect(eva.getByText('Puedes robar')).toBeVisible();
+  await expect(leo.getByText('Eva y Rut pueden robar. Roba quien lo pida primero.')).toBeVisible();
+  await eva.getByRole('button', { name: 'Intentar robar' }).click();
+  await expect(eva.getByRole('button', { name: 'Ya respondí' })).toBeVisible();
+  await expect(rut.getByText('Eva está respondiendo.')).toBeVisible();
+  await expect(rut.getByRole('button', { name: 'Intentar robar' })).toHaveCount(0);
+
+  // El anfitrión corta la ronda de robo: la casilla se cierra sin puntos para Eva.
+  await page.getByRole('button', { name: 'Terminar turno' }).click();
+  await expect(eva.getByText('El anfitrión terminó el turno. Turno de Eva.')).toBeVisible();
+  await expect(eva.locator('.clue-tile:enabled')).toHaveCount(8);
+  await expect(eva.locator('.score-list strong')).toHaveText(['0', '-100', '0']);
 });
 
 test('sin invitados el anfitrión juega solo', async ({ page }) => {

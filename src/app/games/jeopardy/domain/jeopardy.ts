@@ -64,8 +64,21 @@ export interface JeopardyClue {
   readonly double: boolean;
   /** Oculta hasta que se fija la apuesta. */
   readonly prompt: string | null;
-  /** Solo la recibe el anfitrión, y solo mientras juzga. */
+  /** Solo la recibe el anfitrión, en cuanto la pregunta está a la vista. */
   readonly answer: string | null;
+  readonly reference: string | null;
+}
+
+/** Pregunta y respuesta de cualquier casilla, para el anfitrión que conduce. */
+export interface JeopardyAnswerKey {
+  readonly id: string;
+  /** La de la pregunta: una apuesta especial trae una extrema de otra categoría. */
+  readonly category: string;
+  readonly value: number;
+  readonly special: boolean;
+  readonly double: boolean;
+  readonly prompt: string;
+  readonly answer: string;
   readonly reference: string | null;
 }
 
@@ -83,8 +96,11 @@ export interface JeopardyRoom {
   readonly selfId: string | null;
   readonly turnPlayerId: string | null;
   readonly attemptPlayerId: string | null;
+  /** Quienes todavía pueden robar; se queda el intento quien lo pida primero. */
   readonly stealQueue: readonly string[];
   readonly wager: number | null;
+  /** Fin de la cuenta regresiva del anfitrión, ya en el reloj de este teléfono. */
+  readonly deadline: number | null;
   readonly message: string;
   readonly board: readonly JeopardyTile[];
   readonly clue: JeopardyClue | null;
@@ -105,9 +121,14 @@ export const MIN_GRID = 3;
 export const MAX_COLUMNS = 8;
 export const MAX_ROWS = 8;
 export const SPECIAL_COUNT = 2;
+/** La cuenta regresiva que puede lanzar el anfitrión. */
+export const COUNTDOWN_SECONDS = 10;
 /** Un color por jugador. El anfitrión conduce y no cuenta. */
 export const MAX_PLAYERS = JEOPARDY_COLORS.length;
 export const WAGER_STEP = 100;
+
+/** Fases con alguien en turno: el anfitrión puede apurarlo o terminarlo. */
+export const TURN_PHASES: readonly JeopardyPhase[] = ['board', 'wager', 'question', 'judging', 'steal'];
 
 export function maxDoubles(rows: number, columns: number): number {
   return Math.max(0, rows * columns - SPECIAL_COUNT);
@@ -187,7 +208,7 @@ export function nextPlayerAfter(players: readonly JeopardyPlayer[], playerId: st
   return playing[(index + 1) % Math.max(1, playing.length)] ?? null;
 }
 
-/** Quién puede robar tras un fallo: el resto, empezando por quien sigue a quien falló. */
+/** Quién puede robar tras un fallo: el resto, en orden de turno a partir de quien falló. */
 export function stealOrder(players: readonly JeopardyPlayer[], failedPlayerId: string): readonly string[] {
   const playing = playingPlayers(players);
   const index = playing.findIndex(player => player.id === failedPlayerId);
