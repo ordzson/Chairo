@@ -142,6 +142,28 @@
         </div>
       </fieldset>
 
+      @if (!reopenCode()) {
+        <fieldset class="setup-section name-section">
+          <legend>
+            <chairo-game-icon name="person" />
+            <span id="host-name-legend">Tu nombre</span>
+          </legend>
+          <input
+            id="host-name"
+            class="name-input"
+            type="text"
+            name="host-name"
+            autocomplete="nickname"
+            [attr.maxlength]="maxNameLength"
+            aria-labelledby="host-name-legend"
+            aria-describedby="host-name-help"
+            [value]="hostName()"
+            (input)="writeHostName($any($event.target))"
+          >
+          <p id="host-name-help" class="section-help">Así te verán los demás en la sala y en la clasificación.</p>
+        </fieldset>
+      }
+
       <fieldset class="setup-section role-section">
         <legend>
           <chairo-game-icon name="users" />

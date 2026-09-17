@@ -41,7 +41,8 @@ export abstract class MultiplayerPort {
    */
   abstract readonly self: Signal<Participant | null>;
 
-  abstract createRoom(setup: MatchSetup): Promise<Room>;
+  /** Abre una sala nueva con el anfitrión sentado bajo `hostName`. */
+  abstract createRoom(setup: MatchSetup, hostName: string): Promise<Room>;
 
   /** Recupera una sala ya creada, por ejemplo al recargar la pantalla. */
   abstract restoreRoom(code: RoomCode): Promise<Room>;

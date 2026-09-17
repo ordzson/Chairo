@@ -6,6 +6,7 @@ import { GameIconComponent } from '../../../../game-icon.component';
 import { SoundService } from '../../../../sound.service';
 import { MultiplayerError, MultiplayerPort, type MultiplayerErrorReason } from '../../domain/multiplayer.port';
 import {
+  MAX_NAME_LENGTH,
   PARTICIPANT_COLORS,
   ROOM_CODE_LENGTH,
   colorLabel,
@@ -23,7 +24,6 @@ import { ManualHeaderComponent } from '../../ui/manual-header.component';
 /** Lo que puede impedir la entrada, del teclado o del servidor. */
 type JoinIssue = MultiplayerErrorReason | 'code-invalid' | 'name-missing' | 'color-missing';
 
-const MAX_NAME_LENGTH = 24;
 const ROOM_ROUTE = '/juegos/versiculo-o-inventiculo/sala';
 
 @Component({

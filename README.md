@@ -9,7 +9,11 @@ Sitio publicado: **https://ordzson.github.io/Chairo/**
 - **Centro de juegos**: terminado. Índice, ficha de acetato y preferencia de modalidad guardada en el navegador.
 - **¿Versículo o inventículo?**: jugable hasta la sala de espera. Configuración, sala con QR y entrada del invitado desde su propio teléfono, sincronizadas por Supabase. La cuenta regresiva, las preguntas, la revelación y los resultados llegan en etapas posteriores.
 - **Jeopardy**: jugable. Tablero de 3 × 3 a 8 × 8, sala con QR para hasta cuatro jugadores —el anfitrión conduce y juzga, y solo juega si nadie más entra—, turnos, robo abierto a todos —se lo queda quien lo pide primero, y suma o resta—, dos apuestas especiales, casillas dobles y «Jugar otra vez» en la misma sala. El anfitrión puede dar diez segundos o terminar el turno cuando quiera, y ver la pregunta y la respuesta de cualquier casilla. Con Supabase la partida la arbitra la base de datos y ninguna respuesta llega a los jugadores.
-- Los otros cuatro juegos: **Próximamente**.
+- **Revelaciones**: jugable. Es el Password bíblico para dos teléfonos: sala por código con QR, una palabra distinta en cada
+  aparato, cuenta 3–2–1 sincronizada, reloj común que se queda en 0 hasta que la persona anfitriona cierra la ronda a
+  propósito, un punto por palabra adivinada, marcador acumulado y «Jugar otra vez» en la misma sala. El banco de palabras
+  se escribe en [`assets/password.md`](assets/password.md) y se compila con `pnpm run generate:password-bank`.
+- Los otros tres juegos: **Próximamente**.
 
 ## Ejecutar
 
@@ -49,8 +53,9 @@ La clave publicable viaja al navegador por definición. Lo que protege los datos
 Dos comprobaciones contra el proyecto real, fuera de la suite porque sí usan red:
 
 ```sh
-node supabase/verify.mjs            # reglas y RLS por REST
+node supabase/verify.mjs             # reglas y RLS por REST
 node supabase/verify-navegadores.mjs # dos navegadores, dos sesiones anónimas
+pnpm run verify:supabase:password    # sala, palabras separadas y puntos de Revelaciones
 ```
 
 La segunda necesita la aplicación compilada y servida:

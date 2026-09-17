@@ -42,6 +42,28 @@ test('el anfitrión inicia y todos reciben una pregunta real', async ({ page }) 
   await expect(page.getByText('Sí es versículo')).toHaveCount(0);
 });
 
+test('el anfitrión puede conducir sin jugar mientras los invitados responden', async ({ page }) => {
+  const hostOnlyRoom = {
+    ...room,
+    setup: { ...room.setup, hostRole: 'host-only' },
+    participants: [{ ...host, plays: false }, guest]
+  };
+  await page.addInitScript(
+    ([key, value]) => localStorage.setItem(key!, value!),
+    [roomKey, JSON.stringify(hostOnlyRoom)] as const
+  );
+
+  await page.goto(roomUrl);
+  await expect(page.getByText('Solo anfitrión')).toBeVisible();
+  await page.getByRole('button', { name: 'Comenzar partida' }).click();
+
+  await expect(page.getByText('Conduciendo la partida')).toBeVisible({ timeout: 5_000 });
+  await expect(page.getByText('0 de 1 respuestas recibidas')).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Versículo' })).toHaveCount(0);
+  await expect(page.getByRole('button', { name: 'Inventículo' })).toHaveCount(0);
+  await expect(page.getByText('Solo anfitrión').last()).toBeVisible();
+});
+
 test('la partida usa los tiempos que eligió el anfitrión', async ({ page }) => {
   const now = Date.now();
   const question = {
@@ -199,6 +221,7 @@ test('jugar otra vez reinicia la misma sala y la nueva partida llega a todos', a
 
   await page.getByRole('button', { name: 'Jugar otra vez' }).click();
   await expect(page).toHaveURL(/sala\/ABCD\/configurar$/);
+  await expect(page.getByLabel('Tu nombre')).toHaveCount(0);
   await expect(page.getByRole('radio', { name: 'Fácil' })).toBeChecked();
   await expect(page.getByRole('status', { name: 'Preguntas' })).toHaveText('5');
   await expect(page.getByRole('status', { name: 'Leer y responder' })).toHaveText('20 s');

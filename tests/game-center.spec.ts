@@ -2,11 +2,16 @@ import { mkdir } from 'node:fs/promises';
 import { expect, test } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
 
+import { withoutBackend } from './offline';
+
 const games = [
   'Jeopardy', '¿Versículo o inventículo?', 'El discípulo más perdido',
   'Revelaciones', 'Buscando perlas', 'Trivia'
 ];
-const gameStatuses = ['Disponible', 'Disponible', 'Próximamente', 'Próximamente', 'Próximamente', 'Próximamente'];
+/** Jeopardy, ¿Versículo o inventículo? y Revelaciones —el Password bíblico— ya se juegan. */
+const available = new Set([0, 1, 3]);
+const withJoinLink = new Set([1, 3]);
+const gameStatuses = games.map((_, index) => available.has(index) ? 'Disponible' : 'Próximamente');
 const storageKey = 'chairo:play-preference';
 
 for (const width of [320, 390, 941, 1280, 1440]) {
@@ -32,9 +37,10 @@ for (const width of [320, 390, 941, 1280, 1440]) {
       await tab.click();
       await expect(tab).toHaveAttribute('aria-selected', 'true');
       await expect(page.getByRole('tabpanel').getByRole('heading')).toHaveText(name);
-      if (index <= 1) {
+      if (available.has(index)) {
         await expect(page.getByRole('tabpanel')).toContainText('¡A jugar!');
         await expect(page.getByRole('link', { name: 'Preparar partida' })).toBeVisible();
+        await expect(page.getByRole('link', { name: 'Unirse con código' })).toHaveCount(withJoinLink.has(index) ? 1 : 0);
       } else {
         await expect(page.getByRole('tabpanel')).toContainText('Próximamente');
         await expect(page.getByRole('tabpanel')).toContainText('Estamos preparando este juego.');
@@ -84,13 +90,33 @@ test('keyboard roving focus, wrap, Home/End and logical Tab sequence', async ({ 
   await page.keyboard.press('Tab');
   await expect(page.getByRole('link', { name: 'Preparar partida' })).toBeFocused();
   await page.keyboard.press('Tab');
+  await expect(page.getByRole('link', { name: 'Unirse con código' })).toBeFocused();
+  await page.keyboard.press('Tab');
   await expect(page.getByRole('combobox')).toBeFocused();
+  await page.keyboard.press('Shift+Tab');
+  await expect(page.getByRole('link', { name: 'Unirse con código' })).toBeFocused();
   await page.keyboard.press('Shift+Tab');
   await expect(page.getByRole('link', { name: 'Preparar partida' })).toBeFocused();
   await page.keyboard.press('Shift+Tab');
   await expect(page.getByRole('tabpanel')).toBeFocused();
   await page.keyboard.press('Shift+Tab');
   await expect(tabs.nth(1)).toBeFocused();
+});
+
+test('versículo o inventículo permite entrar con un código desde el centro', async ({ page }) => {
+  await withoutBackend(page);
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('./');
+  await page.getByRole('tab', { name: /¿Versículo o inventículo?/ }).click();
+  await page.screenshot({ path: '.impeccable/review/centro-unirse-390.png', fullPage: true, animations: 'disabled' });
+  await page.setViewportSize({ width: 1440, height: 1000 });
+  await page.screenshot({ path: '.impeccable/review/centro-unirse-1440.png', fullPage: true, animations: 'disabled' });
+  await page.getByRole('link', { name: 'Unirse con código' }).click();
+
+  await expect(page).toHaveURL(/#\/juegos\/versiculo-o-inventiculo\/unirse$/);
+  await expect(page.getByRole('heading', { name: 'Entrar a la sala' })).toBeVisible();
+  // El campo espera vacío: el foco se queda al principio para no saltarse el enlace de salto.
+  await expect(page.locator('#room-code')).toHaveValue('');
 });
 
 test('preference is optional, persistent, removable and independent of exploration', async ({ page }) => {

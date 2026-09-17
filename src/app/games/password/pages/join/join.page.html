@@ -1,0 +1,74 @@
+<a class="skip-link" href="#password-main">Ir al formulario para unirse</a>
+
+<main class="password-shell">
+  <article class="password-manual" aria-labelledby="password-title">
+    <div class="password-spine" aria-hidden="true"></div>
+    <chairo-password-header
+      title="Únete a Revelaciones"
+      backLink="/"
+      backLabel="Volver al centro de juegos"
+      [note]="['solo hay', 'dos lugares']"
+    />
+
+    <section id="password-main" class="password-board join-board" aria-label="Datos para entrar">
+      <span class="board-clip" aria-hidden="true"></span>
+      <form class="password-paper" (submit)="$event.preventDefault(); join()">
+        <label class="field-label" for="password-room-code">Código de sala</label>
+        <input
+          #codeField
+          id="password-room-code"
+          class="paper-input code-input"
+          type="text"
+          inputmode="text"
+          autocomplete="off"
+          autocapitalize="characters"
+          [attr.maxlength]="codeLength"
+          [value]="code()"
+          (input)="writeCode($any($event.target))"
+        >
+        @if (codeNotice()) { <p class="field-help" role="status">{{ codeNotice() }}</p> }
+
+        <label class="field-label" for="password-guest-name">Tu nombre</label>
+        <input
+          #nameField
+          id="password-guest-name"
+          class="paper-input"
+          type="text"
+          autocomplete="nickname"
+          [attr.maxlength]="maxNameLength"
+          [value]="name()"
+          (input)="writeName($any($event.target))"
+        >
+
+        <fieldset class="color-fieldset">
+          <legend>Elige tu color</legend>
+          <p class="locked-color"><span class="color-dot color-dot--yellow" aria-hidden="true"></span> Amarillo · anfitrión</p>
+          <div class="color-options">
+            @for (option of colors; track option.value) {
+              <label class="color-option color-option--{{ option.value }}" [class.is-selected]="color() === option.value">
+                <input
+                  type="radio"
+                  name="guest-color"
+                  [value]="option.value"
+                  [checked]="color() === option.value"
+                  (change)="chooseColor(option.value)"
+                >
+                <span class="color-dot" aria-hidden="true"></span>
+                <span>{{ option.label }}</span>
+                @if (color() === option.value) { <strong>Elegido</strong> }
+              </label>
+            }
+          </div>
+        </fieldset>
+
+        <p class="places-note">Falta un lugar</p>
+        @if (issue()) { <p class="password-alert" role="alert">{{ issueTitle() }}</p> }
+        <button class="password-primary pressable" type="submit" [disabled]="joining()">
+          {{ joining() ? 'Entrando…' : 'Unirme' }}
+        </button>
+        <a class="password-text-link" routerLink="/">Volver</a>
+      </form>
+    </section>
+  </article>
+</main>
+

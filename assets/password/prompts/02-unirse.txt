@@ -1,0 +1,8 @@
+Use case: ui-mockup
+Asset type: production-reference portrait mobile guest join screen for Chairo Password
+Primary request: Design the guest entry screen for the approved Chairo Password direction. Real app UI. Strictly follow the reference identity: cream textured mission binder, blue spine and brass rings, molded blue clipboard, yellow clip, clipped cream index cards, blue ink, yellow/orange accent strokes, bold condensed and handwritten typography, tactile early-2000s educational-game polish. Do not show a gameplay word.
+Screen structure: compact Chairo logo and blue title “ÚNETE A PASSWORD”; clipped cream form card with label “Código de sala” and value “G7K4”; label “Tu nombre” and value “Leo”; section “Elige tu color” with exactly one selected orange molded swatch and one unavailable yellow swatch labeled “Ana”; small status note “Falta 1 lugar”; large yellow button “UNIRME”; quiet link “Volver”.
+Text (verbatim): “ÚNETE A PASSWORD”, “Código de sala”, “G7K4”, “Tu nombre”, “Leo”, “Elige tu color”, “Ana”, “Falta 1 lugar”, “UNIRME”, “Volver”.
+Constraints: portrait 941 x 1672 proportions, simple join task, accessible selected/unavailable states not communicated only by color, exactly two-player capacity, Spanish only, no QR necessary on this screen, no phone hardware frame.
+Avoid: gameplay word, score editor, timer, third player, account/password fields, generic dashboard, glassmorphism, photos, people, watermark, extra text.
+

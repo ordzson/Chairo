@@ -1,0 +1,8 @@
+Use case: ui-mockup
+Asset type: production-reference portrait mobile between-round scoreboard screen for Chairo Password
+Primary request: Design the state after round points are saved. Use the approved clipped index-card Chairo Password visual direction: cream textured binder page, blue spine and brass rings, molded blue clipboard, yellow clip, blue ink, yellow/orange participant accents, tactile 2000s educational-game polish. Real app UI.
+Screen structure: compact Chairo logo; deep-blue title plate “MARCADOR”; small subtitle “Después de 3 rondas”; two large horizontal clipped player score cards stacked vertically. First card: gold/yellow accent, small crown, “ANA”, huge “3 PUNTOS”, note “+1 esta ronda”. Second card: orange accent, “LEO”, huge “1 PUNTO”, note “+0 esta ronda”. A pinned note says “¡La siguiente ronda usa palabras nuevas!”; large yellow host button “OTRA RONDA”; secondary cream action “TERMINAR PARTIDA”; tiny status for guest “Esperando a Ana…” can appear only as a subtle alternate annotation, not a third button.
+Text (verbatim): “MARCADOR”, “Después de 3 rondas”, “ANA”, “3 PUNTOS”, “+1 esta ronda”, “LEO”, “1 PUNTO”, “+0 esta ronda”, “¡La siguiente ronda usa palabras nuevas!”, “OTRA RONDA”, “TERMINAR PARTIDA”.
+Constraints: portrait 941 x 1672 proportions, exact two-person tally, current totals dominant, both continuation actions clear, Spanish only, no gameplay word, no timer, no QR, no phone frame.
+Avoid: podium with third place, confetti overload, speed stats, percentages, generic leaderboard, glassmorphism, photos, people, watermark, extra text.
+

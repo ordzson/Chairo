@@ -1,0 +1,8 @@
+Use case: ui-mockup
+Asset type: production-reference portrait mobile setup screen for Chairo Password
+Primary request: Design the host configuration screen for the approved Chairo Password direction. This is a real app screen, not a poster. Use the reference image as strict visual authority: cream fibrous mission-binder paper, royal-blue spine and brass rings at left, blue ink, tactile yellow/orange molded plastic, clipped index-card language, hand-painted accent strokes, bold condensed early-2000s educational-game typography. Carry over the material and component character, not the reference screen’s gameplay content.
+Screen structure: compact Chairo logo; blue painted title strip “PASSWORD”; a cream clipped setup sheet with heading “Prepara la partida”; first field “Tu nombre” with value “Ana”; second section “Tiempo por ronda” with a molded segmented control “30  45  60  90” where 60 is selected in yellow and a small suffix “segundos”; a pinned note reading “Cada palabra adivinada vale 1 punto”; a small diagram of two phones facing each other and the instruction “Se necesitan 2 teléfonos”; large yellow primary button “CREAR SALA”; quiet text action “Cancelar”.
+Text (verbatim): “PASSWORD”, “Prepara la partida”, “Tu nombre”, “Ana”, “Tiempo por ronda”, “30”, “45”, “60”, “90”, “segundos”, “Cada palabra adivinada vale 1 punto”, “Se necesitan 2 teléfonos”, “CREAR SALA”, “Cancelar”.
+Constraints: portrait 941 x 1672 proportions, edge-to-edge UI, accessible hierarchy and controls, no difficulty selector, no number of rounds, no role selector, no device hardware frame, Spanish only.
+Avoid: gameplay word, timer countdown, score table, QR, generic dashboard, glassmorphism, photos, people, watermark, extra text.
+

@@ -23,7 +23,7 @@ import { encodeQrCode } from '../src/app/games/versiculo-o-inventiculo/infrastru
 const room: Room = {
   code: 'ABCD',
   setup: { difficulty: 'medium', questionCount: 10, hostRole: 'player', questionSeconds: 12, revealSeconds: 5 },
-  participants: [hostParticipant('player')],
+  participants: [hostParticipant('player', 'Ana')],
   createdAt: 0
 };
 

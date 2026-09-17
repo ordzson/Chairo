@@ -14,5 +14,9 @@ export const routes: Routes = [
     path: 'juegos/versiculo-o-inventiculo',
     loadChildren: () => import('./games/versiculo-o-inventiculo/versiculo.routes').then(module => module.versiculoRoutes)
   },
+  {
+    path: 'juegos/revelaciones',
+    loadChildren: () => import('./games/password/password.routes').then(module => module.passwordRoutes)
+  },
   { path: '**', redirectTo: '' }
 ];

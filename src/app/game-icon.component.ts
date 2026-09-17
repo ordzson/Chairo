@@ -3,6 +3,7 @@ import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import type { GameIcon } from './game';
 
 export type ChairoIcon = GameIcon |
+  'book' |
   'gear' |
   'arrow-left' |
   'mountain' |
@@ -33,6 +34,10 @@ export type ChairoIcon = GameIcon |
         @case ('question') {
           <path d="M19 22c1-10 8-16 18-16 11 0 18 7 18 16 0 8-4 12-11 16-6 4-8 7-8 13"/>
           <path d="M35 59h.1"/>
+        }
+        @case ('key') {
+          <circle cx="22" cy="25" r="12"/>
+          <path d="M31 34 53 56M42 45l7-7M48 51l7-7M14 25h16"/>
         }
         @case ('compass') {
           <circle cx="32" cy="32" r="24"/>

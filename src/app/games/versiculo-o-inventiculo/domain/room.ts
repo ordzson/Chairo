@@ -32,6 +32,9 @@ export const PARTICIPANT_COLORS: readonly { readonly value: GameColor; readonly 
 export const MIN_PARTICIPANTS = 2;
 export const MAX_PARTICIPANTS = PARTICIPANT_COLORS.length;
 
+/** Tope del nombre visible; `supabase/schema.sql` lo repite en `participants.name`. */
+export const MAX_NAME_LENGTH = 24;
+
 export type RoomCode = string;
 export type ParticipantRole = 'host' | 'guest';
 export type ParticipantStatus = 'joining' | 'ready';
@@ -96,10 +99,11 @@ export function createRoomCode(random: () => number): RoomCode {
   return code;
 }
 
-export function hostParticipant(hostRole: HostRole): Participant {
+/** El anfitrión aparece con el nombre que escribió, igual que cualquier invitado. */
+export function hostParticipant(hostRole: HostRole, name: string): Participant {
   return {
     id: 'host',
-    name: 'Tú',
+    name: name.trim(),
     role: 'host',
     status: 'ready',
     color: 'yellow',

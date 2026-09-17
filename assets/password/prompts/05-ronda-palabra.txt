@@ -1,0 +1,7 @@
+Use case: ui-mockup
+Asset type: approved-direction portrait mobile active gameplay screen for Chairo Password with score tally
+Primary request: Create the definitive active round screen based on the approved MANÁ reference. Preserve its composition almost exactly: Chairo logo, “PASSWORD · RONDA 3” label, deep-blue molded clipboard frame, yellow clip, large cream flash card with yellow paint stroke, enormous word “MANÁ”, small circular timer “24” in the upper-right corner, handwritten rule “Pistas sí · la palabra no”, and two player index tabs connected by a link icon. Add the required accumulated score to each participant tab without changing the focal hierarchy: left tab “ANA” with “2 PTS”; right tab “LEO” with “1 PT”. Keep one orange host-only button “TERMINAR RONDA”. Real app UI, not a poster.
+Text (verbatim): “PASSWORD · RONDA 3”, “MANÁ”, “24”, “Pistas sí · la palabra no”, “ANA”, “2 PTS”, “LEO”, “1 PT”, “TERMINAR RONDA”.
+Constraints: portrait 941 x 1672 proportions, exact approved clipped-index-card visual thesis, word remains dominant and legible from distance, scores secondary, timer only in top-right corner, Spanish only, no device frame.
+Avoid: changing to a flat full-screen word panel, scoreboard banner, points buttons, answer choices, QR, generic UI, glassmorphism, photos, people, watermark, extra text.
+

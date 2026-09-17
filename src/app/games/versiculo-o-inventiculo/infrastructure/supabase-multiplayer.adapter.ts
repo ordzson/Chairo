@@ -79,9 +79,9 @@ export class SupabaseMultiplayerAdapter implements MultiplayerPort {
     inject(DestroyRef).onDestroy(() => void this.unwatch());
   }
 
-  async createRoom(setup: MatchSetup): Promise<Room> {
+  async createRoom(setup: MatchSetup, hostName: string): Promise<Room> {
     const client = await this.connect();
-    const host = hostParticipant(setup.hostRole);
+    const host = hostParticipant(setup.hostRole, hostName);
 
     for (let attempt = 0; attempt < CODE_ATTEMPTS; attempt += 1) {
       const { data, error } = await client

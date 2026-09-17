@@ -50,6 +50,7 @@ async function addReadyGuest(context: BrowserContext, page: Page): Promise<void>
 test('crear sala guarda la configuración, genera un código válido y abre la sala', async ({ page }) => {
   await page.goto(setupUrl);
   await page.locator('label[for="difficulty-hard"]').click();
+  await page.getByLabel('Tu nombre').fill('  Marta ');
   await page.getByRole('button', { name: 'Crear sala' }).click();
 
   await expect(page).toHaveURL(/#\/juegos\/versiculo-o-inventiculo\/sala\/[2-9A-HJ-NP-Z]{4}$/);
@@ -61,13 +62,14 @@ test('crear sala guarda la configuración, genera un código válido y abre la s
   await expect(page.locator('.room-code-value')).toHaveText(code);
   await expect(page.getByText('Anfitrión · jugando')).toBeVisible();
   await expect(page.getByText('Difícil · 10 preguntas')).toBeVisible();
-  await expect(page.getByRole('listitem').filter({ hasText: 'Tú' })).toContainText('anfitrión');
+  await expect(page.getByRole('listitem').filter({ hasText: 'Marta' })).toContainText('anfitrión');
   await expect(page.getByText('Esperando…')).toBeVisible();
 
   const stored = JSON.parse((await page.evaluate(key => localStorage.getItem(key), roomKey))!) as typeof openRoom;
   expect(stored.code).toBe(code);
   expect(stored.setup).toEqual({ difficulty: 'hard', questionCount: 10, hostRole: 'player', questionSeconds: 12, revealSeconds: 5 });
   expect(stored.participants).toHaveLength(1);
+  expect(stored.participants[0]?.name).toBe('Marta');
 
   // La sala sobrevive a una recarga: el código compartido sigue siendo válido.
   await page.reload();

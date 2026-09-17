@@ -1,0 +1,8 @@
+{
+  "approved": true,
+  "approvedAt": "2026-09-17",
+  "approvedBy": "user",
+  "promptFile": "prompts/02-ficha-sujeta.txt",
+  "role": "north-star composition",
+  "notes": "La ficha de palabra sujeta con clip amarillo es la dirección vinculante. El texto, los controles y el reloj se implementan como HTML/CSS, no como una pantalla rasterizada."
+}

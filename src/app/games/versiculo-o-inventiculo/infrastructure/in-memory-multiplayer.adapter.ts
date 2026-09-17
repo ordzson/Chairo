@@ -64,8 +64,8 @@ export class InMemoryMultiplayerAdapter implements MultiplayerPort {
     inject(DestroyRef).onDestroy(unsubscribe);
   }
 
-  async createRoom(setup: MatchSetup): Promise<Room> {
-    const host = hostParticipant(setup.hostRole);
+  async createRoom(setup: MatchSetup, hostName: string): Promise<Room> {
+    const host = hostParticipant(setup.hostRole, hostName);
     const room: Room = {
       code: this.nextCode(),
       setup,

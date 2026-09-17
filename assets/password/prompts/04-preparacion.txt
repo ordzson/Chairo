@@ -1,0 +1,8 @@
+Use case: ui-mockup
+Asset type: production-reference portrait mobile ready screen for Chairo Password
+Primary request: Design the synchronized preparation state immediately before a Password round. Real app UI. Strictly extend the approved reference direction: cream fibrous binder paper, blue spine and brass rings at left, deep-blue molded frame, yellow clip holding a cream index card, blue ink, yellow/orange marker strokes, tactile early-2000s educational-game polish. Do not show a secret word yet.
+Screen structure: compact Chairo logo and small label “PASSWORD · RONDA 3”; large clipped cream instruction card inside blue frame; simple blue line illustration of a person holding a phone against their forehead; dominant heading “Pon el teléfono en tu frente”; supporting line “No mires la pantalla”; two compact player cards below with accumulated scores “Ana · 2 pts” and “Leo · 1 pt”; readiness rows with green/yellow marker accents “Ana · lista” and “Leo · esperando”; one large yellow personal action “ESTOY LISTA”. Add small note “La cuenta 3–2–1 empezará cuando ambos estén listos”.
+Text (verbatim): “PASSWORD · RONDA 3”, “Pon el teléfono en tu frente”, “No mires la pantalla”, “Ana · 2 pts”, “Leo · 1 pt”, “Ana · lista”, “Leo · esperando”, “ESTOY LISTA”, “La cuenta 3–2–1 empezará cuando ambos estén listos”.
+Constraints: portrait 941 x 1672 proportions, clear single action, no word visible, no QR, no timer, no score controls, Spanish only, edge-to-edge UI, no phone hardware frame.
+Avoid: giant countdown, gameplay word, points editor, third participant, photos, realistic person, generic dashboard, glassmorphism, watermark, extra text.
+

@@ -1,0 +1,216 @@
+<a class="skip-link" href="#password-main">Ir al estado de la partida</a>
+
+<main class="password-shell">
+  <article class="password-manual" aria-labelledby="password-title">
+    <div class="password-spine" aria-hidden="true"></div>
+    <chairo-password-header
+      [title]="phaseTitle()"
+      backLink="/"
+      backLabel="Volver al centro de juegos"
+      [note]="['pistas sí', 'la palabra no']"
+    />
+
+    <p class="connection-status" aria-live="polite">
+      @if (connection() === 'reconnecting') { Reconectando… }
+      @if (connection() === 'offline') { Sin conexión. Conservamos tu ronda. }
+    </p>
+    <p class="sr-only" aria-live="polite">{{ liveMessage() }}</p>
+
+    <section id="password-main" class="game-state" [attr.data-phase]="phase()">
+      @if (snapshot(); as game) {
+        @switch (phase()) {
+          @case ('preparing') {
+            <div class="password-board preparation-board">
+              <span class="board-clip" aria-hidden="true"></span>
+              <div class="password-paper preparation-paper">
+                <div class="phone-forehead" aria-hidden="true"><span></span></div>
+                <h2><span>Pon el teléfono<br>en tu frente</span></h2>
+                <p>No mires la pantalla</p>
+              </div>
+            </div>
+
+            <ul class="player-list readiness-list">
+              @for (player of game.players; track player.id) {
+                <li class="player-ticket player-ticket--{{ player.color }}">
+                  <span class="player-avatar" aria-hidden="true"></span>
+                  <span><strong>{{ player.name }} · {{ player.score }} pts</strong><small>{{ player.ready ? 'Listo/a' : 'Esperando' }}</small></span>
+                  <b aria-hidden="true">{{ player.ready ? '✓' : '…' }}</b>
+                </li>
+              }
+            </ul>
+            <button class="password-primary pressable" type="button" [disabled]="busy()" (click)="toggleReady()">
+              {{ game.self.ready ? 'Ya no estoy listo/a' : 'Estoy listo/a' }}
+            </button>
+            <p class="waiting-note">La cuenta 3–2–1 empezará cuando ambos estén listos.</p>
+          }
+
+          @case ('countdown') {
+            <div class="password-board countdown-board" aria-live="polite" aria-atomic="true">
+              <span class="board-clip" aria-hidden="true"></span>
+              <div class="password-paper countdown-paper">
+                <p>Preparen el teléfono</p>
+                <strong>{{ countdown() }}</strong>
+                <span>La palabra aparecerá a la vez</span>
+              </div>
+            </div>
+          }
+
+          @case ('playing') {
+            <div class="password-board word-board">
+              <span class="board-clip" aria-hidden="true"></span>
+              <div class="round-timer" [class.is-warning]="remainingSeconds() <= 10" [class.is-zero]="remainingSeconds() === 0" aria-hidden="true">
+                {{ remainingSeconds() }}
+              </div>
+              <div class="password-paper word-paper">
+                <!-- La palabra solo entra en el DOM cuando termina la cuenta sincronizada. -->
+                <p class="secret-word">{{ game.selfWord }}</p>
+              </div>
+            </div>
+            <p class="timer-description" role="timer" [attr.aria-label]="remainingSeconds() === 0 ? 'Tiempo agotado' : remainingSeconds() + ' segundos restantes'">
+              {{ remainingSeconds() === 0 ? 'Tiempo agotado · la ronda sigue hasta el cierre manual' : 'Pistas sí · la palabra no' }}
+            </p>
+            <ul class="player-list compact-scores">
+              @for (player of game.players; track player.id) {
+                <li class="player-ticket player-ticket--{{ player.color }}"><strong>{{ player.name }}</strong><b>{{ player.score }} pts</b></li>
+              }
+            </ul>
+            @if (isHost()) {
+              <div class="hold-control" [class.is-holding]="holding()">
+                <button
+                  class="password-primary password-primary--orange pressable hold-button"
+                  type="button"
+                  [disabled]="busy()"
+                  (pointerdown)="startHold($event)"
+                  (pointerup)="cancelHold()"
+                  (pointerleave)="cancelHold()"
+                  (pointercancel)="cancelHold()"
+                  (keydown)="holdKeyDown($event)"
+                  (keyup)="holdKeyUp($event)"
+                  (blur)="cancelHold()"
+                >Mantén para terminar ronda</button>
+              </div>
+              <button class="accessible-end" type="button" (click)="confirmEnd.set(true)">Usar confirmación en vez de mantener</button>
+              @if (confirmEnd()) {
+                <div class="inline-confirmation" role="group" aria-label="Confirmar fin de ronda">
+                  <p>¿Terminar la ronda y ocultar las palabras?</p>
+                  <button class="password-secondary pressable" type="button" (click)="endRoundConfirmed()">Sí, terminar ronda</button>
+                  <button class="password-text-link" type="button" (click)="confirmEnd.set(false)">Seguir jugando</button>
+                </div>
+              }
+            } @else {
+              <p class="waiting-note">La persona anfitriona controla el final de la ronda.</p>
+            }
+          }
+
+          @case ('scoring') {
+            @if (isHost()) {
+              <h2 class="scoring-question">¿Quién adivinó?</h2>
+              <div class="scoring-list">
+                @for (entry of game.revealedEntries; track entry.participantId) {
+                  @for (player of game.players; track player.id) {
+                    @if (player.id === entry.participantId) {
+                      <fieldset class="password-board scoring-card">
+                        <legend class="sr-only">Resultado de {{ player.name }}</legend>
+                        <span class="board-clip board-clip--{{ player.color }}" aria-hidden="true"></span>
+                        <div class="password-paper">
+                          <header><strong>{{ player.name }}</strong><span>{{ player.score }} pts</span></header>
+                          <p class="revealed-word">{{ entry.word }}</p>
+                          <div class="result-options">
+                            <button
+                              class="result-button result-button--yes pressable"
+                              [class.is-selected]="results()[player.id] === true"
+                              type="button"
+                              [attr.aria-pressed]="results()[player.id] === true"
+                              (click)="chooseResult(player.id, true)"
+                            >Adivinó · +1</button>
+                            <button
+                              class="result-button result-button--no pressable"
+                              [class.is-selected]="results()[player.id] === false"
+                              type="button"
+                              [attr.aria-pressed]="results()[player.id] === false"
+                              (click)="chooseResult(player.id, false)"
+                            >No adivinó · +0</button>
+                          </div>
+                        </div>
+                      </fieldset>
+                    }
+                  }
+                }
+              </div>
+              <button class="password-primary pressable" type="button" [disabled]="!allResultsSelected() || busy()" (click)="saveScores()">
+                {{ busy() ? 'Guardando puntos…' : 'Guardar puntos' }}
+              </button>
+              <p class="waiting-note">Se guardan las dos decisiones en una sola operación.</p>
+            } @else {
+              <div class="password-board waiting-board">
+                <span class="board-clip" aria-hidden="true"></span>
+                <div class="password-paper">
+                  <h2>La persona anfitriona está anotando</h2>
+                  <p>Verás el marcador cuando guarde los dos resultados.</p>
+                </div>
+              </div>
+            }
+          }
+
+          @case ('scoreboard') {
+            <h2 class="scoreboard-heading">Después de {{ game.roundNumber }} {{ game.roundNumber === 1 ? 'ronda' : 'rondas' }}</h2>
+            <ol class="scoreboard-list">
+              @for (player of game.players; track player.id) {
+                <li class="password-board score-card score-card--{{ player.color }}">
+                  <span class="board-clip board-clip--{{ player.color }}" aria-hidden="true"></span>
+                  <div class="password-paper">
+                    <span class="player-avatar" aria-hidden="true"></span>
+                    <strong>{{ player.name }}</strong>
+                    <b>{{ player.score }} <small>{{ player.score === 1 ? 'punto' : 'puntos' }}</small></b>
+                    <em>+{{ game.roundDeltas[player.id] ?? 0 }} esta ronda</em>
+                  </div>
+                </li>
+              }
+            </ol>
+            @if (isHost()) {
+              <button class="password-primary pressable" type="button" [disabled]="busy()" (click)="nextRound()">Otra ronda</button>
+              <button class="password-secondary pressable" type="button" [disabled]="busy()" (click)="finishMatch()">Terminar partida</button>
+            } @else {
+              <p class="waiting-note">La persona anfitriona elige si hay otra ronda.</p>
+            }
+          }
+
+          @case ('finished') {
+            <div class="password-board final-board">
+              <span class="board-clip" aria-hidden="true"></span>
+              <div class="password-paper">
+                @if (winner(); as champion) {
+                  <h2>{{ champion.name }} gana</h2>
+                  <p class="final-score">{{ champion.score }} {{ champion.score === 1 ? 'punto' : 'puntos' }}</p>
+                } @else {
+                  <h2>¡Empate!</h2>
+                  <p class="final-score">{{ game.players[0]?.score ?? 0 }} puntos cada uno</p>
+                }
+                <ul class="final-players">
+                  @for (player of game.players; track player.id) {
+                    <li><strong>{{ player.name }}</strong><span>{{ player.score }} pts</span></li>
+                  }
+                </ul>
+              </div>
+            </div>
+            <p class="rounds-played">{{ game.roundNumber }} {{ game.roundNumber === 1 ? 'ronda jugada' : 'rondas jugadas' }}</p>
+            @if (isHost()) {
+              <button class="password-primary pressable" type="button" [disabled]="busy()" (click)="playAgain()">Jugar otra vez</button>
+            } @else {
+              <p class="waiting-note">La persona anfitriona puede abrir otra partida con esta sala.</p>
+            }
+            <a class="password-secondary pressable password-link-button" routerLink="/">Volver al centro</a>
+          }
+        }
+      } @else if (!error()) {
+        <p class="loading-copy" role="status">Recuperando la partida…</p>
+      }
+
+      @if (error()) {
+        <p class="password-alert" role="alert">{{ error() }}</p>
+        <a class="password-secondary pressable password-link-button" routerLink="/">Volver al centro</a>
+      }
+    </section>
+  </article>
+</main>
+

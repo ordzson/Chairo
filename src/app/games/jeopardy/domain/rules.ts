@@ -217,8 +217,9 @@ export function passSteal(state: JeopardyState, selfId: string | null): Jeopardy
 
 /**
  * Diez segundos para quien tiene la jugada: elegir, apostar, responder o
- * robar. Al vencer, el turno termina como si lo terminara el anfitrión.
- * Mientras juzga no hay nada que apurar. Pedirla otra vez la reinicia.
+ * robar. Al vencer mientras responde, cuenta como «Ya respondí» y el anfitrión
+ * juzga; en las demás fases el turno termina como si lo terminara él. Mientras
+ * juzga no hay nada que apurar. Pedirla otra vez la reinicia.
  */
 export function startCountdown(state: JeopardyState, selfId: string | null, now: number): JeopardyState {
   requireHost(state, selfId);
@@ -237,6 +238,11 @@ export function endTurn(state: JeopardyState, selfId: string | null): JeopardySt
 export function expireCountdown(state: JeopardyState, now: number): JeopardyState {
   const deadline = state.deadline ?? null;
   if (deadline === null || now < deadline) return state;
+  if (state.phase === 'question') {
+    // Quien responde ya habló o se quedó sin tiempo: el anfitrión decide, y un fallo abre el robo.
+    const attempt = state.players.find(player => player.id === state.attemptPlayerId);
+    return { ...state, phase: 'judging', deadline: null, message: `Se acabó el tiempo de ${attempt?.name ?? ''}. El anfitrión decide.` };
+  }
   return finishTurn(state, 'Se acabó el tiempo.');
 }
 

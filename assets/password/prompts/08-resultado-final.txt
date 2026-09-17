@@ -1,0 +1,8 @@
+Use case: ui-mockup
+Asset type: production-reference portrait mobile final result screen for Chairo Password
+Primary request: Design the final match result after the host ends the Password session. Use the approved clipped index-card visual direction: cream fibrous binder page, blue spine and brass rings, deep-blue molded clipboard, yellow clip, cream player cards, blue ink, yellow/orange strokes, tactile joyful 2000s educational-game polish. Real app UI, no generic podium.
+Screen structure: compact Chairo logo; deep-blue header “PARTIDA TERMINADA”; celebratory but restrained clipped winner card with small yellow crown, “ANA GANA” and huge “5 PUNTOS”; second orange-accent player card “LEO · 3 PUNTOS”; quiet summary “7 rondas jugadas”; a pinned handwritten note “¡Buen trabajo en equipo!”; large yellow host action “JUGAR OTRA VEZ”; secondary cream action “VOLVER AL CENTRO”. Include no third place. If tied, the same layout must be able to say “EMPATE”, but render Ana as winner in this mockup.
+Text (verbatim): “PARTIDA TERMINADA”, “ANA GANA”, “5 PUNTOS”, “LEO · 3 PUNTOS”, “7 rondas jugadas”, “¡Buen trabajo en equipo!”, “JUGAR OTRA VEZ”, “VOLVER AL CENTRO”.
+Constraints: portrait 941 x 1672 proportions, exact two-person result, scores and round count clear, celebration secondary to results, Spanish only, no timer, no QR, no phone frame.
+Avoid: third place, trophy stage, confetti covering content, speed statistics, generic leaderboard, glassmorphism, photos, people, watermark, extra text.
+

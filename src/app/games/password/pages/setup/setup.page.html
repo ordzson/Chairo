@@ -1,0 +1,66 @@
+<a class="skip-link" href="#password-main">Ir a la configuración</a>
+
+<main class="password-shell">
+  <article class="password-manual" aria-labelledby="password-title">
+    <div class="password-spine" aria-hidden="true"></div>
+    <chairo-password-header
+      title="Revelaciones"
+      backLink="/"
+      backLabel="Volver al centro de juegos"
+      [note]="['dos teléfonos', 'una palabra por persona']"
+    />
+
+    <section id="password-main" class="password-board setup-board" aria-labelledby="setup-heading">
+      <span class="board-clip" aria-hidden="true"></span>
+      <form class="password-paper" (submit)="$event.preventDefault(); createRoom()">
+        <h2 id="setup-heading"><span>Prepara la partida</span></h2>
+
+        <label class="field-label" for="password-host-name">Tu nombre</label>
+        <input
+          id="password-host-name"
+          class="paper-input"
+          type="text"
+          autocomplete="nickname"
+          [attr.maxlength]="maxNameLength"
+          [value]="hostName()"
+          (input)="writeName($any($event.target))"
+        >
+
+        <fieldset class="duration-fieldset">
+          <legend>Tiempo por ronda</legend>
+          <div class="segmented-control">
+            @for (seconds of durations; track seconds) {
+              <label class="duration-option" [class.is-selected]="roundSeconds() === seconds">
+                <input
+                  type="radio"
+                  name="round-seconds"
+                  [value]="seconds"
+                  [checked]="roundSeconds() === seconds"
+                  (change)="chooseDuration(seconds)"
+                >
+                <span>{{ seconds }}</span>
+              </label>
+            }
+          </div>
+          <span class="field-suffix">segundos</span>
+        </fieldset>
+
+        <p class="rule-note">Cada palabra adivinada vale <strong>1 punto</strong>.</p>
+        <p class="phone-note"><span aria-hidden="true">2</span> Se necesitan dos teléfonos</p>
+
+        @if (!bankReady) {
+          <p class="password-alert password-alert--warning" role="status">
+            El banco de palabras todavía no está cargado. Puedes preparar la sala, pero la ronda no podrá comenzar.
+          </p>
+        }
+        @if (error()) { <p class="password-alert" role="alert">{{ error() }}</p> }
+
+        <button class="password-primary pressable" type="submit" [disabled]="creating()">
+          {{ creating() ? 'Creando sala…' : 'Crear sala' }}
+        </button>
+        <a class="password-text-link" routerLink="/">Cancelar</a>
+      </form>
+    </section>
+  </article>
+</main>
+

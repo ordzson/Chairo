@@ -140,7 +140,7 @@ export class InMemoryJeopardyAdapter implements JeopardyPort {
 
   /**
    * Lee la sala más reciente y reconoce el asiento; si no existe, lo dice. Una
-   * cuenta regresiva vencida se aplica aquí, así la cierra la primera pestaña
+   * cuenta regresiva vencida se aplica aquí, así la aplica la primera pestaña
    * que mire la sala después.
    */
   private load(code: string): JeopardyState {

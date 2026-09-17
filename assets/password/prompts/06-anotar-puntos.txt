@@ -1,0 +1,8 @@
+Use case: ui-mockup
+Asset type: production-reference portrait mobile host scoring screen for Chairo Password
+Primary request: Design the screen shown immediately after the host ends a round. The host must assign one point independently to each participant whose word was guessed. Use the approved MANÁ clipped-index-card direction as strict visual authority: cream mission-binder paper, blue spine and brass rings, deep-blue molded clipboard frame, yellow clip, cream cards, blue ink, yellow/orange marker accents, tactile early-2000s educational-game depth. Real app UI, not a poster.
+Screen structure: compact Chairo logo; label “RONDA 3 · ANOTAR PUNTOS”; heading “¿Quién adivinó?”; two stacked clipped cream result cards. First card has “ANA”, previous score “2 pts”, word “MANÁ”, and two equal choices: selected yellow button “ADIVINÓ · +1” with check icon, unselected cream button “NO ADIVINÓ · +0”. Second card has “LEO”, previous score “1 pt”, word “GOLIAT”, and the same two choices with “NO ADIVINÓ · +0” selected in orange. Under cards show projected tally “Ana 3 · Leo 1”. Large blue or yellow action “GUARDAR PUNTOS”; small note “Solo la anfitriona puede confirmar”.
+Text (verbatim): “RONDA 3 · ANOTAR PUNTOS”, “¿Quién adivinó?”, “ANA”, “2 pts”, “MANÁ”, “ADIVINÓ · +1”, “NO ADIVINÓ · +0”, “LEO”, “1 pt”, “GOLIAT”, “Ana 3 · Leo 1”, “GUARDAR PUNTOS”, “Solo la anfitriona puede confirmar”.
+Constraints: portrait 941 x 1672 proportions, both player decisions visible in one scroll-free screen, selected states unmistakable without color alone, point ownership clear, Spanish only, no timer, no QR, no phone frame.
+Avoid: automatically awarding both, negative points, speed bonus, edit text input, generic form, glassmorphism, photos, people, watermark, extra text.
+

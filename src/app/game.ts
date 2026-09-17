@@ -1,4 +1,4 @@
-export type GameIcon = 'bulb' | 'question' | 'compass' | 'book' | 'shell' | 'trophy';
+export type GameIcon = 'bulb' | 'question' | 'key' | 'compass' | 'shell' | 'trophy';
 export type GameColor = 'yellow' | 'orange' | 'turquoise' | 'blue' | 'green' | 'violet';
 
 export interface Game {
@@ -12,6 +12,8 @@ export interface Game {
   readonly previewAlt: string;
   readonly status: 'available' | 'coming-soon';
   readonly route?: string;
+  /** Entrada directa para invitados cuando el juego admite salas por código. */
+  readonly joinRoute?: string;
 }
 
 export const GAMES: readonly Game[] = [
@@ -33,7 +35,8 @@ export const GAMES: readonly Game[] = [
     preview: 'assets/plates/stage-versiculo-o-inventiculo.png',
     previewAlt: 'Escenario azul con dos podios: uno marcado con un visto verde y otro con una cruz roja',
     status: 'available',
-    route: '/juegos/versiculo-o-inventiculo'
+    route: '/juegos/versiculo-o-inventiculo',
+    joinRoute: '/juegos/versiculo-o-inventiculo/unirse'
   },
   {
     id: 'discipulo-perdido',
@@ -47,11 +50,13 @@ export const GAMES: readonly Game[] = [
   {
     id: 'revelaciones',
     name: 'Revelaciones',
-    icon: 'book',
+    icon: 'key',
     color: 'blue',
     preview: 'assets/plates/stage-revelaciones.png',
     previewAlt: 'Escenario azul con una palabra oculta en casillas vacías y una llave dorada sobre ella',
-    status: 'coming-soon'
+    status: 'available',
+    route: '/juegos/revelaciones',
+    joinRoute: '/juegos/revelaciones/unirse'
   },
   {
     id: 'buscando-perlas',

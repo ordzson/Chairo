@@ -1,0 +1,8 @@
+Use case: ui-mockup
+Asset type: production-reference portrait mobile waiting-room screen for Chairo Password
+Primary request: Design the two-player lobby for the approved Chairo Password direction. Real app UI, not a poster. Follow the reference image’s exact world: cream textured binder paper, left royal-blue spine and brass rings, bold blue ink, yellow/orange molded pieces, clipped cream index cards, marker strokes, joyful polished 2000s educational-game depth. Reuse identity only, not the active word card.
+Screen structure: compact Chairo logo; deep-blue molded header “SALA LISTA”; a clipped cream invitation card with a real-looking placeholder QR on the left and large code “G7K4” on a yellow paint stroke on the right, caption “Escanea o entra con el código”; section “Jugadores · 2 de 2” with two cream participant cards: “Ana · anfitriona” yellow accent and “Leo · listo” orange accent; each card shows score “0 pts”; a quiet setup row “60 segundos por ronda”; one large yellow button “EMPEZAR PARTIDA”; secondary cream button “Compartir código”.
+Text (verbatim): “SALA LISTA”, “Escanea o entra con el código”, “G7K4”, “Jugadores · 2 de 2”, “Ana · anfitriona”, “0 pts”, “Leo · listo”, “60 segundos por ronda”, “EMPEZAR PARTIDA”, “Compartir código”.
+Constraints: portrait 941 x 1672 proportions, exactly two player slots and both filled, score visible per person but secondary, real UI hierarchy, QR and code only in this lobby, Spanish only, no phone frame.
+Avoid: third player slot, gameplay word, giant timer, answer buttons, generic cards, glassmorphism, photographs, people, watermark, extra text.
+

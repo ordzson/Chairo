@@ -127,9 +127,17 @@ test('el robo se abre a todos y el anfitrión apura o termina el turno', async (
   await expect(rut.getByRole('timer')).toHaveCount(0);
   await expect(leo.locator('.clue-tile:enabled')).toHaveCount(9);
 
-  // Leo falla: Rut y Eva pueden robar a la vez y se lo queda quien lo pide primero.
+  // Leo se queda sin tiempo: cuenta como «Ya respondí» y el anfitrión juzga.
   await openClue(leo);
-  await leo.getByRole('button', { name: 'Ya respondí' }).click();
+  await expect(page.locator('.question-paper h2')).toBeVisible();
+  await page.getByRole('button', { name: 'Dar 10 segundos' }).click();
+  await expect(leo.getByRole('timer')).toBeVisible();
+  await page.clock.fastForward(11_000);
+  for (const phone of [page, leo]) await expect(phone.getByText('Se acabó el tiempo de Leo. El anfitrión decide.')).toBeVisible();
+  await expect(leo.getByRole('button', { name: 'Ya respondí' })).toHaveCount(0);
+  await expect(leo.getByText('El anfitrión está comprobando la respuesta.')).toBeVisible();
+
+  // Leo falla: Rut y Eva pueden robar a la vez y se lo queda quien lo pide primero.
   await page.getByRole('button', { name: /No acertó/ }).click();
   await expect(rut.getByText('Puedes robar')).toBeVisible();
   await expect(eva.getByText('Puedes robar')).toBeVisible();

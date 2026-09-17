@@ -212,7 +212,7 @@ export class JeopardyGamePageComponent {
     await this.router.navigateByUrl('/');
   }
 
-  /** Al vencer la cuenta se vuelve a pedir la sala: esa lectura termina el turno. */
+  /** Al vencer la cuenta se vuelve a pedir la sala: esa lectura la aplica. */
   private tick(): void {
     const now = Date.now();
     this.now.set(now);

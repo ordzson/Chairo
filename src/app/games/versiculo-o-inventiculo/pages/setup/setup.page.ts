@@ -4,7 +4,7 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { GameIconComponent } from '../../../../game-icon.component';
 import { SoundService } from '../../../../sound.service';
 import { MultiplayerError, MultiplayerPort } from '../../domain/multiplayer.port';
-import { isRoomCode, type RoomCode } from '../../domain/room';
+import { isRoomCode, MAX_NAME_LENGTH, type RoomCode } from '../../domain/room';
 import {
   DIFFICULTIES,
   LONG_STATEMENT_EXTRA_SECONDS,
@@ -39,11 +39,14 @@ export class SetupPageComponent {
   readonly questionSecondsOptions = QUESTION_SECONDS;
   readonly revealSecondsOptions = REVEAL_SECONDS;
   readonly longStatementExtraSeconds = LONG_STATEMENT_EXTRA_SECONDS;
+  readonly maxNameLength = MAX_NAME_LENGTH;
   readonly difficulty = signal<Difficulty>(this.initial.difficulty);
   readonly questionCount = signal(this.initial.questionCount);
   readonly hostRole = signal<HostRole>(this.initial.hostRole);
   readonly questionSeconds = signal(this.initial.questionSeconds);
   readonly revealSeconds = signal(this.initial.revealSeconds);
+  /** Así ven al anfitrión los demás; al reiniciar la sala conserva su asiento. */
+  readonly hostName = signal('Anfitrión');
   readonly creating = signal(false);
   readonly createError = signal('');
 
@@ -77,6 +80,13 @@ export class SetupPageComponent {
     this.createError.set('');
   }
 
+  writeHostName(field: HTMLInputElement): void {
+    const clean = field.value.slice(0, MAX_NAME_LENGTH);
+    if (field.value !== clean) field.value = clean;
+    this.hostName.set(clean);
+    this.createError.set('');
+  }
+
   changeQuestionCount(direction: -1 | 1): void {
     this.step(this.questionCount, this.questionCounts, direction);
   }
@@ -95,6 +105,12 @@ export class SetupPageComponent {
    */
   async createRoom(): Promise<void> {
     if (this.creating()) return;
+    const code = this.reopenCode();
+    const hostName = this.hostName().trim();
+    if (!code && !hostName) {
+      this.createError.set('Escribe tu nombre para abrir la sala.');
+      return;
+    }
     const setup: MatchSetup = {
       difficulty: this.difficulty(),
       questionCount: this.questionCount(),
@@ -106,11 +122,10 @@ export class SetupPageComponent {
     this.drafts.write(setup);
     this.creating.set(true);
     this.createError.set('');
-    const code = this.reopenCode();
     try {
       const room = code
         ? await this.multiplayer.reopenRoom(code, setup)
-        : await this.multiplayer.createRoom(setup);
+        : await this.multiplayer.createRoom(setup, hostName);
       await this.router.navigate(['/juegos/versiculo-o-inventiculo/sala', room.code]);
     } catch (error) {
       if (!code) {

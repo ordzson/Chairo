@@ -1,0 +1,77 @@
+<a class="skip-link" href="#password-main">Ir a la sala</a>
+
+<main class="password-shell">
+  <article class="password-manual" aria-labelledby="password-title">
+    <div class="password-spine" aria-hidden="true"></div>
+    <chairo-password-header
+      title="Sala lista"
+      backLabel="Salir de la sala"
+      [note]="['escanea', 'o dicta el código']"
+      (back)="exit()"
+    />
+
+    <p class="connection-status" aria-live="polite">
+      @if (connection() === 'reconnecting') { Reconectando… }
+      @if (connection() === 'offline') { Sin conexión. Conservamos la sala y volveremos a intentar. }
+    </p>
+
+    <section id="password-main" class="password-board room-board" aria-label="Sala de Revelaciones">
+      <span class="board-clip" aria-hidden="true"></span>
+      <div class="password-paper">
+        @if (loading()) {
+          <p class="loading-copy" role="status">Buscando la sala…</p>
+        } @else if (snapshot(); as room) {
+          <h2 class="handwritten-heading">Escanea o entra con el código</h2>
+          <div class="invite-grid">
+            <chairo-password-qr
+              [content]="joinUrl"
+              [label]="'Código QR para entrar a la sala ' + spacedCode"
+            />
+            <p class="room-code-value" [attr.aria-label]="'Código ' + spacedCode">{{ room.code }}</p>
+          </div>
+
+          <h2 class="handwritten-heading">Participantes · {{ room.players.length }} de 2</h2>
+          <ul class="player-list">
+            @for (player of room.players; track player.id) {
+              <li class="player-ticket player-ticket--{{ player.color }}">
+                <span class="player-avatar" aria-hidden="true"></span>
+                <span><strong>{{ player.name }}</strong><small>{{ player.role === 'host' ? 'anfitrión/a' : 'listo/a' }}</small></span>
+                <b>{{ player.score }} pts</b>
+              </li>
+            }
+            @if (!full()) {
+              <li class="player-ticket player-ticket--empty"><span aria-hidden="true">+</span><span>Esperando a la otra persona…</span></li>
+            }
+          </ul>
+
+          <p class="round-config">{{ room.roundSeconds }} segundos por ronda</p>
+          @if (!bankReady) {
+            <p class="password-alert password-alert--warning" role="status">
+              Falta cargar `assets/password.md`; no se puede iniciar una ronda todavía.
+            </p>
+          }
+          @if (isHost()) {
+            <button
+              class="password-primary pressable"
+              type="button"
+              [disabled]="!full() || busy() || !bankReady"
+              (click)="start()"
+            >
+              {{ busy() ? 'Preparando…' : full() ? 'Empezar partida' : 'Falta 1 lugar' }}
+            </button>
+            <button class="password-secondary pressable" type="button" (click)="share()">Compartir código</button>
+          } @else {
+            <p class="waiting-note">Esperando a que la persona anfitriona comience</p>
+          }
+          @if (shareStatus()) { <p class="field-help" role="status">{{ shareStatus() }}</p> }
+        }
+
+        @if (error()) {
+          <p class="password-alert" role="alert">{{ error() }}</p>
+          <a class="password-secondary pressable password-link-button" routerLink="/juegos/revelaciones/unirse">Probar otro código</a>
+        }
+      </div>
+    </section>
+  </article>
+</main>
+

@@ -73,6 +73,23 @@ test('setup choices persist and the host role explanation stays in sync', async 
   await expect(page.getByRole('radio', { name: 'Solo anfitrión' })).toBeChecked();
 });
 
+test('the host writes the name everyone else will see', async ({ page }) => {
+  await page.goto(setupUrl);
+  const name = page.getByLabel('Tu nombre');
+  await expect(name).toHaveValue('Anfitrión');
+
+  await name.fill('   ');
+  await page.getByRole('button', { name: 'Crear sala' }).click();
+  await expect(page.getByText('Escribe tu nombre para abrir la sala.')).toBeVisible();
+  await expect(page).toHaveURL(/#\/juegos\/versiculo-o-inventiculo$/);
+
+  await name.fill('Pastor Luis');
+  await expect(page.getByText('Escribe tu nombre para abrir la sala.')).toHaveCount(0);
+  await page.getByRole('button', { name: 'Crear sala' }).click();
+  await expect(page).toHaveURL(/#\/juegos\/versiculo-o-inventiculo\/sala\/[2-9A-HJ-NP-Z]{4}$/);
+  await expect(page.getByRole('listitem').filter({ hasText: 'Pastor Luis' })).toContainText('anfitrión');
+});
+
 test('the host chooses how long to read each phrase and to see the answer', async ({ page }) => {
   await page.goto(setupUrl);
   const questionSeconds = page.getByRole('status', { name: 'Leer y responder' });

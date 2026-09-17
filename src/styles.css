@@ -675,13 +675,22 @@ select:focus-visible {
   text-wrap: balance;
 }
 
+.game-actions {
+  align-self: end;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+  justify-content: center;
+  margin-top: 0.6rem;
+}
+
 .game-start-link {
   --press-face: var(--yellow);
   --press-depth: 7px;
   --press-lift: 3px;
-  align-self: end;
+  display: inline-grid;
+  place-items: center;
   min-height: 58px;
-  margin: 0.6rem 0 0;
   padding: 0.75rem 1.5rem;
   color: var(--ink);
   font-family: 'Lilita One', 'Cabin Condensed', sans-serif;
@@ -692,6 +701,13 @@ select:focus-visible {
   background: var(--yellow);
   border: 2px solid var(--ink);
   border-radius: 14px;
+}
+
+.game-join-link {
+  --press-face: var(--paper-light);
+  background: var(--paper-light);
+  font-family: 'Cabin Condensed', sans-serif;
+  font-weight: 700;
 }
 
 .game-start-link:focus-visible {
@@ -866,7 +882,8 @@ select:focus-visible {
     motion-float var(--motion-idle) ease-in-out calc(var(--motion-delay, 0ms) + var(--motion-slow)) infinite;
 }
 
-.preparing-copy { --motion-delay: 180ms; }
+.preparing-copy,
+.game-actions { --motion-delay: 180ms; }
 
 .preference-sheet {
   --motion-delay: 900ms;
@@ -936,6 +953,8 @@ select:focus-visible {
   .sheet-status { grid-column: 2; justify-self: start; margin: 0.25rem 0 0 0.3rem; }
   .brush-plate { width: 88%; }
   .stage-plate { width: 100%; }
+  .game-actions { width: 100%; gap: 0.65rem; }
+  .game-start-link { flex: 1 1 190px; }
 
   .preference-sheet {
     grid-template-columns: 48px minmax(0, 1fr);

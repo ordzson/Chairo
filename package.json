@@ -9,6 +9,8 @@
   "scripts": {
     "start": "ng serve --host 127.0.0.1",
     "build": "ng build --base-href ./",
+    "generate:password-bank": "node scripts/generate-password-bank.mjs",
+    "verify:supabase:password": "node supabase/verify-password.mjs",
     "test": "playwright test",
     "test:report": "playwright show-report",
     "check": "ng build --base-href ./ && playwright test"

@@ -192,12 +192,29 @@ test('el anfitrión apura con diez segundos o termina el turno cuando quiere', (
   expect(state.deadline).toBeNull();
   expect(reason(() => startCountdown(state, 'ana', 0))).toBe('invalid-move');
 
+  // Si la cuenta vence mientras responde, cuenta como «Ya respondí»: el
+  // anfitrión juzga y un fallo abre el robo.
+  state = startCountdown(selectCell(judgeAnswer(state, 'ana', true), 'rut', '1-1'), 'ana', 0);
+  state = expireCountdown(state, 10_000);
+  expect(state).toMatchObject({ phase: 'judging', attemptPlayerId: 'rut', deadline: null, message: 'Se acabó el tiempo de Rut. El anfitrión decide.' });
+  state = judgeAnswer(state, 'ana', false);
+  expect(state).toMatchObject({ phase: 'steal', stealQueue: ['leo', 'eva'] });
+
+  // Quien roba también: al vencer su intento, el anfitrión juzga.
+  state = startCountdown(acceptSteal(state, 'leo'), 'ana', 0);
+  state = expireCountdown(state, 10_000);
+  expect(state).toMatchObject({ phase: 'judging', attemptPlayerId: 'leo', message: 'Se acabó el tiempo de Leo. El anfitrión decide.' });
+  state = judgeAnswer(state, 'ana', false);
+  expect(state).toMatchObject({ phase: 'steal', stealQueue: ['eva'] });
+
   // En el robo la cuenta sigue aunque alguien pase, y al vencer se cierra.
-  state = startCountdown(judgeAnswer(state, 'ana', false), 'ana', 0);
-  state = passSteal(state, 'rut');
+  state = passSteal(state, 'eva');
+  state = judgeAnswer(markAnswered(selectCell(state, 'leo', '1-2'), 'leo'), 'ana', false);
+  state = startCountdown(state, 'ana', 0);
+  state = passSteal(state, 'eva');
   expect(state.deadline).toBe(10_000);
   state = expireCountdown(state, 10_000);
-  expect(state).toMatchObject({ phase: 'board', turnPlayerId: 'rut', message: 'Se acabó el tiempo. Turno de Rut.' });
+  expect(state).toMatchObject({ phase: 'board', turnPlayerId: 'eva', message: 'Se acabó el tiempo. Turno de Eva.' });
 
   state = { ...state, status: 'finished', phase: 'finished' };
   expect(reason(() => endTurn(state, 'ana'))).toBe('invalid-move');

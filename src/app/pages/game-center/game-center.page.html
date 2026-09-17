@@ -62,9 +62,16 @@
           <!-- impeccable-disable-next-line broken-image: Angular binds a validated path from the typed game catalog. -->
           <img class="stage-plate" [src]="game.preview" [alt]="game.previewAlt">
           @if (game.route) {
-            <a class="game-start-link pressable motion-rise" [routerLink]="game.route" (click)="onStartGameClick()">
-              Preparar partida
-            </a>
+            <div class="game-actions motion-rise">
+              <a class="game-start-link pressable" [routerLink]="game.route" (click)="onStartGameClick()">
+                Preparar partida
+              </a>
+              @if (game.joinRoute) {
+                <a class="game-start-link game-join-link pressable" [routerLink]="game.joinRoute" (click)="onStartGameClick()">
+                  Unirse con código
+                </a>
+              }
+            </div>
           } @else {
             <p class="preparing-copy motion-rise"><span aria-hidden="true">—</span> Estamos preparando este juego. <span aria-hidden="true">—</span></p>
           }
