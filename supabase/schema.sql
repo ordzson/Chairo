@@ -1,13 +1,14 @@
--- ¿Versículo o inventículo? — salas multijugador
+-- Chairo — salas multijugador de ¿Versículo o inventículo? y Jeopardy
 --
 -- Pega este archivo completo en el SQL Editor de Supabase y ejecútalo una vez.
 -- Requiere que "Allow anonymous sign-ins" esté activado en Authentication:
 -- cada teléfono recibe un usuario anónimo, sin correo ni cuenta, y ese
 -- `auth.uid()` es lo único que decide qué puede tocar cada quien.
 --
--- Cubre la sala y la partida completa. Las frases se seleccionan del banco
--- revisado que viaja con el frontend, pero la partida, los relojes, las
--- respuestas y los puntos quedan bajo autoridad de estas funciones.
+-- Cubre la sala y la partida completa de ambos juegos. Las preguntas se
+-- seleccionan del banco revisado que viaja con el frontend, pero la partida,
+-- los relojes, las respuestas y los puntos quedan bajo autoridad de estas
+-- funciones. Jeopardy vive en sus propias tablas, al final del archivo.
 
 create extension if not exists pgcrypto;
 
@@ -629,3 +630,827 @@ $$;
 -- todas las salas abiertas. Limpiar es tarea del propietario o de pg_cron, no
 -- de un jugador. La aplicación no la llama.
 revoke all on function public.close_stale_rooms(interval) from public, anon, authenticated;
+
+-- ======================================================================
+-- Jeopardy
+-- ======================================================================
+--
+-- Tablas propias en vez de compartir `rooms` y `participants`: la sala de
+-- Jeopardy tiene otra configuración, otro tope de jugadores y otra partida, y
+-- mezclarlas obligaría a tocar un juego ya terminado para abrir el siguiente.
+--
+-- Nadie escribe estas tablas directamente. Cada jugada es una función que
+-- comprueba turno, fase y asiento con la fila de la sala bloqueada, así que dos
+-- teléfonos que tocan a la vez no pueden abrir dos casillas ni robar dos veces.
+-- Las preguntas y respuestas viven en `jeopardy_cells`, que ningún cliente
+-- puede leer: `jeopardy_snapshot` muestra la pregunta abierta y solo enseña la
+-- respuesta al anfitrión mientras juzga.
+
+-- ---------------------------------------------------------------- tablas ---
+
+create table if not exists public.jeopardy_rooms (
+  id uuid primary key default gen_random_uuid(),
+  code text not null check (code ~ '^[2-9A-HJ-NP-Z]{4}$'),
+  host_id uuid not null default auth.uid(),
+  -- Los límites repiten MIN_GRID, MAX_ROWS, MAX_COLUMNS y SPECIAL_COUNT de
+  -- `jeopardy.ts`.
+  board_rows integer not null check (board_rows between 3 and 8),
+  board_columns integer not null check (board_columns between 3 and 8),
+  double_count integer not null,
+  status text not null default 'waiting' check (status in ('waiting', 'playing', 'finished')),
+  phase text not null default 'waiting'
+    check (phase in ('waiting', 'board', 'wager', 'question', 'judging', 'steal', 'finished')),
+  turn_player_id uuid,
+  active_cell text,
+  attempt_player_id uuid,
+  -- Quienes todavía pueden robar la casilla abierta, en orden; el primero decide.
+  steal_queue uuid[] not null default '{}',
+  wager integer,
+  message text not null default '',
+  created_at timestamptz not null default now(),
+  started_at timestamptz,
+  closed_at timestamptz,
+  constraint jeopardy_rooms_double_count_check
+    check (double_count between 0 and board_rows * board_columns - 2)
+);
+
+-- Una versión previa dejaba elegir si el anfitrión jugaba; ahora solo juega
+-- cuando nadie más entra, y lo decide `start_jeopardy_game`.
+alter table public.jeopardy_rooms drop column if exists host_plays;
+
+create unique index if not exists jeopardy_rooms_open_code_key
+  on public.jeopardy_rooms (code)
+  where closed_at is null;
+
+create table if not exists public.jeopardy_players (
+  id uuid primary key default gen_random_uuid(),
+  room_id uuid not null references public.jeopardy_rooms (id) on delete cascade,
+  user_id uuid not null default auth.uid(),
+  name text not null check (char_length(btrim(name)) between 1 and 24),
+  -- El anfitrión conduce sin color, así los cuatro quedan para los invitados.
+  -- Solo toma uno, el amarillo, cuando juega solo.
+  color text check (color in ('yellow', 'orange', 'turquoise', 'violet')),
+  is_host boolean not null default false,
+  plays boolean not null default true,
+  score integer not null default 0,
+  joined_at timestamptz not null default clock_timestamp(),
+  constraint jeopardy_players_color_plays_check check (plays = (color is not null))
+);
+
+create unique index if not exists jeopardy_players_room_user_key
+  on public.jeopardy_players (room_id, user_id);
+create unique index if not exists jeopardy_players_room_name_key
+  on public.jeopardy_players (room_id, lower(btrim(name)));
+create unique index if not exists jeopardy_players_room_color_key
+  on public.jeopardy_players (room_id, color);
+
+create table if not exists public.jeopardy_cells (
+  room_id uuid not null references public.jeopardy_rooms (id) on delete cascade,
+  id text not null,
+  board_column integer not null check (board_column between 0 and 7),
+  board_row integer not null check (board_row between 0 and 7),
+  category text not null check (btrim(category) <> ''),
+  value integer not null check (value > 0),
+  -- Una apuesta especial trae una pregunta extrema de otra categoría.
+  question_category text not null check (btrim(question_category) <> ''),
+  prompt text not null check (btrim(prompt) <> ''),
+  answer text not null check (btrim(answer) <> ''),
+  reference text not null default '',
+  is_special boolean not null default false,
+  is_double boolean not null default false,
+  used boolean not null default false,
+  primary key (room_id, id),
+  check (not (is_special and is_double))
+);
+
+-- ------------------------------------------------------------ auxiliares ---
+
+-- Lo que un asiento puede ver de la sala. Sin asiento —quien busca el código
+-- para entrar— se ve la sala, pero ninguna pregunta.
+create or replace function public.jeopardy_snapshot(target_room_id uuid)
+returns jsonb
+language plpgsql
+stable
+security definer
+set search_path = public
+as $$
+declare
+  room public.jeopardy_rooms%rowtype;
+  seat public.jeopardy_players%rowtype;
+  cell public.jeopardy_cells%rowtype;
+  seated boolean;
+  judging boolean;
+  players jsonb;
+  board jsonb;
+  clue jsonb;
+begin
+  select * into room from public.jeopardy_rooms where id = target_room_id;
+  select * into seat from public.jeopardy_players where room_id = room.id and user_id = auth.uid();
+  seated := found;
+
+  select coalesce(jsonb_agg(jsonb_build_object(
+    'id', p.id, 'name', p.name, 'color', p.color, 'isHost', p.is_host, 'plays', p.plays, 'score', p.score
+  ) order by p.joined_at, p.id), '[]'::jsonb)
+  into players
+  from public.jeopardy_players p
+  where p.room_id = room.id;
+
+  select coalesce(jsonb_agg(jsonb_build_object(
+    'id', c.id, 'column', c.board_column, 'row', c.board_row, 'category', c.category, 'value', c.value, 'used', c.used
+  ) order by c.board_column, c.board_row), '[]'::jsonb)
+  into board
+  from public.jeopardy_cells c
+  where c.room_id = room.id;
+
+  if seated and room.active_cell is not null then
+    select * into cell from public.jeopardy_cells where room_id = room.id and id = room.active_cell;
+    if found then
+      judging := seat.is_host and room.phase = 'judging';
+      clue := jsonb_build_object(
+        'id', cell.id,
+        'category', cell.question_category,
+        'value', cell.value,
+        'points', case when cell.is_special then room.wager when cell.is_double then cell.value * 2 else cell.value end,
+        'special', cell.is_special,
+        'double', cell.is_double,
+        -- La apuesta se fija antes de leer la pregunta.
+        'prompt', case when room.phase = 'wager' then null else cell.prompt end,
+        'answer', case when judging then cell.answer end,
+        'reference', case when judging then nullif(cell.reference, '') end
+      );
+    end if;
+  end if;
+
+  return jsonb_build_object(
+    'roomId', room.id,
+    'code', room.code,
+    'status', room.status,
+    'phase', room.phase,
+    'setup', jsonb_build_object(
+      'rows', room.board_rows, 'columns', room.board_columns,
+      'doubleCount', room.double_count
+    ),
+    'players', players,
+    'selfId', case when seated then seat.id end,
+    'turnPlayerId', room.turn_player_id,
+    'attemptPlayerId', room.attempt_player_id,
+    'stealQueue', to_jsonb(room.steal_queue),
+    'wager', room.wager,
+    'message', room.message,
+    'board', board,
+    'clue', clue
+  );
+end;
+$$;
+
+-- La sala abierta con ese código, bloqueada hasta el final de la jugada.
+create or replace function public.jeopardy_lock_room(p_code text)
+returns public.jeopardy_rooms
+language plpgsql
+security definer
+set search_path = public
+as $$
+declare
+  room public.jeopardy_rooms%rowtype;
+begin
+  select * into room from public.jeopardy_rooms
+    where code = upper(p_code) and closed_at is null
+    for update;
+  if not found then raise exception 'room-not-found'; end if;
+  return room;
+end;
+$$;
+
+create or replace function public.jeopardy_seat(target_room_id uuid)
+returns public.jeopardy_players
+language plpgsql
+security definer
+set search_path = public
+as $$
+declare
+  seat public.jeopardy_players%rowtype;
+begin
+  select * into seat from public.jeopardy_players where room_id = target_room_id and user_id = auth.uid();
+  if not found then raise exception 'not-seated'; end if;
+  return seat;
+end;
+$$;
+
+-- Los turnos siguen el orden de llegada. Sin jugador de referencia empieza el
+-- primero; después del último vuelve al primero.
+create or replace function public.jeopardy_next_player(target_room_id uuid, after_player uuid)
+returns uuid
+language sql
+stable
+security definer
+set search_path = public
+as $$
+  with ordered as (
+    select id, row_number() over (order by joined_at, id) as position
+    from public.jeopardy_players
+    where room_id = target_room_id and plays
+  ), reference as (
+    select coalesce((select position from ordered where id = after_player), 0) as position
+  )
+  select ordered.id
+  from ordered, reference
+  order by ordered.position <= reference.position, ordered.position
+  limit 1
+$$;
+
+-- Quién puede robar después de un fallo: el resto de jugadores, empezando por
+-- el que sigue a quien falló. Igual que `stealOrder` en `jeopardy.ts`.
+create or replace function public.jeopardy_steal_order(target_room_id uuid, after_player uuid)
+returns uuid[]
+language sql
+stable
+security definer
+set search_path = public
+as $$
+  with ordered as (
+    select id, row_number() over (order by joined_at, id) as position
+    from public.jeopardy_players
+    where room_id = target_room_id and plays
+  ), reference as (
+    select coalesce((select position from ordered where id = after_player), 0) as position
+  )
+  select coalesce(array_agg(ordered.id order by ordered.position <= reference.position, ordered.position), '{}')
+  from ordered, reference
+  where ordered.id <> after_player
+$$;
+
+-- Cierra la casilla abierta y pasa el turno a quien sigue a quien la eligió,
+-- aunque la haya ganado otro robando.
+create or replace function public.jeopardy_close_clue(target_room_id uuid, result_message text)
+returns void
+language plpgsql
+security definer
+set search_path = public
+as $$
+declare
+  room public.jeopardy_rooms%rowtype;
+  next_player uuid;
+  next_name text;
+begin
+  select * into room from public.jeopardy_rooms where id = target_room_id;
+  update public.jeopardy_cells set used = true where room_id = room.id and id = room.active_cell;
+
+  if not exists (select 1 from public.jeopardy_cells where room_id = room.id and not used) then
+    update public.jeopardy_rooms
+      set status = 'finished', phase = 'finished', turn_player_id = null, active_cell = null,
+          attempt_player_id = null, steal_queue = '{}', wager = null,
+          message = result_message || ' Tablero completo.'
+      where id = room.id;
+    return;
+  end if;
+
+  next_player := public.jeopardy_next_player(room.id, room.turn_player_id);
+  select name into next_name from public.jeopardy_players where id = next_player;
+  update public.jeopardy_rooms
+    set phase = 'board', turn_player_id = next_player, active_cell = null,
+        attempt_player_id = null, steal_queue = '{}', wager = null,
+        message = result_message || ' Turno de ' || next_name || '.'
+    where id = room.id;
+end;
+$$;
+
+-- ------------------------------------------------------------------ sala ---
+
+-- Las versiones anteriores recibían si el anfitrión jugaba.
+drop function if exists public.create_jeopardy_room(integer, integer, integer, boolean, text);
+drop function if exists public.reopen_jeopardy_room(text, integer, integer, integer, boolean);
+
+-- El anfitrión entra conduciendo: arbitra y no ocupa puesto de jugador.
+create or replace function public.create_jeopardy_room(
+  p_rows integer,
+  p_columns integer,
+  p_double_count integer,
+  p_host_name text
+)
+returns jsonb
+language plpgsql
+security definer
+set search_path = public
+as $$
+declare
+  alphabet constant text := '23456789ABCDEFGHJKLMNPQRSTUVWXYZ';
+  new_code text;
+  new_room_id uuid;
+begin
+  if auth.uid() is null then raise exception 'not-seated'; end if;
+  if char_length(btrim(coalesce(p_host_name, ''))) not between 1 and 24 then raise exception 'invalid-move'; end if;
+
+  -- Un código solo choca con otra sala abierta: se prueba otro.
+  for attempt in 1..12 loop
+    new_code := '';
+    for position in 1..4 loop
+      new_code := new_code || substr(alphabet, 1 + floor(random() * length(alphabet))::integer, 1);
+    end loop;
+    begin
+      insert into public.jeopardy_rooms (code, host_id, board_rows, board_columns, double_count, message)
+        values (new_code, auth.uid(), p_rows, p_columns, p_double_count, 'Sala abierta.')
+        returning id into new_room_id;
+      exit;
+    exception when unique_violation then
+      new_room_id := null;
+    end;
+  end loop;
+  if new_room_id is null then raise exception 'code-unavailable'; end if;
+
+  insert into public.jeopardy_players (room_id, user_id, name, color, is_host, plays)
+    values (new_room_id, auth.uid(), btrim(p_host_name), null, true, false);
+  return public.jeopardy_snapshot(new_room_id);
+exception when check_violation or not_null_violation then
+  raise exception 'invalid-move';
+end;
+$$;
+
+create or replace function public.get_jeopardy_room(p_code text)
+returns jsonb
+language plpgsql
+stable
+security definer
+set search_path = public
+as $$
+declare
+  target_room_id uuid;
+begin
+  select id into target_room_id from public.jeopardy_rooms where code = upper(p_code) and closed_at is null;
+  if not found then raise exception 'room-not-found'; end if;
+  return public.jeopardy_snapshot(target_room_id);
+end;
+$$;
+
+-- Hasta cuatro jugadores, uno por color; el anfitrión conduce y no cuenta.
+-- Entrar dos veces desde el mismo teléfono devuelve el mismo asiento.
+create or replace function public.join_jeopardy_room(p_code text, p_name text, p_color text)
+returns jsonb
+language plpgsql
+security definer
+set search_path = public
+as $$
+declare
+  room public.jeopardy_rooms%rowtype;
+  playing integer;
+  violated text;
+begin
+  if auth.uid() is null then raise exception 'not-seated'; end if;
+  room := public.jeopardy_lock_room(p_code);
+  if exists (select 1 from public.jeopardy_players where room_id = room.id and user_id = auth.uid()) then
+    return public.jeopardy_snapshot(room.id);
+  end if;
+  if room.status <> 'waiting' then raise exception 'room-started'; end if;
+
+  select count(*) into playing from public.jeopardy_players where room_id = room.id and plays;
+  if playing >= 4 then raise exception 'room-full'; end if;
+  if char_length(btrim(coalesce(p_name, ''))) not between 1 and 24 then raise exception 'invalid-move'; end if;
+  if p_color is null or p_color not in ('yellow', 'orange', 'turquoise', 'violet') then
+    raise exception 'color-taken';
+  end if;
+
+  begin
+    insert into public.jeopardy_players (room_id, user_id, name, color, is_host, plays)
+      values (room.id, auth.uid(), btrim(p_name), p_color, false, true);
+  exception when unique_violation then
+    get stacked diagnostics violated = constraint_name;
+    if violated = 'jeopardy_players_room_name_key' then raise exception 'name-taken'; end if;
+    if violated = 'jeopardy_players_room_color_key' then raise exception 'color-taken'; end if;
+    raise;
+  end;
+
+  update public.jeopardy_rooms set message = btrim(p_name) || ' entró a la sala.' where id = room.id;
+  return public.jeopardy_snapshot(room.id);
+end;
+$$;
+
+-- El tablero lo arma el teléfono del anfitrión con el banco revisado; aquí se
+-- comprueba su forma antes de guardarlo. El valor de cada casilla lo decide la
+-- fila, no lo que llegue en la petición.
+create or replace function public.start_jeopardy_game(p_code text, p_cells jsonb)
+returns jsonb
+language plpgsql
+security definer
+set search_path = public
+as $$
+declare
+  room public.jeopardy_rooms%rowtype;
+  seat public.jeopardy_players%rowtype;
+  item jsonb;
+  first_player uuid;
+  first_name text;
+begin
+  room := public.jeopardy_lock_room(p_code);
+  seat := public.jeopardy_seat(room.id);
+  if not seat.is_host then raise exception 'not-host'; end if;
+  if room.status <> 'waiting' then raise exception 'room-started'; end if;
+
+  -- El anfitrión solo juega si nadie más entró. Toma el amarillo, que sin
+  -- invitados está libre.
+  if not exists (select 1 from public.jeopardy_players where room_id = room.id and plays) then
+    update public.jeopardy_players set plays = true, color = 'yellow' where id = seat.id;
+  end if;
+  first_player := public.jeopardy_next_player(room.id, null);
+  if jsonb_typeof(p_cells) is distinct from 'array'
+     or jsonb_array_length(p_cells) <> room.board_rows * room.board_columns then
+    raise exception 'invalid-move';
+  end if;
+
+  delete from public.jeopardy_cells where room_id = room.id;
+  for item in select value from jsonb_array_elements(p_cells)
+  loop
+    insert into public.jeopardy_cells (
+      room_id, id, board_column, board_row, category, value, question_category,
+      prompt, answer, reference, is_special, is_double
+    ) values (
+      room.id,
+      (item->>'column')::integer || '-' || (item->>'row')::integer,
+      (item->>'column')::integer,
+      (item->>'row')::integer,
+      item->>'category',
+      ((item->>'row')::integer + 1) * 100,
+      item->>'questionCategory',
+      item->>'prompt',
+      item->>'answer',
+      coalesce(item->>'reference', ''),
+      (item->>'special')::boolean,
+      (item->>'double')::boolean
+    );
+  end loop;
+
+  if exists (
+       select 1 from public.jeopardy_cells
+       where room_id = room.id and (board_column >= room.board_columns or board_row >= room.board_rows)
+     )
+     or (select count(*) from public.jeopardy_cells where room_id = room.id and is_special) <> 2
+     or (select count(*) from public.jeopardy_cells where room_id = room.id and is_double) <> room.double_count
+  then
+    raise exception 'invalid-move';
+  end if;
+
+  update public.jeopardy_players set score = 0 where room_id = room.id;
+  select name into first_name from public.jeopardy_players where id = first_player;
+  update public.jeopardy_rooms
+    set status = 'playing', phase = 'board', started_at = now(), turn_player_id = first_player,
+        active_cell = null, attempt_player_id = null, steal_queue = '{}', wager = null,
+        message = 'Turno de ' || first_name || '.'
+    where id = room.id;
+  return public.jeopardy_snapshot(room.id);
+exception
+  when unique_violation or not_null_violation or check_violation
+    or invalid_text_representation or numeric_value_out_of_range then
+    raise exception 'invalid-move';
+end;
+$$;
+
+-- --------------------------------------------------------------- jugadas ---
+
+create or replace function public.select_jeopardy_cell(p_code text, p_cell_id text)
+returns jsonb
+language plpgsql
+security definer
+set search_path = public
+as $$
+declare
+  room public.jeopardy_rooms%rowtype;
+  seat public.jeopardy_players%rowtype;
+  cell public.jeopardy_cells%rowtype;
+begin
+  room := public.jeopardy_lock_room(p_code);
+  seat := public.jeopardy_seat(room.id);
+  if room.phase <> 'board' then raise exception 'invalid-move'; end if;
+  if room.turn_player_id is distinct from seat.id then raise exception 'not-your-turn'; end if;
+
+  select * into cell from public.jeopardy_cells where room_id = room.id and id = p_cell_id and not used;
+  if not found then raise exception 'invalid-move'; end if;
+
+  update public.jeopardy_rooms
+    set active_cell = cell.id, attempt_player_id = seat.id, steal_queue = '{}', wager = null,
+        phase = case when cell.is_special then 'wager' else 'question' end,
+        message = case
+          when cell.is_special then seat.name || ' encontró una apuesta especial.'
+          else seat.name || ' responde por ' || (case when cell.is_double then cell.value * 2 else cell.value end) || ' puntos.'
+        end
+    where id = room.id;
+  return public.jeopardy_snapshot(room.id);
+end;
+$$;
+
+-- Se apuesta de cien en cien, entre 100 y lo que tenga quien apuesta o la
+-- casilla más alta del tablero, lo que sea mayor. Igual que `normalizeWager`.
+create or replace function public.set_jeopardy_wager(p_code text, p_wager integer)
+returns jsonb
+language plpgsql
+security definer
+set search_path = public
+as $$
+declare
+  room public.jeopardy_rooms%rowtype;
+  seat public.jeopardy_players%rowtype;
+  top_points integer;
+  amount integer;
+begin
+  room := public.jeopardy_lock_room(p_code);
+  seat := public.jeopardy_seat(room.id);
+  if room.phase <> 'wager' then raise exception 'invalid-move'; end if;
+  if room.turn_player_id is distinct from seat.id then raise exception 'not-your-turn'; end if;
+
+  select greatest(seat.score, max(value)) into top_points from public.jeopardy_cells where room_id = room.id;
+  amount := greatest(100, least(top_points, round(coalesce(p_wager, 100) / 100.0)::integer * 100));
+  update public.jeopardy_rooms
+    set wager = amount, phase = 'question', message = seat.name || ' apuesta ' || amount || ' puntos.'
+    where id = room.id;
+  return public.jeopardy_snapshot(room.id);
+end;
+$$;
+
+create or replace function public.mark_jeopardy_answered(p_code text)
+returns jsonb
+language plpgsql
+security definer
+set search_path = public
+as $$
+declare
+  room public.jeopardy_rooms%rowtype;
+  seat public.jeopardy_players%rowtype;
+begin
+  room := public.jeopardy_lock_room(p_code);
+  seat := public.jeopardy_seat(room.id);
+  if room.phase <> 'question' then raise exception 'invalid-move'; end if;
+  if room.attempt_player_id is distinct from seat.id then raise exception 'not-your-turn'; end if;
+
+  update public.jeopardy_rooms
+    set phase = 'judging', message = seat.name || ' dio su respuesta. El anfitrión decide.'
+    where id = room.id;
+  return public.jeopardy_snapshot(room.id);
+end;
+$$;
+
+-- Cada intento suma o resta el valor en juego, también al robar. Un fallo pasa
+-- la casilla a quien sigue en la cola de robo; sin nadie más, se cierra.
+create or replace function public.judge_jeopardy_answer(p_code text, p_correct boolean)
+returns jsonb
+language plpgsql
+security definer
+set search_path = public
+as $$
+declare
+  room public.jeopardy_rooms%rowtype;
+  seat public.jeopardy_players%rowtype;
+  cell public.jeopardy_cells%rowtype;
+  attempt public.jeopardy_players%rowtype;
+  points integer;
+  queue uuid[];
+  next_name text;
+begin
+  room := public.jeopardy_lock_room(p_code);
+  seat := public.jeopardy_seat(room.id);
+  if not seat.is_host then raise exception 'not-host'; end if;
+  if room.phase <> 'judging' or p_correct is null then raise exception 'invalid-move'; end if;
+
+  select * into cell from public.jeopardy_cells where room_id = room.id and id = room.active_cell;
+  if not found then raise exception 'invalid-move'; end if;
+  select * into attempt from public.jeopardy_players where id = room.attempt_player_id;
+  if not found then raise exception 'invalid-move'; end if;
+
+  points := case when cell.is_special then room.wager when cell.is_double then cell.value * 2 else cell.value end;
+  update public.jeopardy_players
+    set score = score + case when p_correct then points else -points end
+    where id = attempt.id;
+
+  if p_correct then
+    perform public.jeopardy_close_clue(room.id, attempt.name || ' acertó y suma ' || points || '.');
+    return public.jeopardy_snapshot(room.id);
+  end if;
+
+  -- Con cola ya abierta falló quien robaba, que es el primero de la cola.
+  queue := case
+    when cardinality(room.steal_queue) > 0 then room.steal_queue[2:]
+    else public.jeopardy_steal_order(room.id, attempt.id)
+  end;
+  if cardinality(queue) = 0 then
+    perform public.jeopardy_close_clue(room.id, attempt.name || ' falló y pierde ' || points || '.');
+    return public.jeopardy_snapshot(room.id);
+  end if;
+
+  select name into next_name from public.jeopardy_players where id = queue[1];
+  update public.jeopardy_rooms
+    set phase = 'steal', steal_queue = queue, attempt_player_id = null,
+        message = attempt.name || ' pierde ' || points || '. ' || next_name || ' puede robar.'
+    where id = room.id;
+  return public.jeopardy_snapshot(room.id);
+end;
+$$;
+
+create or replace function public.accept_jeopardy_steal(p_code text)
+returns jsonb
+language plpgsql
+security definer
+set search_path = public
+as $$
+declare
+  room public.jeopardy_rooms%rowtype;
+  seat public.jeopardy_players%rowtype;
+  cell public.jeopardy_cells%rowtype;
+begin
+  room := public.jeopardy_lock_room(p_code);
+  seat := public.jeopardy_seat(room.id);
+  if room.phase <> 'steal' then raise exception 'invalid-move'; end if;
+  if room.steal_queue[1] is distinct from seat.id then raise exception 'not-your-turn'; end if;
+
+  select * into cell from public.jeopardy_cells where room_id = room.id and id = room.active_cell;
+  update public.jeopardy_rooms
+    set phase = 'question', attempt_player_id = seat.id,
+        message = seat.name || ' intenta robar por '
+          || (case when cell.is_special then room.wager when cell.is_double then cell.value * 2 else cell.value end)
+          || ' puntos.'
+    where id = room.id;
+  return public.jeopardy_snapshot(room.id);
+end;
+$$;
+
+create or replace function public.pass_jeopardy_steal(p_code text)
+returns jsonb
+language plpgsql
+security definer
+set search_path = public
+as $$
+declare
+  room public.jeopardy_rooms%rowtype;
+  seat public.jeopardy_players%rowtype;
+  queue uuid[];
+  next_name text;
+begin
+  room := public.jeopardy_lock_room(p_code);
+  seat := public.jeopardy_seat(room.id);
+  if room.phase <> 'steal' then raise exception 'invalid-move'; end if;
+  if room.steal_queue[1] is distinct from seat.id then raise exception 'not-your-turn'; end if;
+
+  queue := room.steal_queue[2:];
+  if cardinality(queue) = 0 then
+    perform public.jeopardy_close_clue(room.id, seat.name || ' dejó pasar el robo.');
+    return public.jeopardy_snapshot(room.id);
+  end if;
+
+  select name into next_name from public.jeopardy_players where id = queue[1];
+  update public.jeopardy_rooms
+    set steal_queue = queue, message = seat.name || ' pasa. ' || next_name || ' puede robar.'
+    where id = room.id;
+  return public.jeopardy_snapshot(room.id);
+end;
+$$;
+
+-- ---------------------------------------------------------- otra ronda ---
+
+-- «Jugar otra vez» en la misma sala: vuelve a la espera con el tablero nuevo,
+-- conserva a quienes siguen dentro y deja los puntos en cero. El anfitrión
+-- vuelve a conducir aunque la ronda anterior la jugara solo.
+create or replace function public.reopen_jeopardy_room(
+  p_code text,
+  p_rows integer,
+  p_columns integer,
+  p_double_count integer
+)
+returns jsonb
+language plpgsql
+security definer
+set search_path = public
+as $$
+declare
+  room public.jeopardy_rooms%rowtype;
+  seat public.jeopardy_players%rowtype;
+begin
+  room := public.jeopardy_lock_room(p_code);
+  seat := public.jeopardy_seat(room.id);
+  if not seat.is_host then raise exception 'not-host'; end if;
+  if room.status = 'playing' then raise exception 'room-started'; end if;
+
+  delete from public.jeopardy_cells where room_id = room.id;
+  update public.jeopardy_players set score = 0 where room_id = room.id;
+  update public.jeopardy_players set plays = false, color = null where id = seat.id;
+  update public.jeopardy_rooms
+    set board_rows = p_rows, board_columns = p_columns, double_count = p_double_count,
+        status = 'waiting', phase = 'waiting', started_at = null,
+        turn_player_id = null, active_cell = null, attempt_player_id = null, steal_queue = '{}',
+        wager = null, message = 'Sala lista para otra ronda.'
+    where id = room.id;
+  return public.jeopardy_snapshot(room.id);
+exception when check_violation or not_null_violation then
+  raise exception 'invalid-move';
+end;
+$$;
+
+create or replace function public.close_jeopardy_room(p_code text)
+returns void
+language plpgsql
+security definer
+set search_path = public
+as $$
+declare
+  room public.jeopardy_rooms%rowtype;
+begin
+  room := public.jeopardy_lock_room(p_code);
+  if room.host_id is distinct from auth.uid() then raise exception 'not-host'; end if;
+  update public.jeopardy_rooms set closed_at = now() where id = room.id;
+end;
+$$;
+
+-- El invitado deja su puesto mientras no haya un tablero en juego: retirarse a
+-- mitad de ronda rompería el orden de turnos de los demás.
+create or replace function public.leave_jeopardy_room(p_code text)
+returns void
+language plpgsql
+security definer
+set search_path = public
+as $$
+declare
+  room public.jeopardy_rooms%rowtype;
+  seat public.jeopardy_players%rowtype;
+begin
+  room := public.jeopardy_lock_room(p_code);
+  select * into seat from public.jeopardy_players where room_id = room.id and user_id = auth.uid();
+  if not found then return; end if;
+  if seat.is_host then raise exception 'not-host'; end if;
+  if room.status = 'playing' then raise exception 'room-started'; end if;
+
+  delete from public.jeopardy_players where id = seat.id;
+  update public.jeopardy_rooms set message = seat.name || ' salió de la sala.' where id = room.id;
+end;
+$$;
+
+-- ------------------------------------------------------------ permisos ---
+
+alter table public.jeopardy_rooms enable row level security;
+alter table public.jeopardy_players enable row level security;
+alter table public.jeopardy_cells enable row level security;
+
+-- Las preguntas no se leen nunca directamente, y las otras dos solo se leen:
+-- escribirlas es cosa de las funciones de arriba.
+revoke all on public.jeopardy_cells from anon, authenticated;
+revoke all on public.jeopardy_rooms, public.jeopardy_players from anon;
+revoke insert, update, delete, truncate on public.jeopardy_rooms, public.jeopardy_players from authenticated;
+grant select on public.jeopardy_rooms, public.jeopardy_players to authenticated;
+
+-- Leerlas sirve para que Realtime avise de cada cambio; la pantalla vuelve a
+-- pedir la sala a `get_jeopardy_room`, que es la que decide qué se ve.
+drop policy if exists "jeopardy_rooms_select_open" on public.jeopardy_rooms;
+create policy "jeopardy_rooms_select_open" on public.jeopardy_rooms
+  for select to authenticated
+  using (closed_at is null);
+
+drop policy if exists "jeopardy_players_select_open_room" on public.jeopardy_players;
+create policy "jeopardy_players_select_open_room" on public.jeopardy_players
+  for select to authenticated
+  using (exists (select 1 from public.jeopardy_rooms r where r.id = room_id and r.closed_at is null));
+
+revoke all on function public.jeopardy_snapshot(uuid) from public, anon, authenticated;
+revoke all on function public.jeopardy_lock_room(text) from public, anon, authenticated;
+revoke all on function public.jeopardy_seat(uuid) from public, anon, authenticated;
+revoke all on function public.jeopardy_next_player(uuid, uuid) from public, anon, authenticated;
+revoke all on function public.jeopardy_steal_order(uuid, uuid) from public, anon, authenticated;
+revoke all on function public.jeopardy_close_clue(uuid, text) from public, anon, authenticated;
+
+revoke all on function public.create_jeopardy_room(integer, integer, integer, text) from public, anon;
+revoke all on function public.get_jeopardy_room(text) from public, anon;
+revoke all on function public.join_jeopardy_room(text, text, text) from public, anon;
+revoke all on function public.start_jeopardy_game(text, jsonb) from public, anon;
+revoke all on function public.select_jeopardy_cell(text, text) from public, anon;
+revoke all on function public.set_jeopardy_wager(text, integer) from public, anon;
+revoke all on function public.mark_jeopardy_answered(text) from public, anon;
+revoke all on function public.judge_jeopardy_answer(text, boolean) from public, anon;
+revoke all on function public.accept_jeopardy_steal(text) from public, anon;
+revoke all on function public.pass_jeopardy_steal(text) from public, anon;
+revoke all on function public.reopen_jeopardy_room(text, integer, integer, integer) from public, anon;
+revoke all on function public.close_jeopardy_room(text) from public, anon;
+revoke all on function public.leave_jeopardy_room(text) from public, anon;
+
+grant execute on function public.create_jeopardy_room(integer, integer, integer, text) to authenticated;
+grant execute on function public.get_jeopardy_room(text) to authenticated;
+grant execute on function public.join_jeopardy_room(text, text, text) to authenticated;
+grant execute on function public.start_jeopardy_game(text, jsonb) to authenticated;
+grant execute on function public.select_jeopardy_cell(text, text) to authenticated;
+grant execute on function public.set_jeopardy_wager(text, integer) to authenticated;
+grant execute on function public.mark_jeopardy_answered(text) to authenticated;
+grant execute on function public.judge_jeopardy_answer(text, boolean) to authenticated;
+grant execute on function public.accept_jeopardy_steal(text) to authenticated;
+grant execute on function public.pass_jeopardy_steal(text) to authenticated;
+grant execute on function public.reopen_jeopardy_room(text, integer, integer, integer) to authenticated;
+grant execute on function public.close_jeopardy_room(text) to authenticated;
+grant execute on function public.leave_jeopardy_room(text) to authenticated;
+
+-- -------------------------------------------------------------- realtime ---
+
+alter table public.jeopardy_rooms replica identity full;
+alter table public.jeopardy_players replica identity full;
+
+do $$
+begin
+  begin
+    alter publication supabase_realtime add table public.jeopardy_rooms;
+  exception when duplicate_object then null;
+  end;
+  begin
+    alter publication supabase_realtime add table public.jeopardy_players;
+  exception when duplicate_object then null;
+  end;
+end
+$$;

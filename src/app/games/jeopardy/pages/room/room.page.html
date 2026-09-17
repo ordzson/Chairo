@@ -1,0 +1,69 @@
+<main class="manual-shell jeopardy-shell">
+  <article class="mission-manual jeopardy-manual motion-rise" aria-labelledby="room-title">
+    <div class="binder-spine" aria-hidden="true"></div>
+    <chairo-manual-header
+      [backLabel]="isHost() ? 'Cerrar sala y volver' : 'Salir de la sala'"
+      [note]="['cada teléfono', 'un mismo tablero']"
+      (back)="exit()"
+    />
+    <header class="jeopardy-title motion-rise">
+      <p>Sala de concursantes</p>
+      <h1 id="room-title">{{ loadPhase() === 'error' ? 'Sin señal' : loadPhase() === 'loading' ? 'Abriendo sala' : 'Todo listo' }}</h1>
+      <span>{{ room()?.setup?.columns ?? 0 }} × {{ room()?.setup?.rows ?? 0 }} · Jeopardy bíblico</span>
+    </header>
+
+    @if (loadPhase() === 'error') {
+      <section class="room-paper empty-paper">
+        <h2>No encontramos la sala</h2>
+        <p>{{ error() }}</p>
+        <a class="paper-link" href="#/juegos/jeopardy">Crear otra sala</a>
+      </section>
+    } @else if (room(); as current) {
+      <div class="room-layout">
+        <section class="invite-paper motion-rise" aria-labelledby="invite-title">
+          <h2 id="invite-title">Que entren los jugadores</h2>
+          <div class="qr-frame"><chairo-qr-code [content]="joinUrl()" [label]="'QR para entrar a la sala ' + code" /></div>
+          <p class="code-label">Código de sala</p>
+          <p class="room-code" aria-label="Código de sala, {{ code }}">{{ code }}</p>
+          <button class="share-button pressable" type="button" (click)="share()">Compartir invitación</button>
+          <p class="live-status" aria-live="polite">{{ shareStatus() }}</p>
+        </section>
+
+        <section class="players-paper motion-rise" aria-labelledby="players-title">
+          <div class="players-heading">
+            <div>
+              <h2 id="players-title">En sus puestos</h2>
+              <p>{{ playerCount() }} de {{ maxPlayers }} jugadores</p>
+            </div>
+            <span class="waiting-light" aria-hidden="true"></span>
+          </div>
+          <ol class="player-list">
+            @for (player of current.players; track player.id) {
+              <li [class.is-conductor]="!player.plays">
+                <span class="player-color" [attr.data-color]="player.color" aria-hidden="true"></span>
+                <strong>{{ player.name }}</strong>
+                <small>{{ playerNote(player) }}</small>
+              </li>
+            }
+          </ol>
+          <dl class="round-facts">
+            <div><dt>Tablero</dt><dd>{{ current.setup.columns }} × {{ current.setup.rows }}</dd></div>
+            <div><dt>Apuestas</dt><dd>{{ specialCount }} especiales</dd></div>
+            <div><dt>Dobles</dt><dd>{{ current.setup.doubleCount }}</dd></div>
+          </dl>
+          @if (isHost()) {
+            <button class="start-button pressable" type="button" [disabled]="!canStart() || busy()" (click)="start()">
+              {{ busy() ? 'Abriendo…' : 'Abrir el tablero' }}
+            </button>
+            @if (!playerCount()) { <p class="start-help">Si nadie más entra, jugarás tú solo.</p> }
+          } @else if (self()) {
+            <p class="guest-wait">El anfitrión abrirá el tablero cuando todos estén listos.</p>
+          } @else {
+            <p class="guest-wait"><a class="paper-link" [href]="'#/juegos/jeopardy/unirse/' + code">Toma un puesto en esta sala</a></p>
+          }
+          @if (error()) { <p class="form-error" role="alert">{{ error() }}</p> }
+        </section>
+      </div>
+    }
+  </article>
+</main>

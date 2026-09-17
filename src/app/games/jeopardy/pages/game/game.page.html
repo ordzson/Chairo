@@ -1,0 +1,126 @@
+<main class="manual-shell jeopardy-shell game-shell">
+  <article class="mission-manual jeopardy-manual game-manual motion-rise" aria-labelledby="game-title">
+    <div class="binder-spine" aria-hidden="true"></div>
+    <chairo-manual-header backLink="/" backLabel="Volver al centro de juegos" [note]="['la respuesta', 'también enseña']" />
+
+    @if (loadPhase() === 'error') {
+      <section class="lost-game"><h1 id="game-title">Tablero cerrado</h1><p>{{ error() }}</p><a href="#/">Volver al centro</a></section>
+    } @else if (room(); as currentRoom) {
+      <header class="score-ribbon">
+        <div class="round-mark"><span>Jeopardy</span><strong id="game-title">Tablero bíblico</strong></div>
+        <ol class="score-list" aria-label="Marcador">
+          @for (player of currentRoom.players; track player.id) {
+            @if (player.plays) {
+              <li [class.is-turn]="current()?.id === player.id" [attr.data-color]="player.color">
+                <span>{{ player.name }}</span><strong>{{ player.score }}</strong>
+              </li>
+            }
+          }
+        </ol>
+      </header>
+
+      <p class="turn-announcement" aria-live="polite">{{ currentRoom.message }}</p>
+      @if (error()) { <p class="game-error" role="alert">{{ error() }}</p> }
+
+      @if (currentRoom.phase === 'board') {
+        <section class="board-region" aria-label="Tablero de preguntas">
+          <p class="board-instruction">{{ myTurn() ? 'Tu turno: elige una casilla.' : 'Solo ' + current()?.name + ' puede elegir.' }}</p>
+          <div class="board-scroll" tabindex="0">
+            <div class="jeopardy-board" [style.--board-columns]="currentRoom.setup.columns">
+              @for (column of columns(); track $index) {
+                <section class="board-column" [attr.aria-label]="column.name">
+                  <h2>{{ column.name }}</h2>
+                  @for (question of column.cells; track question.id) {
+                    <button
+                      class="clue-tile pressable"
+                      type="button"
+                      [class.is-used]="question.used"
+                      [disabled]="question.used || !myTurn() || busy()"
+                      [attr.aria-label]="question.used ? column.name + ', usada' : column.name + ', ' + question.value + ' puntos'"
+                      (click)="select(question.id)"
+                    >
+                      @if (!question.used) { <span>{{ question.value }}</span> } @else { <span class="tile-mark" aria-hidden="true"></span> }
+                    </button>
+                  }
+                </section>
+              }
+            </div>
+          </div>
+        </section>
+      } @else if (currentRoom.phase === 'finished') {
+        <section class="final-paper motion-rise" aria-labelledby="final-title">
+          <p class="final-note">Tablero completo</p>
+          <h2 id="final-title">Clasificación final</h2>
+          <ol class="final-ranking">
+            @for (player of ranking(); track player.id; let index = $index) {
+              <li><span>{{ index + 1 }}</span><strong>{{ player.name }}</strong><b>{{ player.score }} pts</b></li>
+            }
+          </ol>
+          @if (isHost()) {
+            <div class="final-actions">
+              <button class="finish-button pressable" type="button" [disabled]="busy()" (click)="playAgain()">Jugar otra vez</button>
+              <button class="close-button pressable" type="button" [disabled]="busy()" (click)="finish()">Cerrar sala</button>
+            </div>
+          } @else {
+            <p class="waiting-copy">Si el anfitrión arma otra ronda, volverás a la sala con todos.</p>
+            <button class="close-button pressable" type="button" [disabled]="busy()" (click)="finish()">Salir de la sala</button>
+          }
+        </section>
+      } @else if (clue(); as activeClue) {
+        <section class="clue-stage motion-rise" aria-labelledby="clue-category">
+          <header class="clue-heading">
+            <p id="clue-category">{{ activeClue.category }}</p>
+            <strong>{{ activeClue.points ?? activeClue.value }} puntos</strong>
+          </header>
+
+          @if (currentRoom.phase === 'wager') {
+            <div class="special-reveal">
+              <span aria-hidden="true">!</span>
+              <h2>Apuesta especial</h2>
+              <p>Pregunta extrema. Si fallas, también pierdes lo apostado.</p>
+              @if (myTurn()) {
+                <label for="wager">Tu apuesta · máximo {{ wagerMax() }}</label>
+                <input id="wager" type="number" [min]="wagerStep" [max]="wagerMax()" [step]="wagerStep" [value]="wager()" (input)="updateWager($event)">
+                <button class="primary-action pressable" type="button" [disabled]="busy()" (click)="confirmWager()">Confirmar {{ wager() }} puntos</button>
+              } @else { <p class="waiting-copy">{{ current()?.name }} está eligiendo su apuesta.</p> }
+            </div>
+          } @else {
+            <div class="question-paper">
+              @if (activeClue.double) { <p class="double-stamp">Valor doble</p> }
+              @if (activeClue.special) { <p class="special-stamp">Apuesta especial</p> }
+              <h2>{{ activeClue.prompt }}</h2>
+              @if (currentRoom.phase === 'judging' && isHost()) {
+                <div class="answer-key">
+                  <span>Respuesta</span>
+                  <strong>{{ activeClue.answer }}</strong>
+                  @if (activeClue.reference) { <small>{{ activeClue.reference }}</small> }
+                </div>
+                <div class="judge-actions">
+                  <button class="wrong-button pressable" type="button" [disabled]="busy()" (click)="judge(false)">No acertó · −{{ activeClue.points }}</button>
+                  <button class="right-button pressable" type="button" [disabled]="busy()" (click)="judge(true)">Acertó · +{{ activeClue.points }}</button>
+                </div>
+              } @else if (currentRoom.phase === 'judging') {
+                <p class="waiting-copy">El anfitrión está comprobando la respuesta.</p>
+              } @else if (currentRoom.phase === 'steal') {
+                @if (mySteal()) {
+                  <div class="steal-callout"><strong>Puedes robar</strong><span>Tu intento también vale ±{{ activeClue.points }}.</span></div>
+                  <div class="steal-actions">
+                    <button class="pass-button pressable" type="button" [disabled]="busy()" (click)="pass()">Paso</button>
+                    <button class="primary-action pressable" type="button" [disabled]="busy()" (click)="steal()">Intentar robar</button>
+                  </div>
+                } @else { <p class="waiting-copy">Esperando la decisión de {{ stealerName() }}.</p> }
+              } @else if (myAttempt()) {
+                <p class="speak-note">Responde en voz alta. Cuando termines, avisa al anfitrión.</p>
+                <button class="primary-action pressable" type="button" [disabled]="busy()" (click)="answered()">Ya respondí</button>
+              } @else {
+                <p class="waiting-copy">{{ attemptName() }} está respondiendo.</p>
+              }
+            </div>
+          }
+        </section>
+      } @else {
+        <p class="waiting-copy">Toma un puesto en la sala para ver la pregunta.</p>
+      }
+    }
+  </article>
+</main>

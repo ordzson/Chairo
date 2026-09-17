@@ -1,0 +1,28 @@
+<main class="manual-shell jeopardy-shell">
+  <article class="mission-manual jeopardy-manual motion-rise" aria-labelledby="join-title">
+    <div class="binder-spine" aria-hidden="true"></div>
+    <chairo-manual-header backLink="/juegos/jeopardy" backLabel="Volver a la configuración" [note]="['tu nombre', 'tu color', 'tu turno']" />
+    <header class="jeopardy-title motion-rise"><p>Entrada de concursantes</p><h1 id="join-title">Toma tu puesto</h1><span>sin cuenta · sin contraseña</span></header>
+    <form class="join-paper motion-rise" (submit)="$event.preventDefault(); join()">
+      <label class="field-label" for="room-code">Código de sala</label>
+      <input id="room-code" class="code-input" [value]="code()" maxlength="4" inputmode="text" autocomplete="off" (input)="updateCode($event)" aria-describedby="room-found">
+      <p id="room-found" class="lookup-status" aria-live="polite">{{ lookupNote() }}</p>
+      <label class="field-label" for="player-name">Tu nombre</label>
+      <input id="player-name" class="name-input" [value]="name()" maxlength="24" autocomplete="nickname" (input)="updateName($event)">
+      <fieldset class="color-field">
+        <legend>Elige tu color</legend>
+        <div class="color-options">
+          @for (option of colors; track option.value) {
+            <button class="color-choice pressable" type="button" [attr.data-color]="option.value" [class.is-selected]="color() === option.value" [disabled]="colorTaken(option.value)" [attr.aria-pressed]="color() === option.value" (click)="chooseColor(option.value)">
+              <span aria-hidden="true"></span>{{ option.label }}
+            </button>
+          }
+        </div>
+      </fieldset>
+      @if (error()) { <p class="form-error" role="alert">{{ error() }}</p> }
+      <button class="join-button pressable" type="submit" [disabled]="!found() || full() || started() || joining()">
+        {{ joining() ? 'Entrando…' : 'Entrar a la sala' }}
+      </button>
+    </form>
+  </article>
+</main>

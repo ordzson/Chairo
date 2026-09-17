@@ -22,7 +22,8 @@ export const GAMES: readonly Game[] = [
     color: 'yellow',
     preview: 'assets/plates/stage.png',
     previewAlt: 'Escenario azul con tres podios: 100, 200 y 300',
-    status: 'coming-soon'
+    status: 'available',
+    route: '/juegos/jeopardy'
   },
   {
     id: 'versiculo-o-inventiculo',

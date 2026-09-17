@@ -1,0 +1,29 @@
+.room-layout { display: grid; grid-template-columns: minmax(250px, 0.78fr) minmax(320px, 1.22fr); gap: clamp(16px, 3vw, 28px); align-items: start; }
+.invite-paper, .players-paper, .room-paper { padding: clamp(20px, 3.4vw, 34px); background: var(--paper-light); border-radius: 16px; box-shadow: 0 9px 20px rgb(63 40 3 / 0.16); }
+h2 { margin: 0; font: 400 clamp(1.75rem, 4vw, 2.5rem)/1 'Lilita One', sans-serif; }
+.invite-paper h2 { text-align: center; }
+.qr-frame { width: min(100%, 210px); margin: 1rem auto; padding: 10px; background: #fff; border: 3px solid var(--ink); border-radius: 12px; }
+.code-label { margin: 0; font: 700 0.9rem 'Dosis', sans-serif; text-align: center; text-transform: uppercase; letter-spacing: 0.08em; }
+.room-code { margin: 0.1rem 0 1rem; font: 400 clamp(2.7rem, 8vw, 4.2rem)/1 'Lilita One', sans-serif; text-align: center; letter-spacing: 0.13em; font-variant-numeric: tabular-nums; }
+.share-button, .start-button { --press-face: var(--yellow); width: 100%; min-height: 56px; padding: 0.7rem 1rem; background: var(--yellow); border: 2px solid var(--ink); border-radius: 13px; font-weight: 700; cursor: pointer; }
+.live-status { min-height: 1.3em; margin: 1rem 0 0; text-align: center; }
+.players-heading { display: flex; justify-content: space-between; align-items: center; gap: 1rem; padding-bottom: 1rem; border-bottom: 2px solid var(--ink); }
+.players-heading p { margin: 0.2rem 0 0; }
+.waiting-light { width: 18px; height: 18px; background: var(--green); border: 3px solid var(--ink); border-radius: 50%; box-shadow: 0 0 0 5px rgb(84 189 83 / 0.2); }
+.player-list { display: grid; gap: 0; margin: 0; padding: 0; list-style: none; }
+.player-list li { display: grid; grid-template-columns: 24px minmax(0, 1fr) auto; gap: 0.7rem; align-items: center; min-height: 58px; border-bottom: 1px dashed rgb(7 38 110 / 0.28); }
+.player-list li.is-conductor { opacity: 0.72; }
+.player-list strong { font-size: 1.15rem; }
+.player-list small { text-align: right; }
+.player-color { width: 20px; height: 20px; background: currentColor; border: 2px solid var(--ink); border-radius: 50%; }
+.player-color[data-color='yellow'] { color: var(--yellow); }.player-color[data-color='orange'] { color: var(--orange); }.player-color[data-color='turquoise'] { color: var(--turquoise); }.player-color[data-color='violet'] { color: var(--violet); }
+.round-facts { display: grid; grid-template-columns: repeat(3, 1fr); margin: 1.4rem 0; padding: 0.8rem 0; border-block: 2px solid var(--ink); }
+.round-facts div { text-align: center; }.round-facts div + div { border-left: 1px solid var(--ink); }.round-facts dt { font-size: 0.85rem; }.round-facts dd { margin: 0.2rem 0 0; font: 700 1.15rem 'Dosis', sans-serif; }
+.start-button { --press-face: var(--orange); background: var(--orange); font: 400 1.4rem 'Lilita One', sans-serif; }
+.start-help, .guest-wait { margin: 1rem 0 0; text-align: center; }
+.empty-paper { width: min(100%, 620px); margin: auto; text-align: center; }.paper-link { color: var(--ink); font-weight: 700; text-underline-offset: 4px; }
+
+@media (max-width: 720px) { .room-layout { grid-template-columns: 1fr; }.invite-paper { display: grid; grid-template-columns: 132px minmax(0, 1fr); column-gap: 1rem; align-items: center; }.invite-paper h2 { grid-column: 1 / -1; }.qr-frame { grid-row: 2 / span 4; width: 132px; }.code-label, .room-code { text-align: left; }.room-code { font-size: clamp(2.4rem, 13vw, 3.4rem); }.live-status { grid-column: 1 / -1; } }
+@media (max-width: 430px) { .invite-paper { grid-template-columns: 1fr; }.qr-frame { grid-row: auto; width: min(100%, 190px); }.code-label, .room-code { text-align: center; }.round-facts { font-size: 0.9rem; } }
+/* Quien solo conduce no ocupa color. */
+.player-color:not([data-color]) { background: transparent; border-style: dashed; }

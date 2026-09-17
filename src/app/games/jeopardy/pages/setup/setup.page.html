@@ -1,0 +1,76 @@
+<main class="manual-shell jeopardy-shell">
+  <article class="mission-manual jeopardy-manual motion-rise" aria-labelledby="jeopardy-title">
+    <div class="binder-spine" aria-hidden="true"></div>
+    <chairo-manual-header
+      [backLink]="backLink()"
+      [backLabel]="reopenCode() ? 'Volver a la clasificación' : 'Volver al centro de juegos'"
+      [note]="reopenCode() ? ['otra ronda,', 'misma sala'] : ['preguntas grandes', 'apuestas valientes']"
+    />
+
+    <header class="jeopardy-title motion-rise">
+      <p>El tablero bíblico</p>
+      <h1 id="jeopardy-title">Jeopardy</h1>
+      <span>elige · responde · arriesga</span>
+    </header>
+
+    <form class="setup-sheet motion-rise" (submit)="$event.preventDefault(); createRoom()">
+      <div class="setup-intro">
+        <h2>{{ reopenCode() ? 'Arma otra ronda' : 'Arma la ronda' }}</h2>
+        <p>
+          Elige el tamaño del tablero. Siempre habrá {{ specialCount }} apuestas especiales ocultas.
+          Tú conduces y juzgas; si nadie más entra, juegas solo.
+          @if (reopenCode()) { Quienes siguen en la sala {{ reopenCode() }} empiezan de cero contigo. }
+        </p>
+      </div>
+
+      <div class="counter-list">
+        <div class="counter-row">
+          <div><strong>Categorías</strong><small>Columnas del tablero</small></div>
+          <div class="stepper" aria-label="Número de categorías">
+            <button class="pressable" type="button" (click)="step('columns', -1)" [disabled]="columns() === minGrid" aria-label="Quitar una categoría">−</button>
+            <output>{{ columns() }}</output>
+            <button class="pressable" type="button" (click)="step('columns', 1)" [disabled]="columns() === maxColumns" aria-label="Agregar una categoría">+</button>
+          </div>
+        </div>
+        <div class="counter-row">
+          <div><strong>Preguntas por categoría</strong><small>Filas de menor a mayor valor</small></div>
+          <div class="stepper" aria-label="Preguntas por categoría">
+            <button class="pressable" type="button" (click)="step('rows', -1)" [disabled]="rows() === minGrid" aria-label="Quitar una fila">−</button>
+            <output>{{ rows() }}</output>
+            <button class="pressable" type="button" (click)="step('rows', 1)" [disabled]="rows() === maxRows" aria-label="Agregar una fila">+</button>
+          </div>
+        </div>
+        <div class="counter-row">
+          <div><strong>Casillas dobles</strong><small>Valen el doble, sin apuesta</small></div>
+          <div class="stepper" aria-label="Número de casillas dobles">
+            <button class="pressable" type="button" (click)="step('doubleCount', -1)" [disabled]="doubleCount() === 0" aria-label="Quitar una casilla doble">−</button>
+            <output>{{ doubleCount() }}</output>
+            <button class="pressable" type="button" (click)="step('doubleCount', 1)" [disabled]="doubleCount() >= doubleLimit()" aria-label="Agregar una casilla doble">+</button>
+          </div>
+        </div>
+      </div>
+
+      @if (!reopenCode()) {
+        <label class="name-field">
+          <span>Nombre del anfitrión</span>
+          <input [value]="hostName()" maxlength="24" autocomplete="nickname" (input)="updateName($event)">
+        </label>
+      }
+
+      <div class="round-summary" aria-live="polite">
+        <strong>{{ columns() }} × {{ rows() }}</strong>
+        <span>{{ columns() * rows() }} preguntas · {{ specialCount }} apuestas · {{ doubleCount() }} dobles</span>
+      </div>
+
+      @if (error()) { <p class="form-error" role="alert">{{ error() }}</p> }
+      <button class="create-button pressable" type="submit" [disabled]="creating()">
+        @if (reopenCode()) {
+          {{ creating() ? 'Reiniciando sala…' : 'Reiniciar sala' }}
+        } @else {
+          {{ creating() ? 'Creando sala…' : 'Crear sala' }}
+        }
+      </button>
+      @if (!reopenCode()) { <a class="join-link" routerLink="unirse">Tengo un código de sala</a> }
+    </form>
+  </article>
+</main>

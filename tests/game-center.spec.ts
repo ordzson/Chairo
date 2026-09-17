@@ -6,7 +6,7 @@ const games = [
   'Jeopardy', '¿Versículo o inventículo?', 'El discípulo más perdido',
   'Revelaciones', 'Buscando perlas', 'Trivia'
 ];
-const gameStatuses = ['Próximamente', 'Disponible', 'Próximamente', 'Próximamente', 'Próximamente', 'Próximamente'];
+const gameStatuses = ['Disponible', 'Disponible', 'Próximamente', 'Próximamente', 'Próximamente', 'Próximamente'];
 const storageKey = 'chairo:play-preference';
 
 for (const width of [320, 390, 941, 1280, 1440]) {
@@ -32,7 +32,7 @@ for (const width of [320, 390, 941, 1280, 1440]) {
       await tab.click();
       await expect(tab).toHaveAttribute('aria-selected', 'true');
       await expect(page.getByRole('tabpanel').getByRole('heading')).toHaveText(name);
-      if (index === 1) {
+      if (index <= 1) {
         await expect(page.getByRole('tabpanel')).toContainText('¡A jugar!');
         await expect(page.getByRole('link', { name: 'Preparar partida' })).toBeVisible();
       } else {
@@ -47,7 +47,7 @@ for (const width of [320, 390, 941, 1280, 1440]) {
     }
 
     await tabs.first().click();
-    await expect(page.locator('a:not(.skip-link)')).toHaveCount(0);
+    await expect(page.getByRole('link', { name: 'Preparar partida' })).toBeVisible();
     expect(await page.locator('img').evaluateAll(images =>
       images.every(image => image instanceof HTMLImageElement && image.complete && image.naturalWidth > 0))).toBe(true);
     const a11y = await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa', 'wcag21aa', 'best-practice']).analyze();

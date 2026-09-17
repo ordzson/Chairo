@@ -8,7 +8,8 @@ Sitio publicado: **https://ordzson.github.io/Chairo/**
 
 - **Centro de juegos**: terminado. Índice, ficha de acetato y preferencia de modalidad guardada en el navegador.
 - **¿Versículo o inventículo?**: jugable hasta la sala de espera. Configuración, sala con QR y entrada del invitado desde su propio teléfono, sincronizadas por Supabase. La cuenta regresiva, las preguntas, la revelación y los resultados llegan en etapas posteriores.
-- Los otros cinco juegos: **Próximamente**.
+- **Jeopardy**: jugable. Tablero de 3 × 3 a 8 × 8, sala con QR para hasta cuatro jugadores —el anfitrión conduce y juzga, y solo juega si nadie más entra—, turnos, robos que suman o restan, dos apuestas especiales, casillas dobles y «Jugar otra vez» en la misma sala. Con Supabase la partida la arbitra la base de datos y la respuesta solo la ve el anfitrión mientras juzga.
+- Los otros cuatro juegos: **Próximamente**.
 
 ## Ejecutar
 
@@ -29,7 +30,7 @@ pnpm test
 pnpm check   # ambas
 ```
 
-`pnpm test` son 56 pruebas de navegador con Playwright. **No tocan la red**: sirven la salida estática con Python 3 y, cuando hace falta ejercitar el adaptador remoto, contestan cada petición desde el propio Playwright. Si no hay navegador instalado:
+`pnpm test` son 80 pruebas de navegador con Playwright. **No tocan la red**: sirven la salida estática con Python 3 y, cuando hace falta ejercitar el adaptador remoto, contestan cada petición desde el propio Playwright. Si no hay navegador instalado:
 
 ```sh
 pnpm exec playwright install chromium
@@ -37,13 +38,13 @@ pnpm exec playwright install chromium
 
 También vale `CHROMIUM_PATH=/ruta/al/chromium pnpm test`.
 
-Último resultado verificado (16 de septiembre de 2026): compilación correcta, 56/56 pruebas y bundle inicial de 264.80 kB (72.04 kB estimados en transferencia).
+Último resultado verificado (16 de septiembre de 2026): compilación correcta, 80/80 pruebas y bundle inicial de 267.40 kB (72.67 kB estimados en transferencia).
 
 ## Backend
 
 La sala multijugador vive en Supabase. La aplicación lee la configuración en tiempo de ejecución desde `public/supabase.json`, no compilada dentro del bundle: el mismo despliegue estático puede cambiar de proyecto, o quedarse sin backend y seguir siendo jugable en un dispositivo con el adaptador en memoria.
 
-La clave publicable viaja al navegador por definición. Lo que protege los datos son las políticas RLS de [`supabase/schema.sql`](supabase/schema.sql), que se pega entero en el SQL Editor de Supabase y es idempotente. Requiere «Allow anonymous sign-ins» activado.
+La clave publicable viaja al navegador por definición. Lo que protege los datos son las políticas RLS de [`supabase/schema.sql`](supabase/schema.sql), que se pega entero en el SQL Editor de Supabase y es idempotente. Requiere «Allow anonymous sign-ins» activado. Cada vez que cambia —por ejemplo, al llegar las tablas de Jeopardy— hay que volver a ejecutarlo entero; hasta entonces las salas de ese juego no abren con backend.
 
 Dos comprobaciones contra el proyecto real, fuera de la suite porque sí usan red:
 
