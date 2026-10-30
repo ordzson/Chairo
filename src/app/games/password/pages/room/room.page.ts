@@ -15,7 +15,7 @@ import { PasswordQrComponent } from '../../ui/password-qr.component';
   selector: 'chairo-password-room-page',
   imports: [PasswordHeaderComponent, PasswordQrComponent, RouterLink],
   templateUrl: './room.page.html',
-  styleUrl: '../../ui/password.css',
+  styleUrls: ['../../ui/password.css', '../../ui/password-landscape.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PasswordRoomPageComponent {
@@ -72,7 +72,7 @@ export class PasswordRoomPageComponent {
     const message = buildPasswordInvitation(this.joinUrl, this.code);
     try {
       if (this.document.defaultView?.navigator.share) {
-        await this.document.defaultView.navigator.share({ title: 'Revelaciones · Chairo', text: message, url: this.joinUrl });
+        await this.document.defaultView.navigator.share({ title: 'Revelaciones · Chispazo', text: message, url: this.joinUrl });
         this.shareStatus.set('Invitación compartida.');
       } else {
         await this.document.defaultView?.navigator.clipboard.writeText(message);
@@ -129,4 +129,3 @@ function messageFor(failure: unknown): string {
   if (failure.reason === 'not-host') return 'Solo la persona anfitriona puede comenzar la partida.';
   return 'La sala cambió o perdió la conexión. Vuelve a intentarlo.';
 }
-

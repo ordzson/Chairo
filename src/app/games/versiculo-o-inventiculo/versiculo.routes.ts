@@ -44,34 +44,34 @@ export const versiculoRoutes: Routes = [
     children: [
       {
         path: '',
-        title: 'Configurar ¿Versículo o inventículo? · Chairo',
+        title: 'Configurar ¿Versículo o inventículo? · Chispazo',
         loadComponent: () => import('./pages/setup/setup.page').then(module => module.SetupPageComponent)
       },
       {
         // «Jugar otra vez»: la misma configuración, pero reinicia la sala abierta.
         path: 'sala/:codigo/configurar',
-        title: 'Configurar ¿Versículo o inventículo? · Chairo',
+        title: 'Configurar ¿Versículo o inventículo? · Chispazo',
         loadComponent: () => import('./pages/setup/setup.page').then(module => module.SetupPageComponent)
       },
       {
         path: 'sala/:codigo',
-        title: 'Sala de ¿Versículo o inventículo? · Chairo',
+        title: 'Sala de ¿Versículo o inventículo? · Chispazo',
         loadComponent: () => import('./pages/room/room.page').then(module => module.RoomPageComponent)
       },
       {
         // Con el código del QR y sin él, para quien lo teclea: la misma pantalla.
         path: 'unirse/:codigo',
-        title: 'Entrar a ¿Versículo o inventículo? · Chairo',
+        title: 'Entrar a ¿Versículo o inventículo? · Chispazo',
         loadComponent: () => import('./pages/join/join.page').then(module => module.JoinPageComponent)
       },
       {
         path: 'unirse',
-        title: 'Entrar a ¿Versículo o inventículo? · Chairo',
+        title: 'Entrar a ¿Versículo o inventículo? · Chispazo',
         loadComponent: () => import('./pages/join/join.page').then(module => module.JoinPageComponent)
       },
       {
         path: 'partida/:codigo',
-        title: 'Partida de ¿Versículo o inventículo? · Chairo',
+        title: 'Partida de ¿Versículo o inventículo? · Chispazo',
         loadComponent: () => import('./pages/game/game.page').then(module => module.GamePageComponent)
       }
     ]

@@ -19,15 +19,15 @@ Personas de todas las edades que quieren jugar juegos bíblicos con amigos. Los 
 
 ## Product Purpose
 
-Chairo es un centro de juegos bíblicos para jugar a solas o en grupo. Reúne varios juegos, normalmente basados en preguntas, y busca hacer que aprender, recordar y conversar sobre la Biblia sea una experiencia alegre y compartida.
+Chispazo es un centro de juegos bíblicos para jugar a solas o en grupo. Reúne varios juegos, normalmente basados en preguntas, y busca hacer que aprender, recordar y conversar sobre la Biblia sea una experiencia alegre y compartida.
 
-El éxito significa que una persona pueda comenzar a jugar fácilmente desde su teléfono, que un grupo pueda reunirse alrededor de uno o varios dispositivos según el juego y que la experiencia resulte reconocible como Chairo desde el primer vistazo.
+El éxito significa que una persona pueda comenzar a jugar fácilmente desde su teléfono, que un grupo pueda reunirse alrededor de uno o varios dispositivos según el juego y que la experiencia resulte reconocible como Chispazo desde el primer vistazo.
 
 ## Positioning
 
-Chairo combina una colección de juegos bíblicos con modos flexibles para uno o varios dispositivos. Cada juego puede ajustar su dificultad y su dinámica sin obligar a los participantes a crear una cuenta.
+Chispazo combina una colección de juegos bíblicos con modos flexibles para uno o varios dispositivos. Cada juego puede ajustar su dificultad y su dinámica sin obligar a los participantes a crear una cuenta.
 
-El nombre proviene del griego *chaírō*, “alegrarse”, y orienta el producto hacia una experiencia bíblica lúdica, social y alegre.
+El nombre evoca ese instante en que una pregunta enciende una idea, un recuerdo o una conversación; orienta el producto hacia una experiencia bíblica viva, lúdica y compartida.
 
 ## Operating Context
 
@@ -51,8 +51,9 @@ El nombre proviene del griego *chaírō*, “alegrarse”, y orienta el producto
 
 ## Brand Commitments
 
-- Nombre: Chairo.
-- Significado asociado: “alegrarse” en griego.
+- Nombre: Chispazo.
+- Significado asociado: una idea o conversación que se enciende al jugar.
+- Logotipo: marca denominativa amarilla con volumen moldeado y contorno ultramarino; sobre la «o» final aparece un destello amarillo cóncavo de cuatro puntas, sin forma de cruz.
 - La identidad debe ser visualmente reconocible de inmediato y tener un acabado de alta calidad.
 - Referencias visuales vinculantes para el trabajo posterior: estética de render, Frutiger Aero y sensibilidad de los años 2000.
 
@@ -60,7 +61,7 @@ El nombre proviene del griego *chaírō*, “alegrarse”, y orienta el producto
 
 - Banco de preguntas bíblicas existente, todavía no incorporado al repositorio.
 - Los versículos asociados a las respuestas constituyen la evidencia dentro de cada juego cuando estén disponibles.
-- No hay testimonios, métricas, logotipos ni otros activos de marca incorporados al proyecto; no deben inventarse.
+- El logotipo oficial de Chispazo está incorporado en `assets/plates/brand.png`; no debe sustituirse por texto genérico ni recrearse de forma aproximada.
 
 ## Product Principles
 
@@ -68,4 +69,4 @@ El nombre proviene del griego *chaírō*, “alegrarse”, y orienta el producto
 2. **Entrada inmediata:** jugar como invitado debe requerir muy poca preparación, sin cuentas obligatorias.
 3. **Flexibilidad por juego:** cada mecánica puede elegir el número de dispositivos, la dificultad y la forma de validar respuestas que mejor le convengan.
 4. **Claridad para todas las edades:** las reglas, preguntas, respuestas y estados de partida deben entenderse rápidamente en grupos diversos.
-5. **Identidad memorable:** toda superficie debe sentirse inequívocamente parte de Chairo sin sacrificar legibilidad ni facilidad de uso.
+5. **Identidad memorable:** toda superficie debe sentirse inequívocamente parte de Chispazo sin sacrificar legibilidad ni facilidad de uso.

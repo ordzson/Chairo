@@ -7,7 +7,7 @@
       <section class="lost-game"><h1 id="game-title">Tablero cerrado</h1><p>{{ error() }}</p><a href="#/">Volver al centro</a></section>
     } @else if (room(); as currentRoom) {
       <header class="score-ribbon">
-        <div class="round-mark"><span>Jeopardy</span><strong id="game-title">Tablero bíblico</strong></div>
+        <div class="round-mark"><span>Jeopardy</span><strong id="game-title">{{ currentRoom.setup.topic === 'sistemas' ? 'Tablero de Sistemas' : 'Tablero bíblico' }}</strong></div>
         <ol class="score-list" aria-label="Marcador">
           @for (player of currentRoom.players; track player.id) {
             @if (player.plays) {
@@ -109,12 +109,10 @@
               @if (activeClue.special) { <p class="special-stamp">Apuesta especial</p> }
               <h2>{{ activeClue.prompt }}</h2>
               @if (activeClue.answer !== null) {
-                @if (currentRoom.phase !== 'judging') {
-                  <button class="reveal-button pressable" type="button" [attr.aria-expanded]="showAnswer()" (click)="toggleAnswer()">
-                    {{ showAnswer() ? 'Ocultar respuesta' : 'Ver respuesta' }}
-                  </button>
-                }
-                @if (showAnswer() || currentRoom.phase === 'judging') {
+                <button class="reveal-button pressable" type="button" [attr.aria-expanded]="showAnswer()" (click)="toggleAnswer()">
+                  {{ showAnswer() ? 'Ocultar respuesta' : 'Ver respuesta' }}
+                </button>
+                @if (showAnswer()) {
                   <div class="answer-key">
                     <span>Respuesta</span>
                     <strong>{{ activeClue.answer }}</strong>

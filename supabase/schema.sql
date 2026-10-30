@@ -1261,6 +1261,9 @@
   -- Instalaciones anteriores a la cuenta regresiva.
   alter table public.jeopardy_rooms add column if not exists deadline_at timestamptz;
 
+  alter table public.jeopardy_rooms add column if not exists topic text not null default 'biblia'
+    check (topic in ('biblia', 'sistemas'));
+
   create unique index if not exists jeopardy_rooms_open_code_key
     on public.jeopardy_rooms (code)
     where closed_at is null;
@@ -1372,7 +1375,7 @@
       'phase', room.phase,
       'setup', jsonb_build_object(
         'rows', room.board_rows, 'columns', room.board_columns,
-        'doubleCount', room.double_count
+        'doubleCount', room.double_count, 'topic', room.topic
       ),
       'players', players,
       'selfId', case when seated then seat.id end,
@@ -1554,13 +1557,16 @@
   -- Las versiones anteriores recibían si el anfitrión jugaba.
   drop function if exists public.create_jeopardy_room(integer, integer, integer, boolean, text);
   drop function if exists public.reopen_jeopardy_room(text, integer, integer, integer, boolean);
+  drop function if exists public.create_jeopardy_room(integer, integer, integer, text);
+  drop function if exists public.reopen_jeopardy_room(text, integer, integer, integer);
 
   -- El anfitrión entra conduciendo: arbitra y no ocupa puesto de jugador.
   create or replace function public.create_jeopardy_room(
     p_rows integer,
     p_columns integer,
     p_double_count integer,
-    p_host_name text
+    p_host_name text,
+    p_topic text default 'biblia'
   )
   returns jsonb
   language plpgsql
@@ -1582,8 +1588,8 @@
         new_code := new_code || substr(alphabet, 1 + floor(random() * length(alphabet))::integer, 1);
       end loop;
       begin
-        insert into public.jeopardy_rooms (code, host_id, board_rows, board_columns, double_count, message)
-          values (new_code, auth.uid(), p_rows, p_columns, p_double_count, 'Sala abierta.')
+        insert into public.jeopardy_rooms (code, host_id, board_rows, board_columns, double_count, topic, message)
+          values (new_code, auth.uid(), p_rows, p_columns, p_double_count, p_topic, 'Sala abierta.')
           returning id into new_room_id;
         exit;
       exception when unique_violation then
@@ -2039,7 +2045,8 @@
     p_code text,
     p_rows integer,
     p_columns integer,
-    p_double_count integer
+    p_double_count integer,
+    p_topic text default 'biblia'
   )
   returns jsonb
   language plpgsql
@@ -2059,7 +2066,7 @@
     update public.jeopardy_players set score = 0 where room_id = room.id;
     update public.jeopardy_players set plays = false, color = null where id = seat.id;
     update public.jeopardy_rooms
-      set board_rows = p_rows, board_columns = p_columns, double_count = p_double_count,
+      set board_rows = p_rows, board_columns = p_columns, double_count = p_double_count, topic = p_topic,
           status = 'waiting', phase = 'waiting', started_at = null,
           turn_player_id = null, active_cell = null, attempt_player_id = null, steal_queue = '{}',
           wager = null, deadline_at = null, message = 'Sala lista para otra ronda.'
@@ -2141,7 +2148,7 @@
   revoke all on function public.jeopardy_close_clue(uuid, text) from public, anon, authenticated;
   revoke all on function public.jeopardy_finish_turn(uuid, text) from public, anon, authenticated;
 
-  revoke all on function public.create_jeopardy_room(integer, integer, integer, text) from public, anon;
+  revoke all on function public.create_jeopardy_room(integer, integer, integer, text, text) from public, anon;
   revoke all on function public.get_jeopardy_room(text) from public, anon;
   revoke all on function public.join_jeopardy_room(text, text, text) from public, anon;
   revoke all on function public.start_jeopardy_game(text, jsonb) from public, anon;
@@ -2154,11 +2161,11 @@
   revoke all on function public.start_jeopardy_countdown(text) from public, anon;
   revoke all on function public.end_jeopardy_turn(text) from public, anon;
   revoke all on function public.get_jeopardy_cell(text, text) from public, anon;
-  revoke all on function public.reopen_jeopardy_room(text, integer, integer, integer) from public, anon;
+  revoke all on function public.reopen_jeopardy_room(text, integer, integer, integer, text) from public, anon;
   revoke all on function public.close_jeopardy_room(text) from public, anon;
   revoke all on function public.leave_jeopardy_room(text) from public, anon;
 
-  grant execute on function public.create_jeopardy_room(integer, integer, integer, text) to authenticated;
+  grant execute on function public.create_jeopardy_room(integer, integer, integer, text, text) to authenticated;
   grant execute on function public.get_jeopardy_room(text) to authenticated;
   grant execute on function public.join_jeopardy_room(text, text, text) to authenticated;
   grant execute on function public.start_jeopardy_game(text, jsonb) to authenticated;
@@ -2171,7 +2178,7 @@
   grant execute on function public.start_jeopardy_countdown(text) to authenticated;
   grant execute on function public.end_jeopardy_turn(text) to authenticated;
   grant execute on function public.get_jeopardy_cell(text, text) to authenticated;
-  grant execute on function public.reopen_jeopardy_room(text, integer, integer, integer) to authenticated;
+  grant execute on function public.reopen_jeopardy_room(text, integer, integer, integer, text) to authenticated;
   grant execute on function public.close_jeopardy_room(text) to authenticated;
   grant execute on function public.leave_jeopardy_room(text) to authenticated;
 

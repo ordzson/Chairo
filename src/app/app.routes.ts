@@ -3,7 +3,7 @@ import type { Routes } from '@angular/router';
 export const routes: Routes = [
   {
     path: '',
-    title: 'Chairo · Centro de juegos',
+    title: 'Chispazo · Centro de juegos',
     loadComponent: () => import('./pages/game-center/game-center.page').then(module => module.GameCenterPageComponent)
   },
   {

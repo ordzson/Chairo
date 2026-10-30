@@ -33,6 +33,7 @@ export class JeopardySetupPageComponent {
   readonly columns = signal(5);
   readonly doubleCount = signal(3);
   readonly hostName = signal('Anfitrión');
+  readonly sistemas = signal(false);
   readonly creating = signal(false);
   readonly error = signal('');
   readonly minGrid = MIN_GRID;
@@ -72,6 +73,12 @@ export class JeopardySetupPageComponent {
     if (event.target instanceof HTMLInputElement) this.hostName.set(event.target.value);
   }
 
+  toggleTopic(): void {
+    this.sound.playButtonClick();
+    this.touched = true;
+    this.sistemas.update(value => !value);
+  }
+
   async createRoom(): Promise<void> {
     if (this.creating()) return;
     const code = this.reopenCode();
@@ -81,7 +88,8 @@ export class JeopardySetupPageComponent {
       return;
     }
     const setup: JeopardySetup = {
-      rows: this.rows(), columns: this.columns(), doubleCount: this.doubleCount()
+      rows: this.rows(), columns: this.columns(), doubleCount: this.doubleCount(),
+      topic: this.sistemas() ? 'sistemas' : 'biblia'
     };
     this.sound.playButtonClick();
     this.creating.set(true);
@@ -119,6 +127,7 @@ export class JeopardySetupPageComponent {
       this.rows.set(room.setup.rows);
       this.columns.set(room.setup.columns);
       this.doubleCount.set(room.setup.doubleCount);
+      this.sistemas.set(room.setup.topic === 'sistemas');
     } catch (error) {
       if (error instanceof JeopardyError && error.reason === 'room-not-found') this.forgetRoom(code);
     }

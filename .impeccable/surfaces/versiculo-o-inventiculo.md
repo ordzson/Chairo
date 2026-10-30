@@ -20,7 +20,7 @@ La pantalla de configuración se apoya en `assets/versiculo-o-inventiculo/01-con
 
 ## Direction contract
 
-THESIS: Una hoja de juego táctil permite preparar y conducir una partida compartida sin perder la claridad del manual Chairo.
+THESIS: Una hoja de juego táctil permite preparar y conducir una partida compartida sin perder la claridad del manual Chispazo.
 
 OWN-WORLD: Papel marfil texturizado, tinta azul, encuadernación visible, notas manuscritas y piezas moldeadas amarillas, naranjas y azules; el marcador competitivo convive con una zona de lectura tranquila.
 

@@ -59,7 +59,8 @@ export class SupabaseJeopardyAdapter implements JeopardyPort {
       p_rows: setup.rows,
       p_columns: setup.columns,
       p_double_count: setup.doubleCount,
-      p_host_name: hostName
+      p_host_name: hostName,
+      ...(setup.topic === 'sistemas' ? { p_topic: 'sistemas' } : {})
     });
   }
 
@@ -130,7 +131,8 @@ export class SupabaseJeopardyAdapter implements JeopardyPort {
       p_code: code,
       p_rows: setup.rows,
       p_columns: setup.columns,
-      p_double_count: setup.doubleCount
+      p_double_count: setup.doubleCount,
+      ...(setup.topic ? { p_topic: setup.topic } : {})
     });
   }
 
@@ -265,7 +267,8 @@ function parseSnapshot(value: unknown): Snapshot {
       setup: {
         rows: Number(setup['rows']),
         columns: Number(setup['columns']),
-        doubleCount: Number(setup['doubleCount'])
+        doubleCount: Number(setup['doubleCount']),
+        topic: setup['topic'] === 'sistemas' ? 'sistemas' : 'biblia'
       },
       players: (raw['players'] as Record<string, unknown>[]).map((player): JeopardyPlayer => ({
         id: String(player['id']),

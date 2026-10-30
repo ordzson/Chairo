@@ -29,33 +29,33 @@ export const jeopardyRoutes: Routes = [{
   children: [
     {
       path: '',
-      title: 'Configurar Jeopardy · Chairo',
+      title: 'Configurar Jeopardy · Chispazo',
       loadComponent: () => import('./pages/setup/setup.page').then(module => module.JeopardySetupPageComponent)
     },
     {
       // «Jugar otra vez»: la misma configuración, pero reinicia la sala abierta.
       path: 'sala/:codigo/configurar',
-      title: 'Configurar Jeopardy · Chairo',
+      title: 'Configurar Jeopardy · Chispazo',
       loadComponent: () => import('./pages/setup/setup.page').then(module => module.JeopardySetupPageComponent)
     },
     {
       path: 'sala/:codigo',
-      title: 'Sala de Jeopardy · Chairo',
+      title: 'Sala de Jeopardy · Chispazo',
       loadComponent: () => import('./pages/room/room.page').then(module => module.JeopardyRoomPageComponent)
     },
     {
       path: 'unirse/:codigo',
-      title: 'Entrar a Jeopardy · Chairo',
+      title: 'Entrar a Jeopardy · Chispazo',
       loadComponent: () => import('./pages/join/join.page').then(module => module.JeopardyJoinPageComponent)
     },
     {
       path: 'unirse',
-      title: 'Entrar a Jeopardy · Chairo',
+      title: 'Entrar a Jeopardy · Chispazo',
       loadComponent: () => import('./pages/join/join.page').then(module => module.JeopardyJoinPageComponent)
     },
     {
       path: 'partida/:codigo',
-      title: 'Partida de Jeopardy · Chairo',
+      title: 'Partida de Jeopardy · Chispazo',
       loadComponent: () => import('./pages/game/game.page').then(module => module.JeopardyGamePageComponent)
     }
   ]

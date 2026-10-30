@@ -21,7 +21,7 @@ type JoinIssue = PasswordErrorReason | 'code-invalid' | 'name-missing' | 'color-
   selector: 'chairo-password-join-page',
   imports: [PasswordHeaderComponent, RouterLink],
   templateUrl: './join.page.html',
-  styleUrl: '../../ui/password.css',
+  styleUrls: ['../../ui/password.css', '../../ui/password-landscape.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PasswordJoinPageComponent {
@@ -114,4 +114,3 @@ const ISSUE_COPY: Readonly<Record<JoinIssue, string>> = {
   'invalid-results': 'Los datos enviados no son válidos.',
   unavailable: 'No pudimos entrar. Revisa la conexión e inténtalo otra vez.'
 };
-

@@ -8,7 +8,7 @@
     />
 
     <header class="jeopardy-title motion-rise">
-      <p>El tablero bíblico</p>
+      <p>{{ sistemas() ? 'El tablero de sistemas' : 'El tablero bíblico' }}</p>
       <h1 id="jeopardy-title">Jeopardy</h1>
       <span>elige · responde · arriesga</span>
     </header>
@@ -24,6 +24,13 @@
       </div>
 
       <div class="counter-list">
+        <div class="counter-row">
+          <div><strong>Temática</strong><small>{{ sistemas() ? 'Preguntas de informática' : 'Preguntas bíblicas' }}</small></div>
+          <button class="topic-toggle pressable" type="button" role="switch" aria-label="Sistemas"
+            [attr.aria-checked]="sistemas()" [disabled]="creating()" (click)="toggleTopic()">
+            {{ sistemas() ? 'Sistemas' : 'Biblia' }}
+          </button>
+        </div>
         <div class="counter-row">
           <div><strong>Categorías</strong><small>Columnas del tablero</small></div>
           <div class="stepper" aria-label="Número de categorías">

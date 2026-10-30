@@ -25,30 +25,29 @@ export const passwordRoutes: Routes = [
     children: [
       {
         path: '',
-        title: 'Configurar Revelaciones · Chairo',
+        title: 'Configurar Revelaciones · Chispazo',
         loadComponent: () => import('./pages/setup/setup.page').then(module => module.PasswordSetupPageComponent)
       },
       {
         path: 'unirse/:codigo',
-        title: 'Entrar a Revelaciones · Chairo',
+        title: 'Entrar a Revelaciones · Chispazo',
         loadComponent: () => import('./pages/join/join.page').then(module => module.PasswordJoinPageComponent)
       },
       {
         path: 'unirse',
-        title: 'Entrar a Revelaciones · Chairo',
+        title: 'Entrar a Revelaciones · Chispazo',
         loadComponent: () => import('./pages/join/join.page').then(module => module.PasswordJoinPageComponent)
       },
       {
         path: 'sala/:codigo',
-        title: 'Sala de Revelaciones · Chairo',
+        title: 'Sala de Revelaciones · Chispazo',
         loadComponent: () => import('./pages/room/room.page').then(module => module.PasswordRoomPageComponent)
       },
       {
         path: 'partida/:codigo',
-        title: 'Partida de Revelaciones · Chairo',
+        title: 'Partida de Revelaciones · Chispazo',
         loadComponent: () => import('./pages/game/game.page').then(module => module.PasswordGamePageComponent)
       }
     ]
   }
 ];
-

@@ -3,10 +3,18 @@
 :host {
   display: contents;
   --manual-rings-inset: 10% auto 24% clamp(-56px, -5.9vw, -34px);
+  --manual-rings-size: clamp(76px, 10vw, 98px);
   --manual-header-min-height: clamp(154px, 20vw, 192px);
   --manual-header-min-height-compact: 138px;
   --manual-note-size: clamp(1.05rem, 2.6vw, 1.55rem);
   --manual-note-leading: 1.02;
+  --manual-brand-width: min(100%, 382px);
+  --manual-brand-caption-size: clamp(1.4rem, 3.3vw, 2rem);
+  /* El rótulo y el subrayado son adorno: una pantalla muy baja puede
+     apagarlos sin perder nada que se lea. */
+  --manual-brand-caption-display: block;
+  --manual-back-size: 64px;
+  --manual-back-size-compact: 48px;
 }
 
 .manual-rings {
@@ -21,7 +29,7 @@
 }
 
 .manual-rings img {
-  width: clamp(76px, 10vw, 98px);
+  width: var(--manual-rings-size);
   height: auto;
 }
 
@@ -39,8 +47,8 @@
   --press-lift: 3px;
   display: inline-grid;
   place-items: center;
-  width: 64px;
-  min-height: 64px;
+  width: var(--manual-back-size);
+  min-height: var(--manual-back-size);
   color: var(--ink);
   background: var(--yellow);
   border: 2px solid var(--ink);
@@ -60,18 +68,20 @@
 
 .manual-brand img {
   display: block;
-  width: min(100%, 382px);
+  width: var(--manual-brand-width);
   height: auto;
 }
 
 .manual-brand p {
+  display: var(--manual-brand-caption-display);
   margin: -0.08em 0 0;
   font-family: 'Kalam', cursive;
-  font-size: clamp(1.4rem, 3.3vw, 2rem);
+  font-size: var(--manual-brand-caption-size);
   line-height: 1;
 }
 
 .manual-brand span {
+  display: var(--manual-brand-caption-display);
   width: min(76%, 290px);
   height: 6px;
   margin-top: 0.28rem;
@@ -102,7 +112,7 @@
   }
 
   .manual-rings img {
-    width: 72px;
+    width: min(var(--manual-rings-size), 72px);
   }
 
   .manual-header {
@@ -111,8 +121,8 @@
   }
 
   .back-button {
-    width: 48px;
-    min-height: 48px;
+    width: var(--manual-back-size-compact);
+    min-height: var(--manual-back-size-compact);
   }
 
   .back-button .game-icon {
@@ -124,7 +134,7 @@
   }
 
   .manual-brand p {
-    font-size: clamp(1.1rem, 5vw, 1.55rem);
+    font-size: min(var(--manual-brand-caption-size), clamp(1.1rem, 5vw, 1.55rem));
   }
 
   .manual-note {

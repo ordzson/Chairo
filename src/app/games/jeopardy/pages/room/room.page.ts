@@ -6,6 +6,7 @@ import { SoundService } from '../../../../sound.service';
 import { ManualHeaderComponent } from '../../../versiculo-o-inventiculo/ui/manual-header.component';
 import { QrCodeComponent } from '../../../versiculo-o-inventiculo/ui/qr-code.component';
 import { JEOPARDY_BANK } from '../../domain/question-bank.generated';
+import { SISTEMAS_BANK } from '../../domain/sistemas-bank';
 import {
   MAX_PLAYERS,
   SPECIAL_COUNT,
@@ -76,7 +77,8 @@ export class JeopardyRoomPageComponent {
     this.busy.set(true);
     this.error.set('');
     try {
-      await this.rooms.startGame(room.code, createJeopardyBoard(JEOPARDY_BANK, room.setup));
+      const bank = room.setup.topic === 'sistemas' ? SISTEMAS_BANK : JEOPARDY_BANK;
+      await this.rooms.startGame(room.code, createJeopardyBoard(bank, room.setup));
       await this.router.navigate(['/juegos/jeopardy/partida', room.code]);
     } catch {
       this.error.set('No pudimos abrir el tablero. Revisa tu conexión y vuelve a intentarlo.');
@@ -87,10 +89,11 @@ export class JeopardyRoomPageComponent {
 
   async share(): Promise<void> {
     this.sound.playButtonClick();
-    const message = `Únete a mi Jeopardy bíblico en Chairo. Código: ${this.code}`;
+    const topic = this.room()?.setup.topic === 'sistemas' ? 'de Sistemas' : 'bíblico';
+    const message = `Únete a mi Jeopardy ${topic} en Chispazo. Código: ${this.code}`;
     const navigator = this.document.defaultView?.navigator;
     try {
-      if (navigator?.share) await navigator.share({ title: 'Jeopardy · Chairo', text: message, url: this.joinUrl() });
+      if (navigator?.share) await navigator.share({ title: 'Jeopardy · Chispazo', text: message, url: this.joinUrl() });
       else if (navigator?.clipboard) await navigator.clipboard.writeText(`${message}\n${this.joinUrl()}`);
       else throw new Error('unavailable');
       this.shareStatus.set('Invitación compartida.');

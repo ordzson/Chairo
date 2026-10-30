@@ -14,7 +14,7 @@ import { PasswordHeaderComponent } from '../../ui/password-header.component';
   selector: 'chairo-password-setup-page',
   imports: [PasswordHeaderComponent, RouterLink],
   templateUrl: './setup.page.html',
-  styleUrl: '../../ui/password.css',
+  styleUrls: ['../../ui/password.css', '../../ui/password-landscape.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PasswordSetupPageComponent {
@@ -69,4 +69,3 @@ export class PasswordSetupPageComponent {
     }
   }
 }
-

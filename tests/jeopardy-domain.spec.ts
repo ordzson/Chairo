@@ -1,6 +1,7 @@
 import { expect, test } from '@playwright/test';
 
 import { JEOPARDY_BANK } from '../src/app/games/jeopardy/domain/question-bank.generated';
+import { SISTEMAS_BANK } from '../src/app/games/jeopardy/domain/sistemas-bank';
 import {
   MAX_PLAYERS,
   SPECIAL_COUNT,
@@ -294,6 +295,21 @@ test('el banco arma tableros con dos especiales y las dobles pedidas', () => {
     expect(cells.every(cell => cell.value === cellValue(cell.row) && !(cell.special && cell.double))).toBe(true);
     expect(new Set(cells.map(cell => cell.question.prompt)).size).toBe(cells.length);
     expect(cells.filter(cell => cell.special).every(cell => cell.question.level === 'extreme')).toBe(true);
+  }
+});
+
+test('Sistemas usa las 400 preguntas y admite todos los tamaños sin repetir preguntas', () => {
+  expect(SISTEMAS_BANK).toHaveLength(400);
+  expect(new Set(SISTEMAS_BANK.map(question => question.category)).size).toBe(20);
+  for (let rows = 3; rows <= 8; rows += 1) {
+    for (let columns = 3; columns <= 8; columns += 1) {
+      const cells = createJeopardyBoard(SISTEMAS_BANK, { rows, columns, doubleCount: 1, topic: 'sistemas' });
+      expect(cells).toHaveLength(rows * columns);
+      expect(new Set(cells.map(cell => cell.question.prompt)).size).toBe(cells.length);
+      expect(cells.filter(cell => cell.special)).toHaveLength(2);
+      expect(cells.filter(cell => cell.double)).toHaveLength(1);
+      expect(cells.every(cell => SISTEMAS_BANK.includes(cell.question))).toBe(true);
+    }
   }
 });
 

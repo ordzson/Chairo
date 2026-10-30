@@ -2,6 +2,7 @@ import { expect, test, type BrowserContext, type Page } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
 
 import { withoutBackend } from './offline';
+import { SISTEMAS_BANK } from '../src/app/games/jeopardy/domain/sistemas-bank';
 
 /*
  * Sin backend: la sala vive en `localStorage`, que comparten las pestañas del
@@ -166,6 +167,35 @@ test('sin invitados el anfitrión juega solo', async ({ page }) => {
   await playTurn(page, page);
   await expect(page.getByText(/^Anfitrión acertó y suma \d+\. Turno de Anfitrión\.$/)).toBeVisible();
   await expect(page.locator('.clue-tile:enabled')).toHaveCount(8);
+});
+
+test('Sistemas conserva la temática al recargar y permite volver a Biblia en otra ronda', async ({ page }) => {
+  await page.goto('./#/juegos/jeopardy');
+  const toggle = page.getByRole('switch', { name: 'Sistemas' });
+  await expect(toggle).not.toBeChecked();
+  await toggle.click();
+  await expect(toggle).toBeChecked();
+  await page.getByRole('button', { name: 'Quitar una categoría' }).click({ clickCount: 2 });
+  await page.getByRole('button', { name: 'Quitar una fila' }).click();
+  const code = await createRoom(page);
+  await page.reload();
+  await expect(page.getByText(/Jeopardy de Sistemas/)).toBeVisible();
+  await page.getByRole('button', { name: 'Abrir el tablero' }).click();
+  for (let turn = 0; turn < 9; turn += 1) {
+    await openClue(page);
+    const prompt = await page.locator('.question-paper h2').textContent();
+    expect(SISTEMAS_BANK.some(question => question.prompt === prompt?.trim())).toBe(true);
+    await page.getByRole('button', { name: 'Ya respondí' }).click();
+    await page.getByRole('button', { name: /^Acertó/ }).click();
+  }
+  await page.getByRole('button', { name: 'Jugar otra vez' }).click();
+  await expect(toggle).toBeChecked();
+  await toggle.click();
+  await page.getByRole('button', { name: 'Reiniciar sala' }).click();
+  await expect(page).toHaveURL(new RegExp(`jeopardy/sala/${code}$`));
+  await expect(page.getByText(/Jeopardy bíblico/)).toBeVisible();
+  await page.getByRole('button', { name: 'Abrir el tablero' }).click();
+  await expect(page.getByText('Tablero bíblico', { exact: true })).toBeVisible();
 });
 
 test('jugar otra vez reinicia la misma sala y trae a los invitados de vuelta', async ({ context, page }) => {

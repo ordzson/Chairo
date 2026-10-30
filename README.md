@@ -1,8 +1,8 @@
-# Chairo · Centro de juegos
+# Chispazo · Centro de juegos
 
 Centro de juegos bíblicos en español, hecho en Angular. La composición aprobada —**Manual de misión / Índice primero**— presenta los juegos como pestañas de un cuaderno físico.
 
-Sitio publicado: **https://ordzson.github.io/Chairo/**
+Sitio publicado: **https://ordzson.github.io/Chairo/** (la ruta conserva el nombre técnico del repositorio).
 
 ## Estado
 

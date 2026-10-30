@@ -16,6 +16,8 @@
 .counter-row strong, .counter-row small { display: block; }
 .counter-row strong { font-size: 1.2rem; }
 .counter-row small { color: color-mix(in srgb, var(--ink) 72%, white); font-size: 0.95rem; }
+.topic-toggle { --press-face: var(--paper-light); --press-depth: 4px; min-width: 130px; min-height: 48px; padding: 0.5rem 1rem; color: var(--ink); background: var(--press-face); border: 2px solid var(--ink); border-radius: 12px; font: 700 1.2rem 'Cabin Condensed', sans-serif; cursor: pointer; }
+.topic-toggle[aria-checked="true"] { --press-face: var(--yellow); }
 .stepper { display: grid; grid-template-columns: 48px 54px 48px; gap: 0.5rem; align-items: center; }
 .stepper button { --press-depth: 4px; width: 48px; min-height: 48px; font-size: 1.6rem; font-weight: 700; background: var(--yellow); border: 2px solid var(--ink); border-radius: 12px; cursor: pointer; }
 .stepper output { font: 700 1.6rem/1 'Dosis', sans-serif; text-align: center; font-variant-numeric: tabular-nums; }

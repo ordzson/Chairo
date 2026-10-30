@@ -44,7 +44,7 @@ const RINGS = [0, 1, 2] as const;
       }
 
       <div class="manual-brand">
-        <img class="motion-stamp" src="assets/plates/brand.png" alt="Chairo">
+        <img class="motion-stamp" src="assets/plates/brand.png" alt="Chispazo">
         <p>Centro de juegos</p>
         <span aria-hidden="true"></span>
       </div>

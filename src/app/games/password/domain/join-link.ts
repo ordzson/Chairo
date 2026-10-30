@@ -8,6 +8,5 @@ export function buildPasswordJoinUrl(href: string, code: RoomCode): string {
 }
 
 export function buildPasswordInvitation(joinUrl: string, code: RoomCode): string {
-  return `Únete a Revelaciones en Chairo con el código ${code}: ${joinUrl}`;
+  return `Únete a Revelaciones en Chispazo con el código ${code}: ${joinUrl}`;
 }
-

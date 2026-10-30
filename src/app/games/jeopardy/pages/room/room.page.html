@@ -9,7 +9,7 @@
     <header class="jeopardy-title motion-rise">
       <p>Sala de concursantes</p>
       <h1 id="room-title">{{ loadPhase() === 'error' ? 'Sin señal' : loadPhase() === 'loading' ? 'Abriendo sala' : 'Todo listo' }}</h1>
-      <span>{{ room()?.setup?.columns ?? 0 }} × {{ room()?.setup?.rows ?? 0 }} · Jeopardy bíblico</span>
+      <span>{{ room()?.setup?.columns ?? 0 }} × {{ room()?.setup?.rows ?? 0 }} · Jeopardy {{ room()?.setup?.topic === 'sistemas' ? 'de Sistemas' : 'bíblico' }}</span>
     </header>
 
     @if (loadPhase() === 'error') {

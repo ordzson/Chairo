@@ -132,8 +132,34 @@ async function holdToEnd(page: Page): Promise<void> {
   await page.mouse.up();
 }
 
+/**
+ * Comprueba la fase en dos teléfonos horizontales: uno amplio y uno pequeño.
+ * Ni el ancho ni el alto pueden desbordar: la ronda se juega sin desplazar.
+ */
+async function landscape(page: Page, phase: string): Promise<void> {
+  await mkdir('.impeccable/review', { recursive: true });
+  for (const size of [{ width: 740, height: 360 }, { width: 568, height: 320 }]) {
+    await page.setViewportSize(size);
+    await page.evaluate(() => scrollTo(0, 0));
+    await page.screenshot({
+      path: `.impeccable/review/password-${phase}-${size.width}x${size.height}.png`,
+      animations: 'disabled'
+    });
+    const overflow = await page.evaluate(() => ({
+      width: document.documentElement.scrollWidth - innerWidth,
+      height: document.documentElement.scrollHeight - innerHeight
+    }));
+    expect(overflow.width, `${phase} desborda a ${size.width}×${size.height}`).toBeLessThanOrEqual(0);
+    // El borde moldeado puede sobresalir hasta 8 px; el contenido y todos los
+    // controles deben seguir dentro del plano visible.
+    const materialEdge = size.width <= 640 ? 8 : 0;
+    expect(overflow.height, `${phase} desborda a ${size.width}×${size.height}`).toBeLessThanOrEqual(materialEdge);
+  }
+  await page.setViewportSize({ width: 390, height: 844 });
+}
+
 test('dos contextos completan dos rondas, sincronizan 0, puntúan y juegan otra vez', async ({ browser }) => {
-  test.setTimeout(90_000);
+  test.setTimeout(120_000);
   const backend = new SharedPasswordBackend();
   const hostContext = await browser.newContext({ reducedMotion: 'reduce', viewport: { width: 390, height: 844 } });
   const guestContext = await browser.newContext({ reducedMotion: 'reduce', viewport: { width: 320, height: 780 } });
@@ -185,8 +211,15 @@ test('dos contextos completan dos rondas, sincronizan 0, puntúan y juegan otra 
     expect(await host.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
     await host.screenshot({ path: '.impeccable/review/desktop.png', fullPage: true, animations: 'disabled' });
     await host.setViewportSize({ width: 390, height: 844 });
+
+    // El teléfono girado es un caso de uso real: la palabra va en la frente y
+    // la pantalla queda de lado. Nada de la ronda puede quedar fuera.
+    await landscape(host, 'playing');
+    await expect(hostWord).toBeVisible();
+    await host.setViewportSize({ width: 390, height: 844 });
     await holdToEnd(host);
     await expect(host.getByText('¿Quién adivinó?')).toBeVisible();
+    await landscape(host, 'scoring');
     await expect(guest.getByText('La persona anfitriona está anotando')).toBeVisible({ timeout: 5_000 });
     await axe(host);
 
@@ -197,6 +230,7 @@ test('dos contextos completan dos rondas, sincronizan 0, puntúan y juegan otra 
     await expect(guest.getByText('Después de 1 ronda')).toBeVisible({ timeout: 5_000 });
     await expect(host.getByText('1 punto')).toBeVisible();
 
+    await landscape(host, 'scoreboard');
     await host.getByRole('button', { name: 'Otra ronda' }).click();
     await host.getByRole('button', { name: 'Estoy listo/a' }).click();
     await guest.getByRole('button', { name: 'Estoy listo/a' }).click();
@@ -214,6 +248,7 @@ test('dos contextos completan dos rondas, sincronizan 0, puntúan y juegan otra 
     await expect(guest.getByRole('heading', { name: 'Ana gana' })).toBeVisible({ timeout: 5_000 });
     await axe(host);
 
+    await landscape(host, 'finished');
     await host.getByRole('button', { name: 'Jugar otra vez' }).click();
     await expect(host).toHaveURL(/revelaciones\/sala\/ABCD$/);
     await expect(guest).toHaveURL(/revelaciones\/sala\/ABCD$/, { timeout: 5_000 });

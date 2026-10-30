@@ -23,7 +23,7 @@ const HOLD_MS = 600;
   selector: 'chairo-password-game-page',
   imports: [PasswordHeaderComponent, RouterLink],
   templateUrl: './game.page.html',
-  styleUrls: ['../../ui/password.css', '../../ui/password-game.css'],
+  styleUrls: ['../../ui/password.css', '../../ui/password-landscape.css', '../../ui/password-game.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PasswordGamePageComponent {

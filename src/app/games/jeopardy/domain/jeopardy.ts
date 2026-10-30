@@ -16,6 +16,7 @@ export interface JeopardySetup {
   readonly rows: number;
   readonly columns: number;
   readonly doubleCount: number;
+  readonly topic?: 'biblia' | 'sistemas';
 }
 
 export interface JeopardyPlayer {
@@ -135,7 +136,8 @@ export function maxDoubles(rows: number, columns: number): number {
 }
 
 export function isValidSetup(setup: JeopardySetup): boolean {
-  return Number.isInteger(setup.rows) && setup.rows >= MIN_GRID && setup.rows <= MAX_ROWS &&
+  return (setup.topic === undefined || setup.topic === 'biblia' || setup.topic === 'sistemas') &&
+    Number.isInteger(setup.rows) && setup.rows >= MIN_GRID && setup.rows <= MAX_ROWS &&
     Number.isInteger(setup.columns) && setup.columns >= MIN_GRID && setup.columns <= MAX_COLUMNS &&
     Number.isInteger(setup.doubleCount) && setup.doubleCount >= 0 &&
     setup.doubleCount <= maxDoubles(setup.rows, setup.columns);
@@ -146,7 +148,8 @@ export function createJeopardyBoard(
   setup: JeopardySetup,
   random: () => number = Math.random
 ): readonly JeopardyCell[] {
-  const categories = unique(bank.filter(question => question.level !== 'extreme').map(question => question.category))
+  const availableCategories = unique(bank.filter(question => question.level !== 'extreme').map(question => question.category));
+  const categories = (setup.topic === 'sistemas' ? shuffle(availableCategories, random) : availableCategories)
     .slice(0, setup.columns);
   if (categories.length < setup.columns) throw new Error('question-bank-insufficient');
 

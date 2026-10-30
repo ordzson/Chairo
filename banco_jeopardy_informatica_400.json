@@ -1,0 +1,2831 @@
+{
+  "titulo": "Banco de preguntas de informática para Jeopardy",
+  "idioma": "es",
+  "total_preguntas": 400,
+  "total_categorias": 20,
+  "nota_puntajes": "Puntajes sugeridos y editables: 100, 200, 300, 400 y 500. Cuatro preguntas por puntaje en cada categoría.",
+  "categorias": [
+    "Redes de computadoras",
+    "Internet y protocolos",
+    "Fundamentos de bases de datos",
+    "SQL",
+    "Programación orientada a objetos",
+    "Fundamentos de programación",
+    "Algoritmos y estructuras de datos",
+    "HTML y CSS",
+    "JavaScript y navegador",
+    "Backend y API",
+    "Sistemas operativos",
+    "Hardware y almacenamiento",
+    "Ciberseguridad",
+    "Git y control de versiones",
+    "Pruebas de software",
+    "Ingeniería de software",
+    "Linux y línea de comandos",
+    "Nube y despliegue",
+    "Lógica y sistemas digitales",
+    "Arquitectura y diseño de aplicaciones"
+  ],
+  "preguntas": [
+    {
+      "id": 1,
+      "categoria": "Redes de computadoras",
+      "puntaje": 100,
+      "pregunta": "¿Qué es una red de computadoras?",
+      "respuesta": "Un conjunto de dispositivos conectados para compartir datos y recursos."
+    },
+    {
+      "id": 2,
+      "categoria": "Redes de computadoras",
+      "puntaje": 100,
+      "pregunta": "¿Qué es una red LAN?",
+      "respuesta": "Una red que cubre un área local."
+    },
+    {
+      "id": 3,
+      "categoria": "Redes de computadoras",
+      "puntaje": 100,
+      "pregunta": "¿Qué es una red WAN?",
+      "respuesta": "Una red que conecta áreas geográficas extensas."
+    },
+    {
+      "id": 4,
+      "categoria": "Redes de computadoras",
+      "puntaje": 100,
+      "pregunta": "¿Qué es una dirección IP?",
+      "respuesta": "Una dirección lógica que identifica una interfaz en una red IP."
+    },
+    {
+      "id": 5,
+      "categoria": "Redes de computadoras",
+      "puntaje": 200,
+      "pregunta": "¿Para qué sirve un router?",
+      "respuesta": "Para dirigir paquetes entre redes."
+    },
+    {
+      "id": 6,
+      "categoria": "Redes de computadoras",
+      "puntaje": 200,
+      "pregunta": "¿Para qué sirve un switch?",
+      "respuesta": "Para conectar dispositivos dentro de una red local."
+    },
+    {
+      "id": 7,
+      "categoria": "Redes de computadoras",
+      "puntaje": 200,
+      "pregunta": "¿Qué es una dirección MAC?",
+      "respuesta": "Un identificador de una interfaz de red a nivel de enlace."
+    },
+    {
+      "id": 8,
+      "categoria": "Redes de computadoras",
+      "puntaje": 200,
+      "pregunta": "¿Qué es Wi-Fi?",
+      "respuesta": "Una tecnología de conexión inalámbrica para redes locales."
+    },
+    {
+      "id": 9,
+      "categoria": "Redes de computadoras",
+      "puntaje": 300,
+      "pregunta": "¿Para qué sirve una máscara de subred?",
+      "respuesta": "Para distinguir la parte de red y la parte de host de una dirección IPv4."
+    },
+    {
+      "id": 10,
+      "categoria": "Redes de computadoras",
+      "puntaje": 300,
+      "pregunta": "¿Qué es la puerta de enlace predeterminada?",
+      "respuesta": "El router al que se envía tráfico destinado a otras redes."
+    },
+    {
+      "id": 11,
+      "categoria": "Redes de computadoras",
+      "puntaje": 300,
+      "pregunta": "¿Qué es el ancho de banda de una conexión?",
+      "respuesta": "Su capacidad de transmisión de datos."
+    },
+    {
+      "id": 12,
+      "categoria": "Redes de computadoras",
+      "puntaje": 300,
+      "pregunta": "¿Qué es la latencia de red?",
+      "respuesta": "El tiempo que tarda la comunicación en llegar a su destino."
+    },
+    {
+      "id": 13,
+      "categoria": "Redes de computadoras",
+      "puntaje": 400,
+      "pregunta": "¿Qué es un paquete de red?",
+      "respuesta": "Una unidad de datos transmitida por una red."
+    },
+    {
+      "id": 14,
+      "categoria": "Redes de computadoras",
+      "puntaje": 400,
+      "pregunta": "¿Qué es una topología de red?",
+      "respuesta": "La forma en que se organizan las conexiones de una red."
+    },
+    {
+      "id": 15,
+      "categoria": "Redes de computadoras",
+      "puntaje": 400,
+      "pregunta": "¿Qué caracteriza a la topología en estrella?",
+      "respuesta": "Los dispositivos se conectan a un punto central."
+    },
+    {
+      "id": 16,
+      "categoria": "Redes de computadoras",
+      "puntaje": 400,
+      "pregunta": "¿Qué es una VLAN?",
+      "respuesta": "Una segmentación lógica de una red local."
+    },
+    {
+      "id": 17,
+      "categoria": "Redes de computadoras",
+      "puntaje": 500,
+      "pregunta": "¿Qué permite hacer NAT en un router?",
+      "respuesta": "Traducir direcciones IP entre redes."
+    },
+    {
+      "id": 18,
+      "categoria": "Redes de computadoras",
+      "puntaje": 500,
+      "pregunta": "¿Qué significa comunicación full-duplex?",
+      "respuesta": "Transmitir y recibir datos simultáneamente."
+    },
+    {
+      "id": 19,
+      "categoria": "Redes de computadoras",
+      "puntaje": 500,
+      "pregunta": "¿Qué es la pérdida de paquetes?",
+      "respuesta": "La falta de llegada de algunos paquetes a su destino."
+    },
+    {
+      "id": 20,
+      "categoria": "Redes de computadoras",
+      "puntaje": 500,
+      "pregunta": "¿Qué diferencia básica hay entre IPv4 e IPv6 en el tamaño de sus direcciones?",
+      "respuesta": "IPv4 usa 32 bits e IPv6 usa 128 bits."
+    },
+    {
+      "id": 21,
+      "categoria": "Internet y protocolos",
+      "puntaje": 100,
+      "pregunta": "¿Qué es un protocolo de comunicación?",
+      "respuesta": "Un conjunto de reglas para intercambiar datos."
+    },
+    {
+      "id": 22,
+      "categoria": "Internet y protocolos",
+      "puntaje": 100,
+      "pregunta": "¿Para qué sirve DNS?",
+      "respuesta": "Para resolver nombres de dominio en registros como direcciones IP."
+    },
+    {
+      "id": 23,
+      "categoria": "Internet y protocolos",
+      "puntaje": 100,
+      "pregunta": "¿Para qué sirve DHCP?",
+      "respuesta": "Para asignar automáticamente la configuración de red."
+    },
+    {
+      "id": 24,
+      "categoria": "Internet y protocolos",
+      "puntaje": 100,
+      "pregunta": "¿Qué es una URL?",
+      "respuesta": "La dirección de un recurso en la web."
+    },
+    {
+      "id": 25,
+      "categoria": "Internet y protocolos",
+      "puntaje": 200,
+      "pregunta": "¿Para qué sirve HTTP?",
+      "respuesta": "Para intercambiar solicitudes y respuestas en la web."
+    },
+    {
+      "id": 26,
+      "categoria": "Internet y protocolos",
+      "puntaje": 200,
+      "pregunta": "¿Qué añade HTTPS a HTTP?",
+      "respuesta": "Cifrado y autenticación de la conexión mediante TLS."
+    },
+    {
+      "id": 27,
+      "categoria": "Internet y protocolos",
+      "puntaje": 200,
+      "pregunta": "¿Qué es un nombre de dominio?",
+      "respuesta": "Un nombre legible que identifica un dominio de Internet."
+    },
+    {
+      "id": 28,
+      "categoria": "Internet y protocolos",
+      "puntaje": 200,
+      "pregunta": "¿Qué es un puerto de red?",
+      "respuesta": "Un número que permite identificar un servicio o extremo de comunicación."
+    },
+    {
+      "id": 29,
+      "categoria": "Internet y protocolos",
+      "puntaje": 300,
+      "pregunta": "¿Qué ofrece TCP para transportar datos?",
+      "respuesta": "Entrega ordenada y confiable de un flujo de bytes."
+    },
+    {
+      "id": 30,
+      "categoria": "Internet y protocolos",
+      "puntaje": 300,
+      "pregunta": "¿Qué caracteriza a UDP?",
+      "respuesta": "Envía datagramas sin garantizar su entrega ni su orden."
+    },
+    {
+      "id": 31,
+      "categoria": "Internet y protocolos",
+      "puntaje": 300,
+      "pregunta": "¿Para qué sirve SMTP?",
+      "respuesta": "Para enviar y transferir correo electrónico."
+    },
+    {
+      "id": 32,
+      "categoria": "Internet y protocolos",
+      "puntaje": 300,
+      "pregunta": "¿Para qué sirve IMAP?",
+      "respuesta": "Para consultar y sincronizar correo almacenado en un servidor."
+    },
+    {
+      "id": 33,
+      "categoria": "Internet y protocolos",
+      "puntaje": 400,
+      "pregunta": "¿Para qué sirve SSH?",
+      "respuesta": "Para acceder de forma segura a un equipo remoto."
+    },
+    {
+      "id": 34,
+      "categoria": "Internet y protocolos",
+      "puntaje": 400,
+      "pregunta": "¿Qué comprueba normalmente el comando ping?",
+      "respuesta": "La accesibilidad y el tiempo de respuesta mediante ICMP."
+    },
+    {
+      "id": 35,
+      "categoria": "Internet y protocolos",
+      "puntaje": 400,
+      "pregunta": "¿Para qué sirve traceroute o tracert?",
+      "respuesta": "Para mostrar los saltos de una ruta de red."
+    },
+    {
+      "id": 36,
+      "categoria": "Internet y protocolos",
+      "puntaje": 400,
+      "pregunta": "¿Qué indica el código HTTP 404?",
+      "respuesta": "Que el recurso solicitado no se encontró."
+    },
+    {
+      "id": 37,
+      "categoria": "Internet y protocolos",
+      "puntaje": 500,
+      "pregunta": "¿Qué indica el código HTTP 500?",
+      "respuesta": "Un error interno del servidor."
+    },
+    {
+      "id": 38,
+      "categoria": "Internet y protocolos",
+      "puntaje": 500,
+      "pregunta": "¿Qué indica el código HTTP 301?",
+      "respuesta": "Una redirección permanente."
+    },
+    {
+      "id": 39,
+      "categoria": "Internet y protocolos",
+      "puntaje": 500,
+      "pregunta": "¿Cuál es el puerto predeterminado de HTTPS?",
+      "respuesta": "El 443."
+    },
+    {
+      "id": 40,
+      "categoria": "Internet y protocolos",
+      "puntaje": 500,
+      "pregunta": "¿Cuál es el puerto predeterminado de HTTP?",
+      "respuesta": "El 80."
+    },
+    {
+      "id": 41,
+      "categoria": "Fundamentos de bases de datos",
+      "puntaje": 100,
+      "pregunta": "¿Qué es una base de datos?",
+      "respuesta": "Una colección organizada de datos."
+    },
+    {
+      "id": 42,
+      "categoria": "Fundamentos de bases de datos",
+      "puntaje": 100,
+      "pregunta": "¿Qué es un sistema gestor de bases de datos?",
+      "respuesta": "Un software para crear, consultar y administrar bases de datos."
+    },
+    {
+      "id": 43,
+      "categoria": "Fundamentos de bases de datos",
+      "puntaje": 100,
+      "pregunta": "¿Qué es una tabla en una base de datos relacional?",
+      "respuesta": "Una estructura de filas y columnas."
+    },
+    {
+      "id": 44,
+      "categoria": "Fundamentos de bases de datos",
+      "puntaje": 100,
+      "pregunta": "¿Qué representa una fila en una tabla?",
+      "respuesta": "Un registro."
+    },
+    {
+      "id": 45,
+      "categoria": "Fundamentos de bases de datos",
+      "puntaje": 200,
+      "pregunta": "¿Qué representa una columna en una tabla?",
+      "respuesta": "Un atributo de los registros."
+    },
+    {
+      "id": 46,
+      "categoria": "Fundamentos de bases de datos",
+      "puntaje": 200,
+      "pregunta": "¿Qué es una clave primaria?",
+      "respuesta": "Un atributo o conjunto de atributos que identifica de forma única cada fila."
+    },
+    {
+      "id": 47,
+      "categoria": "Fundamentos de bases de datos",
+      "puntaje": 200,
+      "pregunta": "¿Qué es una clave foránea?",
+      "respuesta": "Un atributo o conjunto de atributos que referencia una clave de otra tabla o de la misma."
+    },
+    {
+      "id": 48,
+      "categoria": "Fundamentos de bases de datos",
+      "puntaje": 200,
+      "pregunta": "¿Qué es una consulta a una base de datos?",
+      "respuesta": "Una solicitud para obtener o manipular datos."
+    },
+    {
+      "id": 49,
+      "categoria": "Fundamentos de bases de datos",
+      "puntaje": 300,
+      "pregunta": "¿Qué es un esquema de base de datos?",
+      "respuesta": "La definición de sus estructuras y relaciones."
+    },
+    {
+      "id": 50,
+      "categoria": "Fundamentos de bases de datos",
+      "puntaje": 300,
+      "pregunta": "¿Qué significa NULL en una base de datos?",
+      "respuesta": "Un valor ausente, desconocido o no aplicable."
+    },
+    {
+      "id": 51,
+      "categoria": "Fundamentos de bases de datos",
+      "puntaje": 300,
+      "pregunta": "¿Qué es una relación uno a muchos?",
+      "respuesta": "Una relación donde un registro se asocia con varios de otra entidad."
+    },
+    {
+      "id": 52,
+      "categoria": "Fundamentos de bases de datos",
+      "puntaje": 300,
+      "pregunta": "¿Cómo suele representarse una relación muchos a muchos en tablas?",
+      "respuesta": "Con una tabla intermedia."
+    },
+    {
+      "id": 53,
+      "categoria": "Fundamentos de bases de datos",
+      "puntaje": 400,
+      "pregunta": "¿Qué es la integridad referencial?",
+      "respuesta": "La coherencia entre las referencias de claves foráneas y sus filas relacionadas."
+    },
+    {
+      "id": 54,
+      "categoria": "Fundamentos de bases de datos",
+      "puntaje": 400,
+      "pregunta": "¿Para qué sirve normalizar una base de datos?",
+      "respuesta": "Para reducir redundancias y anomalías de los datos."
+    },
+    {
+      "id": 55,
+      "categoria": "Fundamentos de bases de datos",
+      "puntaje": 400,
+      "pregunta": "¿Qué es una transacción de base de datos?",
+      "respuesta": "Una unidad de trabajo que se confirma o se revierte como conjunto."
+    },
+    {
+      "id": 56,
+      "categoria": "Fundamentos de bases de datos",
+      "puntaje": 400,
+      "pregunta": "¿Qué es un índice de base de datos?",
+      "respuesta": "Una estructura que acelera ciertas búsquedas."
+    },
+    {
+      "id": 57,
+      "categoria": "Fundamentos de bases de datos",
+      "puntaje": 500,
+      "pregunta": "¿Qué es una vista en una base de datos?",
+      "respuesta": "Una tabla virtual definida por una consulta."
+    },
+    {
+      "id": 58,
+      "categoria": "Fundamentos de bases de datos",
+      "puntaje": 500,
+      "pregunta": "¿Qué significa atomicidad en una transacción?",
+      "respuesta": "Que sus operaciones se aplican todas o ninguna."
+    },
+    {
+      "id": 59,
+      "categoria": "Fundamentos de bases de datos",
+      "puntaje": 500,
+      "pregunta": "¿Qué significa durabilidad en una transacción?",
+      "respuesta": "Que los cambios confirmados persisten ante fallos."
+    },
+    {
+      "id": 60,
+      "categoria": "Fundamentos de bases de datos",
+      "puntaje": 500,
+      "pregunta": "¿Qué es una base de datos documental?",
+      "respuesta": "Una base de datos que almacena información en documentos."
+    },
+    {
+      "id": 61,
+      "categoria": "SQL",
+      "puntaje": 100,
+      "pregunta": "¿Para qué sirve SELECT en SQL?",
+      "respuesta": "Para consultar datos."
+    },
+    {
+      "id": 62,
+      "categoria": "SQL",
+      "puntaje": 100,
+      "pregunta": "¿Para qué sirve INSERT en SQL?",
+      "respuesta": "Para agregar filas."
+    },
+    {
+      "id": 63,
+      "categoria": "SQL",
+      "puntaje": 100,
+      "pregunta": "¿Para qué sirve UPDATE en SQL?",
+      "respuesta": "Para modificar datos existentes."
+    },
+    {
+      "id": 64,
+      "categoria": "SQL",
+      "puntaje": 100,
+      "pregunta": "¿Para qué sirve DELETE en SQL?",
+      "respuesta": "Para eliminar filas."
+    },
+    {
+      "id": 65,
+      "categoria": "SQL",
+      "puntaje": 200,
+      "pregunta": "¿Para qué sirve WHERE en SQL?",
+      "respuesta": "Para filtrar filas según una condición."
+    },
+    {
+      "id": 66,
+      "categoria": "SQL",
+      "puntaje": 200,
+      "pregunta": "¿Para qué sirve ORDER BY en SQL?",
+      "respuesta": "Para ordenar los resultados."
+    },
+    {
+      "id": 67,
+      "categoria": "SQL",
+      "puntaje": 200,
+      "pregunta": "¿Para qué sirve DISTINCT en SQL?",
+      "respuesta": "Para eliminar filas duplicadas del resultado."
+    },
+    {
+      "id": 68,
+      "categoria": "SQL",
+      "puntaje": 200,
+      "pregunta": "¿Para qué sirve COUNT(*) en SQL?",
+      "respuesta": "Para contar filas."
+    },
+    {
+      "id": 69,
+      "categoria": "SQL",
+      "puntaje": 300,
+      "pregunta": "¿Qué hace SUM en SQL?",
+      "respuesta": "Suma los valores de una expresión numérica."
+    },
+    {
+      "id": 70,
+      "categoria": "SQL",
+      "puntaje": 300,
+      "pregunta": "¿Qué hace AVG en SQL?",
+      "respuesta": "Calcula el promedio de los valores no nulos."
+    },
+    {
+      "id": 71,
+      "categoria": "SQL",
+      "puntaje": 300,
+      "pregunta": "¿Para qué sirve GROUP BY en SQL?",
+      "respuesta": "Para agrupar filas según una o más expresiones."
+    },
+    {
+      "id": 72,
+      "categoria": "SQL",
+      "puntaje": 300,
+      "pregunta": "¿Para qué sirve HAVING en SQL?",
+      "respuesta": "Para filtrar grupos."
+    },
+    {
+      "id": 73,
+      "categoria": "SQL",
+      "puntaje": 400,
+      "pregunta": "¿Qué devuelve un INNER JOIN?",
+      "respuesta": "Las combinaciones de filas que cumplen la condición de unión."
+    },
+    {
+      "id": 74,
+      "categoria": "SQL",
+      "puntaje": 400,
+      "pregunta": "¿Qué conserva un LEFT JOIN?",
+      "respuesta": "Todas las filas de la tabla izquierda y sus coincidencias de la derecha."
+    },
+    {
+      "id": 75,
+      "categoria": "SQL",
+      "puntaje": 400,
+      "pregunta": "¿Para qué sirve CREATE TABLE?",
+      "respuesta": "Para crear una tabla."
+    },
+    {
+      "id": 76,
+      "categoria": "SQL",
+      "puntaje": 400,
+      "pregunta": "¿Para qué sirve ALTER TABLE?",
+      "respuesta": "Para modificar la estructura de una tabla."
+    },
+    {
+      "id": 77,
+      "categoria": "SQL",
+      "puntaje": 500,
+      "pregunta": "¿Para qué sirve DROP TABLE?",
+      "respuesta": "Para eliminar una tabla y sus datos."
+    },
+    {
+      "id": 78,
+      "categoria": "SQL",
+      "puntaje": 500,
+      "pregunta": "¿Cómo se comprueba si un valor es nulo en SQL?",
+      "respuesta": "Con IS NULL."
+    },
+    {
+      "id": 79,
+      "categoria": "SQL",
+      "puntaje": 500,
+      "pregunta": "¿Para qué sirve COMMIT?",
+      "respuesta": "Para confirmar una transacción."
+    },
+    {
+      "id": 80,
+      "categoria": "SQL",
+      "puntaje": 500,
+      "pregunta": "¿Para qué sirve ROLLBACK?",
+      "respuesta": "Para revertir una transacción no confirmada."
+    },
+    {
+      "id": 81,
+      "categoria": "Programación orientada a objetos",
+      "puntaje": 100,
+      "pregunta": "¿Qué es la programación orientada a objetos?",
+      "respuesta": "Un paradigma que organiza el software mediante objetos."
+    },
+    {
+      "id": 82,
+      "categoria": "Programación orientada a objetos",
+      "puntaje": 100,
+      "pregunta": "¿Qué es una clase?",
+      "respuesta": "Una definición de los atributos y comportamientos de sus objetos."
+    },
+    {
+      "id": 83,
+      "categoria": "Programación orientada a objetos",
+      "puntaje": 100,
+      "pregunta": "¿Qué es un objeto?",
+      "respuesta": "Una instancia con estado y comportamiento."
+    },
+    {
+      "id": 84,
+      "categoria": "Programación orientada a objetos",
+      "puntaje": 100,
+      "pregunta": "¿Qué es un atributo de un objeto?",
+      "respuesta": "Un dato que forma parte de su estado."
+    },
+    {
+      "id": 85,
+      "categoria": "Programación orientada a objetos",
+      "puntaje": 200,
+      "pregunta": "¿Qué es un método?",
+      "respuesta": "Una operación definida para una clase u objeto."
+    },
+    {
+      "id": 86,
+      "categoria": "Programación orientada a objetos",
+      "puntaje": 200,
+      "pregunta": "¿Qué es instanciar una clase?",
+      "respuesta": "Crear un objeto a partir de ella."
+    },
+    {
+      "id": 87,
+      "categoria": "Programación orientada a objetos",
+      "puntaje": 200,
+      "pregunta": "¿Para qué sirve un constructor?",
+      "respuesta": "Para inicializar una nueva instancia."
+    },
+    {
+      "id": 88,
+      "categoria": "Programación orientada a objetos",
+      "puntaje": 200,
+      "pregunta": "¿Qué es la encapsulación?",
+      "respuesta": "El control del acceso al estado y comportamiento interno."
+    },
+    {
+      "id": 89,
+      "categoria": "Programación orientada a objetos",
+      "puntaje": 300,
+      "pregunta": "¿Qué es la herencia?",
+      "respuesta": "Un mecanismo para derivar clases a partir de otras."
+    },
+    {
+      "id": 90,
+      "categoria": "Programación orientada a objetos",
+      "puntaje": 300,
+      "pregunta": "¿Qué es el polimorfismo?",
+      "respuesta": "Usar una misma interfaz con comportamientos diferentes según el objeto."
+    },
+    {
+      "id": 91,
+      "categoria": "Programación orientada a objetos",
+      "puntaje": 300,
+      "pregunta": "¿Qué es la abstracción?",
+      "respuesta": "Representar lo esencial y ocultar detalles innecesarios."
+    },
+    {
+      "id": 92,
+      "categoria": "Programación orientada a objetos",
+      "puntaje": 300,
+      "pregunta": "¿Qué es una interfaz en POO?",
+      "respuesta": "Un contrato de operaciones que un tipo debe ofrecer."
+    },
+    {
+      "id": 93,
+      "categoria": "Programación orientada a objetos",
+      "puntaje": 400,
+      "pregunta": "¿Qué es una clase abstracta?",
+      "respuesta": "Una clase que no puede instanciarse directamente."
+    },
+    {
+      "id": 94,
+      "categoria": "Programación orientada a objetos",
+      "puntaje": 400,
+      "pregunta": "¿Qué es la sobrescritura de métodos?",
+      "respuesta": "Redefinir en una subclase un método heredado."
+    },
+    {
+      "id": 95,
+      "categoria": "Programación orientada a objetos",
+      "puntaje": 400,
+      "pregunta": "¿Qué es la sobrecarga de métodos?",
+      "respuesta": "Definir métodos con el mismo nombre y distintas firmas."
+    },
+    {
+      "id": 96,
+      "categoria": "Programación orientada a objetos",
+      "puntaje": 400,
+      "pregunta": "¿Qué representa this o self dentro de un método de instancia?",
+      "respuesta": "La instancia actual."
+    },
+    {
+      "id": 97,
+      "categoria": "Programación orientada a objetos",
+      "puntaje": 500,
+      "pregunta": "¿Qué es la composición de objetos?",
+      "respuesta": "Construir objetos que contienen o usan otros objetos como partes."
+    },
+    {
+      "id": 98,
+      "categoria": "Programación orientada a objetos",
+      "puntaje": 500,
+      "pregunta": "¿Qué significa que un miembro sea privado?",
+      "respuesta": "Que su acceso se restringe según las reglas de la clase y el lenguaje."
+    },
+    {
+      "id": 99,
+      "categoria": "Programación orientada a objetos",
+      "puntaje": 500,
+      "pregunta": "¿Qué caracteriza a un método estático?",
+      "respuesta": "Pertenece a la clase y no necesita una instancia para invocarse."
+    },
+    {
+      "id": 100,
+      "categoria": "Programación orientada a objetos",
+      "puntaje": 500,
+      "pregunta": "¿Qué describe la relación «es un» entre clases?",
+      "respuesta": "Una relación de herencia o especialización."
+    },
+    {
+      "id": 101,
+      "categoria": "Fundamentos de programación",
+      "puntaje": 100,
+      "pregunta": "¿Qué es una variable?",
+      "respuesta": "Un nombre asociado a un valor o ubicación de almacenamiento."
+    },
+    {
+      "id": 102,
+      "categoria": "Fundamentos de programación",
+      "puntaje": 100,
+      "pregunta": "¿Qué es una constante?",
+      "respuesta": "Un nombre cuyo valor no puede reasignarse en su ámbito."
+    },
+    {
+      "id": 103,
+      "categoria": "Fundamentos de programación",
+      "puntaje": 100,
+      "pregunta": "¿Qué es un tipo de dato?",
+      "respuesta": "Una clasificación que determina valores y operaciones permitidas."
+    },
+    {
+      "id": 104,
+      "categoria": "Fundamentos de programación",
+      "puntaje": 100,
+      "pregunta": "¿Qué es una cadena de texto?",
+      "respuesta": "Una secuencia de caracteres."
+    },
+    {
+      "id": 105,
+      "categoria": "Fundamentos de programación",
+      "puntaje": 200,
+      "pregunta": "¿Qué valores representa un booleano?",
+      "respuesta": "Verdadero y falso."
+    },
+    {
+      "id": 106,
+      "categoria": "Fundamentos de programación",
+      "puntaje": 200,
+      "pregunta": "¿Para qué sirve una condición if?",
+      "respuesta": "Para ejecutar código si se cumple una condición."
+    },
+    {
+      "id": 107,
+      "categoria": "Fundamentos de programación",
+      "puntaje": 200,
+      "pregunta": "¿Qué es un bucle?",
+      "respuesta": "Una estructura que repite instrucciones."
+    },
+    {
+      "id": 108,
+      "categoria": "Fundamentos de programación",
+      "puntaje": 200,
+      "pregunta": "¿Qué es una función?",
+      "respuesta": "Un bloque de código reutilizable que realiza una tarea."
+    },
+    {
+      "id": 109,
+      "categoria": "Fundamentos de programación",
+      "puntaje": 300,
+      "pregunta": "¿Qué es un parámetro de una función?",
+      "respuesta": "Una variable declarada para recibir una entrada."
+    },
+    {
+      "id": 110,
+      "categoria": "Fundamentos de programación",
+      "puntaje": 300,
+      "pregunta": "¿Qué es un argumento en una llamada a función?",
+      "respuesta": "Un valor o expresión que se pasa a un parámetro."
+    },
+    {
+      "id": 111,
+      "categoria": "Fundamentos de programación",
+      "puntaje": 300,
+      "pregunta": "¿Qué hace return en una función?",
+      "respuesta": "Finaliza la ejecución de la función y puede devolver un valor."
+    },
+    {
+      "id": 112,
+      "categoria": "Fundamentos de programación",
+      "puntaje": 300,
+      "pregunta": "¿Qué es el ámbito de una variable?",
+      "respuesta": "La región del programa donde puede utilizarse su nombre."
+    },
+    {
+      "id": 113,
+      "categoria": "Fundamentos de programación",
+      "puntaje": 400,
+      "pregunta": "¿Qué es un error de sintaxis?",
+      "respuesta": "Una infracción de las reglas gramaticales del lenguaje."
+    },
+    {
+      "id": 114,
+      "categoria": "Fundamentos de programación",
+      "puntaje": 400,
+      "pregunta": "¿Qué es un error lógico?",
+      "respuesta": "Un fallo en el razonamiento que produce resultados incorrectos."
+    },
+    {
+      "id": 115,
+      "categoria": "Fundamentos de programación",
+      "puntaje": 400,
+      "pregunta": "¿Qué es depurar un programa?",
+      "respuesta": "Localizar y corregir errores."
+    },
+    {
+      "id": 116,
+      "categoria": "Fundamentos de programación",
+      "puntaje": 400,
+      "pregunta": "¿Qué es una excepción?",
+      "respuesta": "Una señal de una situación que altera el flujo normal del programa."
+    },
+    {
+      "id": 117,
+      "categoria": "Fundamentos de programación",
+      "puntaje": 500,
+      "pregunta": "¿Qué es la recursión?",
+      "respuesta": "La resolución de un problema mediante llamadas de una función a sí misma."
+    },
+    {
+      "id": 118,
+      "categoria": "Fundamentos de programación",
+      "puntaje": 500,
+      "pregunta": "¿Qué es el caso base de una función recursiva?",
+      "respuesta": "La condición que termina la recursión."
+    },
+    {
+      "id": 119,
+      "categoria": "Fundamentos de programación",
+      "puntaje": 500,
+      "pregunta": "¿Qué diferencia hay entre asignación y comparación de igualdad?",
+      "respuesta": "La asignación establece un valor y la comparación comprueba si dos valores son iguales."
+    },
+    {
+      "id": 120,
+      "categoria": "Fundamentos de programación",
+      "puntaje": 500,
+      "pregunta": "¿Para qué sirve el operador módulo en aritmética entera?",
+      "respuesta": "Para obtener el resto de una división."
+    },
+    {
+      "id": 121,
+      "categoria": "Algoritmos y estructuras de datos",
+      "puntaje": 100,
+      "pregunta": "¿Qué es un algoritmo?",
+      "respuesta": "Una secuencia definida de pasos para resolver una tarea."
+    },
+    {
+      "id": 122,
+      "categoria": "Algoritmos y estructuras de datos",
+      "puntaje": 100,
+      "pregunta": "¿Qué es una estructura de datos?",
+      "respuesta": "Una forma de organizar datos para utilizarlos eficientemente."
+    },
+    {
+      "id": 123,
+      "categoria": "Algoritmos y estructuras de datos",
+      "puntaje": 100,
+      "pregunta": "¿Qué es un arreglo o array?",
+      "respuesta": "Una colección de elementos accesibles mediante índices."
+    },
+    {
+      "id": 124,
+      "categoria": "Algoritmos y estructuras de datos",
+      "puntaje": 100,
+      "pregunta": "¿Qué es una lista enlazada?",
+      "respuesta": "Una secuencia de nodos conectados mediante referencias."
+    },
+    {
+      "id": 125,
+      "categoria": "Algoritmos y estructuras de datos",
+      "puntaje": 200,
+      "pregunta": "¿Qué regla sigue una pila?",
+      "respuesta": "LIFO: el último en entrar es el primero en salir."
+    },
+    {
+      "id": 126,
+      "categoria": "Algoritmos y estructuras de datos",
+      "puntaje": 200,
+      "pregunta": "¿Qué regla sigue una cola?",
+      "respuesta": "FIFO: el primero en entrar es el primero en salir."
+    },
+    {
+      "id": 127,
+      "categoria": "Algoritmos y estructuras de datos",
+      "puntaje": 200,
+      "pregunta": "¿Qué es un conjunto en programación?",
+      "respuesta": "Una colección sin elementos duplicados."
+    },
+    {
+      "id": 128,
+      "categoria": "Algoritmos y estructuras de datos",
+      "puntaje": 200,
+      "pregunta": "¿Qué es un diccionario o mapa?",
+      "respuesta": "Una colección de pares clave-valor."
+    },
+    {
+      "id": 129,
+      "categoria": "Algoritmos y estructuras de datos",
+      "puntaje": 300,
+      "pregunta": "¿Qué hace una búsqueda lineal?",
+      "respuesta": "Revisa elementos uno por uno hasta hallar el objetivo o terminar."
+    },
+    {
+      "id": 130,
+      "categoria": "Algoritmos y estructuras de datos",
+      "puntaje": 300,
+      "pregunta": "¿Qué condición necesita una búsqueda binaria sobre un arreglo?",
+      "respuesta": "Que sus elementos estén ordenados según el criterio de búsqueda."
+    },
+    {
+      "id": 131,
+      "categoria": "Algoritmos y estructuras de datos",
+      "puntaje": 300,
+      "pregunta": "¿Qué es un algoritmo de ordenamiento?",
+      "respuesta": "Un algoritmo que organiza elementos según un criterio."
+    },
+    {
+      "id": 132,
+      "categoria": "Algoritmos y estructuras de datos",
+      "puntaje": 300,
+      "pregunta": "¿Qué compara el ordenamiento burbuja en cada paso?",
+      "respuesta": "Elementos adyacentes."
+    },
+    {
+      "id": 133,
+      "categoria": "Algoritmos y estructuras de datos",
+      "puntaje": 400,
+      "pregunta": "¿Qué expresa la notación O grande?",
+      "respuesta": "Una cota superior del crecimiento del costo de un algoritmo."
+    },
+    {
+      "id": 134,
+      "categoria": "Algoritmos y estructuras de datos",
+      "puntaje": 400,
+      "pregunta": "¿Qué significa tiempo O(1)?",
+      "respuesta": "Que el costo está acotado por una constante respecto al tamaño de entrada."
+    },
+    {
+      "id": 135,
+      "categoria": "Algoritmos y estructuras de datos",
+      "puntaje": 400,
+      "pregunta": "¿Qué significa tiempo O(n)?",
+      "respuesta": "Que el costo crece como máximo linealmente con el tamaño de entrada."
+    },
+    {
+      "id": 136,
+      "categoria": "Algoritmos y estructuras de datos",
+      "puntaje": 400,
+      "pregunta": "¿Qué es un nodo en un árbol?",
+      "respuesta": "Un elemento que puede tener relaciones con nodos hijos."
+    },
+    {
+      "id": 137,
+      "categoria": "Algoritmos y estructuras de datos",
+      "puntaje": 500,
+      "pregunta": "¿Qué es la raíz de un árbol?",
+      "respuesta": "El nodo que no tiene padre."
+    },
+    {
+      "id": 138,
+      "categoria": "Algoritmos y estructuras de datos",
+      "puntaje": 500,
+      "pregunta": "¿Qué es una hoja en un árbol?",
+      "respuesta": "Un nodo sin hijos."
+    },
+    {
+      "id": 139,
+      "categoria": "Algoritmos y estructuras de datos",
+      "puntaje": 500,
+      "pregunta": "¿Qué es un grafo?",
+      "respuesta": "Una estructura de vértices conectados por aristas."
+    },
+    {
+      "id": 140,
+      "categoria": "Algoritmos y estructuras de datos",
+      "puntaje": 500,
+      "pregunta": "¿Qué estructura utiliza normalmente la búsqueda en anchura, BFS?",
+      "respuesta": "Una cola."
+    },
+    {
+      "id": 141,
+      "categoria": "HTML y CSS",
+      "puntaje": 100,
+      "pregunta": "¿Para qué sirve HTML?",
+      "respuesta": "Para estructurar el contenido de una página web."
+    },
+    {
+      "id": 142,
+      "categoria": "HTML y CSS",
+      "puntaje": 100,
+      "pregunta": "¿Para qué sirve CSS?",
+      "respuesta": "Para definir la presentación visual de una página web."
+    },
+    {
+      "id": 143,
+      "categoria": "HTML y CSS",
+      "puntaje": 100,
+      "pregunta": "¿Qué es una etiqueta HTML?",
+      "respuesta": "Una marca que delimita o identifica un elemento."
+    },
+    {
+      "id": 144,
+      "categoria": "HTML y CSS",
+      "puntaje": 100,
+      "pregunta": "¿Qué elemento HTML crea un enlace?",
+      "respuesta": "El elemento a."
+    },
+    {
+      "id": 145,
+      "categoria": "HTML y CSS",
+      "puntaje": 200,
+      "pregunta": "¿Qué elemento HTML inserta una imagen?",
+      "respuesta": "El elemento img."
+    },
+    {
+      "id": 146,
+      "categoria": "HTML y CSS",
+      "puntaje": 200,
+      "pregunta": "¿Para qué sirve el atributo alt de una imagen?",
+      "respuesta": "Para proporcionar una alternativa textual."
+    },
+    {
+      "id": 147,
+      "categoria": "HTML y CSS",
+      "puntaje": 200,
+      "pregunta": "¿Qué elemento representa el encabezado de mayor nivel?",
+      "respuesta": "El elemento h1."
+    },
+    {
+      "id": 148,
+      "categoria": "HTML y CSS",
+      "puntaje": 200,
+      "pregunta": "¿Qué elemento HTML crea un formulario?",
+      "respuesta": "El elemento form."
+    },
+    {
+      "id": 149,
+      "categoria": "HTML y CSS",
+      "puntaje": 300,
+      "pregunta": "¿Qué es una clase CSS?",
+      "respuesta": "Un identificador reutilizable para seleccionar elementos con el atributo class."
+    },
+    {
+      "id": 150,
+      "categoria": "HTML y CSS",
+      "puntaje": 300,
+      "pregunta": "¿Qué símbolo inicia un selector de clase en CSS?",
+      "respuesta": "El punto."
+    },
+    {
+      "id": 151,
+      "categoria": "HTML y CSS",
+      "puntaje": 300,
+      "pregunta": "¿Qué símbolo inicia un selector de identificador en CSS?",
+      "respuesta": "La almohadilla o numeral."
+    },
+    {
+      "id": 152,
+      "categoria": "HTML y CSS",
+      "puntaje": 300,
+      "pregunta": "¿Qué propiedad CSS cambia el color del texto?",
+      "respuesta": "color."
+    },
+    {
+      "id": 153,
+      "categoria": "HTML y CSS",
+      "puntaje": 400,
+      "pregunta": "¿Qué propiedad CSS cambia el color de fondo?",
+      "respuesta": "background-color."
+    },
+    {
+      "id": 154,
+      "categoria": "HTML y CSS",
+      "puntaje": 400,
+      "pregunta": "¿Qué diferencia hay entre margin y padding?",
+      "respuesta": "Margin es espacio exterior y padding es espacio interior al borde."
+    },
+    {
+      "id": 155,
+      "categoria": "HTML y CSS",
+      "puntaje": 400,
+      "pregunta": "¿Qué es el modelo de caja de CSS?",
+      "respuesta": "El modelo de contenido, relleno, borde y margen de un elemento."
+    },
+    {
+      "id": 156,
+      "categoria": "HTML y CSS",
+      "puntaje": 400,
+      "pregunta": "¿Para qué sirve Flexbox?",
+      "respuesta": "Para distribuir y alinear elementos en una dimensión."
+    },
+    {
+      "id": 157,
+      "categoria": "HTML y CSS",
+      "puntaje": 500,
+      "pregunta": "¿Para qué sirve CSS Grid?",
+      "respuesta": "Para organizar elementos en filas y columnas."
+    },
+    {
+      "id": 158,
+      "categoria": "HTML y CSS",
+      "puntaje": 500,
+      "pregunta": "¿Qué es una media query?",
+      "respuesta": "Una regla condicional de estilos según características del medio."
+    },
+    {
+      "id": 159,
+      "categoria": "HTML y CSS",
+      "puntaje": 500,
+      "pregunta": "¿Qué es el diseño web responsivo?",
+      "respuesta": "Un diseño que se adapta a distintos tamaños de pantalla."
+    },
+    {
+      "id": 160,
+      "categoria": "HTML y CSS",
+      "puntaje": 500,
+      "pregunta": "¿Qué aporta el HTML semántico?",
+      "respuesta": "Elementos que expresan el significado y función del contenido."
+    },
+    {
+      "id": 161,
+      "categoria": "JavaScript y navegador",
+      "puntaje": 100,
+      "pregunta": "¿Para qué se usa JavaScript en una página web?",
+      "respuesta": "Para añadir comportamiento e interactividad."
+    },
+    {
+      "id": 162,
+      "categoria": "JavaScript y navegador",
+      "puntaje": 100,
+      "pregunta": "¿Qué es el DOM?",
+      "respuesta": "La representación de un documento como un árbol de objetos."
+    },
+    {
+      "id": 163,
+      "categoria": "JavaScript y navegador",
+      "puntaje": 100,
+      "pregunta": "¿Qué es un evento del navegador?",
+      "respuesta": "Una señal de que ocurrió una acción o cambio."
+    },
+    {
+      "id": 164,
+      "categoria": "JavaScript y navegador",
+      "puntaje": 100,
+      "pregunta": "¿Para qué sirve addEventListener?",
+      "respuesta": "Para registrar una función que responde a un evento."
+    },
+    {
+      "id": 165,
+      "categoria": "JavaScript y navegador",
+      "puntaje": 200,
+      "pregunta": "¿Para qué sirve console.log?",
+      "respuesta": "Para mostrar información en la consola."
+    },
+    {
+      "id": 166,
+      "categoria": "JavaScript y navegador",
+      "puntaje": 200,
+      "pregunta": "¿Qué hace document.querySelector?",
+      "respuesta": "Devuelve el primer elemento que coincide con un selector CSS."
+    },
+    {
+      "id": 167,
+      "categoria": "JavaScript y navegador",
+      "puntaje": 200,
+      "pregunta": "¿Qué propiedad permite leer o cambiar el texto de un nodo?",
+      "respuesta": "textContent."
+    },
+    {
+      "id": 168,
+      "categoria": "JavaScript y navegador",
+      "puntaje": 200,
+      "pregunta": "¿Qué método agrega un elemento al final de un array?",
+      "respuesta": "push."
+    },
+    {
+      "id": 169,
+      "categoria": "JavaScript y navegador",
+      "puntaje": 300,
+      "pregunta": "¿Qué diferencia básica hay entre let y const?",
+      "respuesta": "Let permite reasignar la variable y const no."
+    },
+    {
+      "id": 170,
+      "categoria": "JavaScript y navegador",
+      "puntaje": 300,
+      "pregunta": "¿Qué compara el operador ===?",
+      "respuesta": "La igualdad sin conversión implícita de tipos."
+    },
+    {
+      "id": 171,
+      "categoria": "JavaScript y navegador",
+      "puntaje": 300,
+      "pregunta": "¿Qué es una función flecha?",
+      "respuesta": "Una forma de escribir funciones con la sintaxis =>."
+    },
+    {
+      "id": 172,
+      "categoria": "JavaScript y navegador",
+      "puntaje": 300,
+      "pregunta": "¿Qué es un callback?",
+      "respuesta": "Una función pasada a otra para que la invoque."
+    },
+    {
+      "id": 173,
+      "categoria": "JavaScript y navegador",
+      "puntaje": 400,
+      "pregunta": "¿Qué es una promesa en JavaScript?",
+      "respuesta": "Un objeto que representa el resultado eventual de una operación."
+    },
+    {
+      "id": 174,
+      "categoria": "JavaScript y navegador",
+      "puntaje": 400,
+      "pregunta": "¿Para qué sirve await?",
+      "respuesta": "Para suspender una ejecución compatible hasta que se resuelva una promesa."
+    },
+    {
+      "id": 175,
+      "categoria": "JavaScript y navegador",
+      "puntaje": 400,
+      "pregunta": "¿Qué devuelve una función async?",
+      "respuesta": "Una promesa."
+    },
+    {
+      "id": 176,
+      "categoria": "JavaScript y navegador",
+      "puntaje": 400,
+      "pregunta": "¿Para qué sirve fetch?",
+      "respuesta": "Para realizar solicitudes de red desde JavaScript."
+    },
+    {
+      "id": 177,
+      "categoria": "JavaScript y navegador",
+      "puntaje": 500,
+      "pregunta": "¿Qué hace JSON.parse?",
+      "respuesta": "Convierte texto JSON en un valor de JavaScript."
+    },
+    {
+      "id": 178,
+      "categoria": "JavaScript y navegador",
+      "puntaje": 500,
+      "pregunta": "¿Qué hace JSON.stringify?",
+      "respuesta": "Convierte un valor compatible en texto JSON."
+    },
+    {
+      "id": 179,
+      "categoria": "JavaScript y navegador",
+      "puntaje": 500,
+      "pregunta": "¿Qué es localStorage?",
+      "respuesta": "Un almacenamiento del navegador por origen que persiste entre sesiones."
+    },
+    {
+      "id": 180,
+      "categoria": "JavaScript y navegador",
+      "puntaje": 500,
+      "pregunta": "¿Qué hace preventDefault en un evento cancelable?",
+      "respuesta": "Impide su acción predeterminada."
+    },
+    {
+      "id": 181,
+      "categoria": "Backend y API",
+      "puntaje": 100,
+      "pregunta": "¿Qué es el backend de una aplicación?",
+      "respuesta": "La parte que procesa lógica y datos del lado del servidor."
+    },
+    {
+      "id": 182,
+      "categoria": "Backend y API",
+      "puntaje": 100,
+      "pregunta": "¿Qué es el frontend de una aplicación?",
+      "respuesta": "La parte con la que interactúa el usuario."
+    },
+    {
+      "id": 183,
+      "categoria": "Backend y API",
+      "puntaje": 100,
+      "pregunta": "¿Qué es una API?",
+      "respuesta": "Una interfaz para que componentes de software se comuniquen."
+    },
+    {
+      "id": 184,
+      "categoria": "Backend y API",
+      "puntaje": 100,
+      "pregunta": "¿Qué es un endpoint de una API web?",
+      "respuesta": "Una dirección de acceso a un recurso u operación."
+    },
+    {
+      "id": 185,
+      "categoria": "Backend y API",
+      "puntaje": 200,
+      "pregunta": "¿Qué es una solicitud HTTP?",
+      "respuesta": "Un mensaje que un cliente envía a un servidor."
+    },
+    {
+      "id": 186,
+      "categoria": "Backend y API",
+      "puntaje": 200,
+      "pregunta": "¿Qué es una respuesta HTTP?",
+      "respuesta": "El mensaje que un servidor devuelve a una solicitud."
+    },
+    {
+      "id": 187,
+      "categoria": "Backend y API",
+      "puntaje": 200,
+      "pregunta": "¿Qué método HTTP se usa normalmente para consultar un recurso?",
+      "respuesta": "GET."
+    },
+    {
+      "id": 188,
+      "categoria": "Backend y API",
+      "puntaje": 200,
+      "pregunta": "¿Qué método HTTP se usa normalmente para enviar datos y crear un recurso?",
+      "respuesta": "POST."
+    },
+    {
+      "id": 189,
+      "categoria": "Backend y API",
+      "puntaje": 300,
+      "pregunta": "¿Qué método HTTP representa el reemplazo completo de un recurso?",
+      "respuesta": "PUT."
+    },
+    {
+      "id": 190,
+      "categoria": "Backend y API",
+      "puntaje": 300,
+      "pregunta": "¿Qué método HTTP se usa para aplicar modificaciones parciales?",
+      "respuesta": "PATCH."
+    },
+    {
+      "id": 191,
+      "categoria": "Backend y API",
+      "puntaje": 300,
+      "pregunta": "¿Qué método HTTP se usa para solicitar la eliminación de un recurso?",
+      "respuesta": "DELETE."
+    },
+    {
+      "id": 192,
+      "categoria": "Backend y API",
+      "puntaje": 300,
+      "pregunta": "¿Qué es JSON?",
+      "respuesta": "Un formato de texto para representar e intercambiar datos."
+    },
+    {
+      "id": 193,
+      "categoria": "Backend y API",
+      "puntaje": 400,
+      "pregunta": "¿Qué es un middleware?",
+      "respuesta": "Un componente que interviene en el procesamiento de solicitudes o respuestas."
+    },
+    {
+      "id": 194,
+      "categoria": "Backend y API",
+      "puntaje": 400,
+      "pregunta": "¿Qué es una sesión web?",
+      "respuesta": "Un mecanismo para mantener estado asociado a un cliente entre solicitudes."
+    },
+    {
+      "id": 195,
+      "categoria": "Backend y API",
+      "puntaje": 400,
+      "pregunta": "¿Qué es una cookie HTTP?",
+      "respuesta": "Un dato que el navegador almacena y puede enviar al servidor según sus reglas."
+    },
+    {
+      "id": 196,
+      "categoria": "Backend y API",
+      "puntaje": 400,
+      "pregunta": "¿Qué es paginar los resultados de una API?",
+      "respuesta": "Dividirlos en grupos o páginas."
+    },
+    {
+      "id": 197,
+      "categoria": "Backend y API",
+      "puntaje": 500,
+      "pregunta": "¿Qué es un webhook?",
+      "respuesta": "Una notificación que un sistema envía a una URL al ocurrir un evento."
+    },
+    {
+      "id": 198,
+      "categoria": "Backend y API",
+      "puntaje": 500,
+      "pregunta": "¿Qué es un límite de solicitudes o rate limit?",
+      "respuesta": "Una restricción a la cantidad de solicitudes en un período."
+    },
+    {
+      "id": 199,
+      "categoria": "Backend y API",
+      "puntaje": 500,
+      "pregunta": "¿Qué significa que una operación sea idempotente?",
+      "respuesta": "Que repetirla produce el mismo efecto previsto que ejecutarla una sola vez."
+    },
+    {
+      "id": 200,
+      "categoria": "Backend y API",
+      "puntaje": 500,
+      "pregunta": "¿Qué es CORS?",
+      "respuesta": "Un mecanismo HTTP que regula el acceso del navegador a recursos de otros orígenes."
+    },
+    {
+      "id": 201,
+      "categoria": "Sistemas operativos",
+      "puntaje": 100,
+      "pregunta": "¿Qué es un sistema operativo?",
+      "respuesta": "El software que administra el hardware y ofrece servicios a los programas."
+    },
+    {
+      "id": 202,
+      "categoria": "Sistemas operativos",
+      "puntaje": 100,
+      "pregunta": "¿Qué es un proceso?",
+      "respuesta": "Una instancia de un programa en ejecución."
+    },
+    {
+      "id": 203,
+      "categoria": "Sistemas operativos",
+      "puntaje": 100,
+      "pregunta": "¿Qué es un archivo?",
+      "respuesta": "Una unidad de información almacenada con un nombre."
+    },
+    {
+      "id": 204,
+      "categoria": "Sistemas operativos",
+      "puntaje": 100,
+      "pregunta": "¿Qué es un directorio?",
+      "respuesta": "Una estructura para organizar archivos y otros directorios."
+    },
+    {
+      "id": 205,
+      "categoria": "Sistemas operativos",
+      "puntaje": 200,
+      "pregunta": "¿Qué es una interfaz gráfica de usuario?",
+      "respuesta": "Una interfaz basada en elementos visuales como ventanas y botones."
+    },
+    {
+      "id": 206,
+      "categoria": "Sistemas operativos",
+      "puntaje": 200,
+      "pregunta": "¿Qué es una terminal?",
+      "respuesta": "Una interfaz para interactuar con programas mediante texto."
+    },
+    {
+      "id": 207,
+      "categoria": "Sistemas operativos",
+      "puntaje": 200,
+      "pregunta": "¿Qué es el kernel?",
+      "respuesta": "El núcleo del sistema operativo."
+    },
+    {
+      "id": 208,
+      "categoria": "Sistemas operativos",
+      "puntaje": 200,
+      "pregunta": "¿Qué es un controlador o driver?",
+      "respuesta": "Software que permite al sistema comunicarse con un dispositivo."
+    },
+    {
+      "id": 209,
+      "categoria": "Sistemas operativos",
+      "puntaje": 300,
+      "pregunta": "¿Qué es la multitarea?",
+      "respuesta": "La capacidad de gestionar la ejecución de varios programas."
+    },
+    {
+      "id": 210,
+      "categoria": "Sistemas operativos",
+      "puntaje": 300,
+      "pregunta": "¿Qué es un hilo de ejecución?",
+      "respuesta": "Una secuencia de ejecución dentro de un proceso."
+    },
+    {
+      "id": 211,
+      "categoria": "Sistemas operativos",
+      "puntaje": 300,
+      "pregunta": "¿Qué es la memoria virtual?",
+      "respuesta": "Una abstracción de memoria que traduce direcciones virtuales a memoria física."
+    },
+    {
+      "id": 212,
+      "categoria": "Sistemas operativos",
+      "puntaje": 300,
+      "pregunta": "¿Qué es la paginación de memoria?",
+      "respuesta": "La división y gestión de la memoria en bloques llamados páginas."
+    },
+    {
+      "id": 213,
+      "categoria": "Sistemas operativos",
+      "puntaje": 400,
+      "pregunta": "¿Qué es un sistema de archivos?",
+      "respuesta": "El mecanismo que organiza y almacena archivos en un medio."
+    },
+    {
+      "id": 214,
+      "categoria": "Sistemas operativos",
+      "puntaje": 400,
+      "pregunta": "¿Qué son los permisos de un archivo?",
+      "respuesta": "Reglas que determinan quién puede leerlo, modificarlo o ejecutarlo."
+    },
+    {
+      "id": 215,
+      "categoria": "Sistemas operativos",
+      "puntaje": 400,
+      "pregunta": "¿Qué es una variable de entorno?",
+      "respuesta": "Un valor que el entorno proporciona a los procesos."
+    },
+    {
+      "id": 216,
+      "categoria": "Sistemas operativos",
+      "puntaje": 400,
+      "pregunta": "¿Qué es una ruta absoluta?",
+      "respuesta": "Una ruta que identifica una ubicación desde la raíz del sistema de archivos."
+    },
+    {
+      "id": 217,
+      "categoria": "Sistemas operativos",
+      "puntaje": 500,
+      "pregunta": "¿Qué es una ruta relativa?",
+      "respuesta": "Una ruta interpretada desde un directorio de referencia."
+    },
+    {
+      "id": 218,
+      "categoria": "Sistemas operativos",
+      "puntaje": 500,
+      "pregunta": "¿Qué es un interbloqueo o deadlock?",
+      "respuesta": "Una espera mutua de recursos que impide avanzar a los participantes."
+    },
+    {
+      "id": 219,
+      "categoria": "Sistemas operativos",
+      "puntaje": 500,
+      "pregunta": "¿Qué es una condición de carrera?",
+      "respuesta": "Un fallo que depende del orden o momento de accesos concurrentes."
+    },
+    {
+      "id": 220,
+      "categoria": "Sistemas operativos",
+      "puntaje": 500,
+      "pregunta": "¿Qué es un cambio de contexto?",
+      "respuesta": "El cambio de la ejecución de una tarea a otra guardando y restaurando su estado."
+    },
+    {
+      "id": 221,
+      "categoria": "Hardware y almacenamiento",
+      "puntaje": 100,
+      "pregunta": "¿Qué función cumple la CPU?",
+      "respuesta": "Ejecutar instrucciones y procesar datos."
+    },
+    {
+      "id": 222,
+      "categoria": "Hardware y almacenamiento",
+      "puntaje": 100,
+      "pregunta": "¿Para qué sirve la memoria RAM?",
+      "respuesta": "Para almacenar temporalmente datos e instrucciones en uso."
+    },
+    {
+      "id": 223,
+      "categoria": "Hardware y almacenamiento",
+      "puntaje": 100,
+      "pregunta": "¿Qué es una placa base o motherboard?",
+      "respuesta": "La tarjeta principal que conecta los componentes del equipo."
+    },
+    {
+      "id": 224,
+      "categoria": "Hardware y almacenamiento",
+      "puntaje": 100,
+      "pregunta": "¿Para qué sirve la fuente de alimentación?",
+      "respuesta": "Para suministrar energía eléctrica adecuada a los componentes."
+    },
+    {
+      "id": 225,
+      "categoria": "Hardware y almacenamiento",
+      "puntaje": 200,
+      "pregunta": "¿Qué función cumple la GPU?",
+      "respuesta": "Procesar gráficos y otras tareas de cálculo paralelo."
+    },
+    {
+      "id": 226,
+      "categoria": "Hardware y almacenamiento",
+      "puntaje": 200,
+      "pregunta": "¿Qué caracteriza a un disco HDD?",
+      "respuesta": "Almacena datos magnéticamente en platos giratorios."
+    },
+    {
+      "id": 227,
+      "categoria": "Hardware y almacenamiento",
+      "puntaje": 200,
+      "pregunta": "¿Qué caracteriza a una unidad SSD?",
+      "respuesta": "Almacena datos en memoria de estado sólido sin partes móviles."
+    },
+    {
+      "id": 228,
+      "categoria": "Hardware y almacenamiento",
+      "puntaje": 200,
+      "pregunta": "¿Qué es un periférico de entrada?",
+      "respuesta": "Un dispositivo que introduce datos, como un teclado."
+    },
+    {
+      "id": 229,
+      "categoria": "Hardware y almacenamiento",
+      "puntaje": 300,
+      "pregunta": "¿Qué es un periférico de salida?",
+      "respuesta": "Un dispositivo que presenta resultados, como un monitor."
+    },
+    {
+      "id": 230,
+      "categoria": "Hardware y almacenamiento",
+      "puntaje": 300,
+      "pregunta": "¿Para qué sirve un disipador de calor?",
+      "respuesta": "Para ayudar a transferir calor fuera de un componente."
+    },
+    {
+      "id": 231,
+      "categoria": "Hardware y almacenamiento",
+      "puntaje": 300,
+      "pregunta": "¿Qué es un núcleo de CPU?",
+      "respuesta": "Una unidad de procesamiento dentro del procesador."
+    },
+    {
+      "id": 232,
+      "categoria": "Hardware y almacenamiento",
+      "puntaje": 300,
+      "pregunta": "¿Qué mide la frecuencia de reloj de un procesador?",
+      "respuesta": "La cantidad de ciclos por segundo."
+    },
+    {
+      "id": 233,
+      "categoria": "Hardware y almacenamiento",
+      "puntaje": 400,
+      "pregunta": "¿Qué es la memoria caché del procesador?",
+      "respuesta": "Una memoria rápida que guarda datos e instrucciones para acceso cercano."
+    },
+    {
+      "id": 234,
+      "categoria": "Hardware y almacenamiento",
+      "puntaje": 400,
+      "pregunta": "¿Qué significa que una memoria sea volátil?",
+      "respuesta": "Que pierde su contenido al dejar de recibir energía."
+    },
+    {
+      "id": 235,
+      "categoria": "Hardware y almacenamiento",
+      "puntaje": 400,
+      "pregunta": "¿Qué es un bit?",
+      "respuesta": "Un dígito binario que puede valer cero o uno."
+    },
+    {
+      "id": 236,
+      "categoria": "Hardware y almacenamiento",
+      "puntaje": 400,
+      "pregunta": "¿Cuántos bits tiene un byte?",
+      "respuesta": "Ocho bits."
+    },
+    {
+      "id": 237,
+      "categoria": "Hardware y almacenamiento",
+      "puntaje": 500,
+      "pregunta": "¿Para qué sirve un puerto USB?",
+      "respuesta": "Para conectar dispositivos y transferir datos o energía."
+    },
+    {
+      "id": 238,
+      "categoria": "Hardware y almacenamiento",
+      "puntaje": 500,
+      "pregunta": "¿Qué permite una conexión HDMI?",
+      "respuesta": "Transmitir audio y video digitales."
+    },
+    {
+      "id": 239,
+      "categoria": "Hardware y almacenamiento",
+      "puntaje": 500,
+      "pregunta": "¿Qué es una partición de almacenamiento?",
+      "respuesta": "Una división lógica de una unidad de almacenamiento."
+    },
+    {
+      "id": 240,
+      "categoria": "Hardware y almacenamiento",
+      "puntaje": 500,
+      "pregunta": "¿Qué es RAID 1?",
+      "respuesta": "La duplicación de datos entre unidades para aportar redundancia."
+    },
+    {
+      "id": 241,
+      "categoria": "Ciberseguridad",
+      "puntaje": 100,
+      "pregunta": "¿Qué es el malware?",
+      "respuesta": "Software diseñado para causar daño o realizar acciones no autorizadas."
+    },
+    {
+      "id": 242,
+      "categoria": "Ciberseguridad",
+      "puntaje": 100,
+      "pregunta": "¿Qué es el phishing?",
+      "respuesta": "Un engaño que suplanta una entidad para obtener información o inducir acciones."
+    },
+    {
+      "id": 243,
+      "categoria": "Ciberseguridad",
+      "puntaje": 100,
+      "pregunta": "¿Qué es el ransomware?",
+      "respuesta": "Malware que exige un rescate, normalmente tras bloquear o cifrar datos."
+    },
+    {
+      "id": 244,
+      "categoria": "Ciberseguridad",
+      "puntaje": 100,
+      "pregunta": "¿Para qué sirve un antivirus?",
+      "respuesta": "Para detectar, bloquear y eliminar software malicioso."
+    },
+    {
+      "id": 245,
+      "categoria": "Ciberseguridad",
+      "puntaje": 200,
+      "pregunta": "¿Qué es un firewall?",
+      "respuesta": "Un sistema que filtra tráfico de red según reglas."
+    },
+    {
+      "id": 246,
+      "categoria": "Ciberseguridad",
+      "puntaje": 200,
+      "pregunta": "¿Qué es la autenticación?",
+      "respuesta": "La verificación de una identidad."
+    },
+    {
+      "id": 247,
+      "categoria": "Ciberseguridad",
+      "puntaje": 200,
+      "pregunta": "¿Qué es la autorización?",
+      "respuesta": "La determinación de las acciones o recursos permitidos."
+    },
+    {
+      "id": 248,
+      "categoria": "Ciberseguridad",
+      "puntaje": 200,
+      "pregunta": "¿Qué es la autenticación multifactor?",
+      "respuesta": "La verificación con dos o más factores de categorías diferentes."
+    },
+    {
+      "id": 249,
+      "categoria": "Ciberseguridad",
+      "puntaje": 300,
+      "pregunta": "¿Qué es el cifrado?",
+      "respuesta": "La transformación de datos para que solo puedan interpretarse con la clave adecuada."
+    },
+    {
+      "id": 250,
+      "categoria": "Ciberseguridad",
+      "puntaje": 300,
+      "pregunta": "¿Qué es un hash criptográfico?",
+      "respuesta": "Un resumen de longitud fija calculado a partir de datos."
+    },
+    {
+      "id": 251,
+      "categoria": "Ciberseguridad",
+      "puntaje": 300,
+      "pregunta": "¿Qué es una vulnerabilidad?",
+      "respuesta": "Una debilidad que puede ser aprovechada para comprometer un sistema."
+    },
+    {
+      "id": 252,
+      "categoria": "Ciberseguridad",
+      "puntaje": 300,
+      "pregunta": "¿Qué es un parche de seguridad?",
+      "respuesta": "Una actualización que corrige vulnerabilidades."
+    },
+    {
+      "id": 253,
+      "categoria": "Ciberseguridad",
+      "puntaje": 400,
+      "pregunta": "¿Qué es el principio de mínimo privilegio?",
+      "respuesta": "Conceder solo los permisos necesarios para una tarea."
+    },
+    {
+      "id": 254,
+      "categoria": "Ciberseguridad",
+      "puntaje": 400,
+      "pregunta": "¿Qué es la ingeniería social?",
+      "respuesta": "La manipulación de personas para obtener acceso o información."
+    },
+    {
+      "id": 255,
+      "categoria": "Ciberseguridad",
+      "puntaje": 400,
+      "pregunta": "¿Qué es una VPN?",
+      "respuesta": "Una red privada virtual que conecta extremos mediante un túnel sobre otra red."
+    },
+    {
+      "id": 256,
+      "categoria": "Ciberseguridad",
+      "puntaje": 400,
+      "pregunta": "¿Qué es una inyección SQL?",
+      "respuesta": "La introducción de instrucciones SQL no previstas mediante entradas manipuladas."
+    },
+    {
+      "id": 257,
+      "categoria": "Ciberseguridad",
+      "puntaje": 500,
+      "pregunta": "¿Qué ayuda a prevenir la inyección SQL al construir consultas?",
+      "respuesta": "Las consultas parametrizadas."
+    },
+    {
+      "id": 258,
+      "categoria": "Ciberseguridad",
+      "puntaje": 500,
+      "pregunta": "¿Qué es XSS?",
+      "respuesta": "La ejecución de contenido o scripts maliciosos en el navegador mediante una aplicación vulnerable."
+    },
+    {
+      "id": 259,
+      "categoria": "Ciberseguridad",
+      "puntaje": 500,
+      "pregunta": "¿Qué es un ataque de denegación de servicio?",
+      "respuesta": "Un intento de impedir el acceso normal a un servicio."
+    },
+    {
+      "id": 260,
+      "categoria": "Ciberseguridad",
+      "puntaje": 500,
+      "pregunta": "¿Qué es una sal en el almacenamiento de contraseñas?",
+      "respuesta": "Un valor aleatorio añadido antes de aplicar una función de derivación o hash."
+    },
+    {
+      "id": 261,
+      "categoria": "Git y control de versiones",
+      "puntaje": 100,
+      "pregunta": "¿Para qué sirve un sistema de control de versiones?",
+      "respuesta": "Para registrar y gestionar cambios en archivos."
+    },
+    {
+      "id": 262,
+      "categoria": "Git y control de versiones",
+      "puntaje": 100,
+      "pregunta": "¿Qué es Git?",
+      "respuesta": "Un sistema distribuido de control de versiones."
+    },
+    {
+      "id": 263,
+      "categoria": "Git y control de versiones",
+      "puntaje": 100,
+      "pregunta": "¿Qué es un repositorio de Git?",
+      "respuesta": "El historial y los datos de control de versiones de un proyecto."
+    },
+    {
+      "id": 264,
+      "categoria": "Git y control de versiones",
+      "puntaje": 100,
+      "pregunta": "¿Qué es un commit?",
+      "respuesta": "Un registro de una instantánea del proyecto con sus metadatos."
+    },
+    {
+      "id": 265,
+      "categoria": "Git y control de versiones",
+      "puntaje": 200,
+      "pregunta": "¿Para qué sirve git init?",
+      "respuesta": "Para inicializar un repositorio."
+    },
+    {
+      "id": 266,
+      "categoria": "Git y control de versiones",
+      "puntaje": 200,
+      "pregunta": "¿Para qué sirve git clone?",
+      "respuesta": "Para obtener una copia de un repositorio."
+    },
+    {
+      "id": 267,
+      "categoria": "Git y control de versiones",
+      "puntaje": 200,
+      "pregunta": "¿Para qué sirve git status?",
+      "respuesta": "Para mostrar el estado del directorio de trabajo y el área de preparación."
+    },
+    {
+      "id": 268,
+      "categoria": "Git y control de versiones",
+      "puntaje": 200,
+      "pregunta": "¿Para qué sirve git add?",
+      "respuesta": "Para preparar cambios para el próximo commit."
+    },
+    {
+      "id": 269,
+      "categoria": "Git y control de versiones",
+      "puntaje": 300,
+      "pregunta": "¿Qué es una rama en Git?",
+      "respuesta": "Una referencia móvil a un commit que permite mantener una línea de trabajo."
+    },
+    {
+      "id": 270,
+      "categoria": "Git y control de versiones",
+      "puntaje": 300,
+      "pregunta": "¿Para qué sirve git switch?",
+      "respuesta": "Para cambiar de rama."
+    },
+    {
+      "id": 271,
+      "categoria": "Git y control de versiones",
+      "puntaje": 300,
+      "pregunta": "¿Para qué sirve git merge?",
+      "respuesta": "Para integrar historiales de desarrollo."
+    },
+    {
+      "id": 272,
+      "categoria": "Git y control de versiones",
+      "puntaje": 300,
+      "pregunta": "¿Qué es un conflicto de fusión?",
+      "respuesta": "Una situación en la que Git necesita ayuda para combinar cambios."
+    },
+    {
+      "id": 273,
+      "categoria": "Git y control de versiones",
+      "puntaje": 400,
+      "pregunta": "¿Para qué sirve git push?",
+      "respuesta": "Para enviar actualizaciones de referencias y objetos a un remoto."
+    },
+    {
+      "id": 274,
+      "categoria": "Git y control de versiones",
+      "puntaje": 400,
+      "pregunta": "¿Para qué sirve git pull?",
+      "respuesta": "Para obtener cambios remotos e integrarlos en la rama actual."
+    },
+    {
+      "id": 275,
+      "categoria": "Git y control de versiones",
+      "puntaje": 400,
+      "pregunta": "¿Para qué sirve git fetch?",
+      "respuesta": "Para descargar objetos y actualizar referencias remotas sin integrarlos en la rama actual."
+    },
+    {
+      "id": 276,
+      "categoria": "Git y control de versiones",
+      "puntaje": 400,
+      "pregunta": "¿Para qué sirve el archivo .gitignore?",
+      "respuesta": "Para indicar archivos no rastreados que Git debe ignorar."
+    },
+    {
+      "id": 277,
+      "categoria": "Git y control de versiones",
+      "puntaje": 500,
+      "pregunta": "¿Para qué sirve git log?",
+      "respuesta": "Para consultar el historial de commits."
+    },
+    {
+      "id": 278,
+      "categoria": "Git y control de versiones",
+      "puntaje": 500,
+      "pregunta": "¿Para qué sirve git diff?",
+      "respuesta": "Para mostrar diferencias entre versiones o estados de archivos."
+    },
+    {
+      "id": 279,
+      "categoria": "Git y control de versiones",
+      "puntaje": 500,
+      "pregunta": "¿Para qué sirve git revert?",
+      "respuesta": "Para crear un commit que deshace los cambios de otro."
+    },
+    {
+      "id": 280,
+      "categoria": "Git y control de versiones",
+      "puntaje": 500,
+      "pregunta": "¿Para qué sirve git stash?",
+      "respuesta": "Para guardar temporalmente cambios locales y apartarlos del trabajo actual."
+    },
+    {
+      "id": 281,
+      "categoria": "Pruebas de software",
+      "puntaje": 100,
+      "pregunta": "¿Qué es una prueba de software?",
+      "respuesta": "Una actividad para evaluar el software y detectar defectos."
+    },
+    {
+      "id": 282,
+      "categoria": "Pruebas de software",
+      "puntaje": 100,
+      "pregunta": "¿Qué es un caso de prueba?",
+      "respuesta": "Un conjunto de condiciones, entradas y resultados esperados para verificar un comportamiento."
+    },
+    {
+      "id": 283,
+      "categoria": "Pruebas de software",
+      "puntaje": 100,
+      "pregunta": "¿Qué es el resultado esperado de una prueba?",
+      "respuesta": "El comportamiento que debería observarse."
+    },
+    {
+      "id": 284,
+      "categoria": "Pruebas de software",
+      "puntaje": 100,
+      "pregunta": "¿Qué es un bug?",
+      "respuesta": "Un defecto en el software."
+    },
+    {
+      "id": 285,
+      "categoria": "Pruebas de software",
+      "puntaje": 200,
+      "pregunta": "¿Qué es una prueba unitaria?",
+      "respuesta": "Una prueba de una unidad pequeña de software de forma aislada."
+    },
+    {
+      "id": 286,
+      "categoria": "Pruebas de software",
+      "puntaje": 200,
+      "pregunta": "¿Qué es una prueba de integración?",
+      "respuesta": "Una prueba de la interacción entre componentes."
+    },
+    {
+      "id": 287,
+      "categoria": "Pruebas de software",
+      "puntaje": 200,
+      "pregunta": "¿Qué es una prueba de sistema?",
+      "respuesta": "Una prueba del sistema completo."
+    },
+    {
+      "id": 288,
+      "categoria": "Pruebas de software",
+      "puntaje": 200,
+      "pregunta": "¿Qué es una prueba de aceptación?",
+      "respuesta": "Una prueba para evaluar si se cumplen necesidades y criterios de aceptación."
+    },
+    {
+      "id": 289,
+      "categoria": "Pruebas de software",
+      "puntaje": 300,
+      "pregunta": "¿Qué es una prueba de regresión?",
+      "respuesta": "Una prueba para detectar efectos no deseados de cambios."
+    },
+    {
+      "id": 290,
+      "categoria": "Pruebas de software",
+      "puntaje": 300,
+      "pregunta": "¿Qué es una prueba de humo?",
+      "respuesta": "Una comprobación breve de funciones esenciales."
+    },
+    {
+      "id": 291,
+      "categoria": "Pruebas de software",
+      "puntaje": 300,
+      "pregunta": "¿Qué es una prueba de caja negra?",
+      "respuesta": "Una prueba basada en entradas y salidas sin depender de la estructura interna."
+    },
+    {
+      "id": 292,
+      "categoria": "Pruebas de software",
+      "puntaje": 300,
+      "pregunta": "¿Qué es una prueba de caja blanca?",
+      "respuesta": "Una prueba basada en la estructura interna del software."
+    },
+    {
+      "id": 293,
+      "categoria": "Pruebas de software",
+      "puntaje": 400,
+      "pregunta": "¿Qué es una prueba de rendimiento?",
+      "respuesta": "Una evaluación del comportamiento temporal y del uso de recursos."
+    },
+    {
+      "id": 294,
+      "categoria": "Pruebas de software",
+      "puntaje": 400,
+      "pregunta": "¿Qué es una prueba de carga?",
+      "respuesta": "Una evaluación del sistema bajo niveles definidos de actividad."
+    },
+    {
+      "id": 295,
+      "categoria": "Pruebas de software",
+      "puntaje": 400,
+      "pregunta": "¿Qué es una prueba de estrés?",
+      "respuesta": "Una evaluación del comportamiento al superar límites de operación previstos."
+    },
+    {
+      "id": 296,
+      "categoria": "Pruebas de software",
+      "puntaje": 400,
+      "pregunta": "¿Qué es una prueba de extremo a extremo o E2E?",
+      "respuesta": "Una prueba de un flujo completo a través de los componentes implicados."
+    },
+    {
+      "id": 297,
+      "categoria": "Pruebas de software",
+      "puntaje": 500,
+      "pregunta": "¿Qué es una aserción en una prueba automatizada?",
+      "respuesta": "Una comprobación de que se cumple una condición esperada."
+    },
+    {
+      "id": 298,
+      "categoria": "Pruebas de software",
+      "puntaje": 500,
+      "pregunta": "¿Qué es un mock en pruebas?",
+      "respuesta": "Un objeto simulado que permite controlar o verificar interacciones."
+    },
+    {
+      "id": 299,
+      "categoria": "Pruebas de software",
+      "puntaje": 500,
+      "pregunta": "¿Qué es TDD?",
+      "respuesta": "Un ciclo de escribir una prueba que falla, implementar y refactorizar."
+    },
+    {
+      "id": 300,
+      "categoria": "Pruebas de software",
+      "puntaje": 500,
+      "pregunta": "¿Qué indica la cobertura de código?",
+      "respuesta": "Qué partes del código fueron ejecutadas por las pruebas."
+    },
+    {
+      "id": 301,
+      "categoria": "Ingeniería de software",
+      "puntaje": 100,
+      "pregunta": "¿Qué es un requisito de software?",
+      "respuesta": "Una necesidad o condición que el sistema debe satisfacer."
+    },
+    {
+      "id": 302,
+      "categoria": "Ingeniería de software",
+      "puntaje": 100,
+      "pregunta": "¿Qué es un requisito funcional?",
+      "respuesta": "Una descripción de lo que el sistema debe hacer."
+    },
+    {
+      "id": 303,
+      "categoria": "Ingeniería de software",
+      "puntaje": 100,
+      "pregunta": "¿Qué es un requisito no funcional?",
+      "respuesta": "Una condición de calidad o restricción del sistema."
+    },
+    {
+      "id": 304,
+      "categoria": "Ingeniería de software",
+      "puntaje": 100,
+      "pregunta": "¿Qué es el ciclo de vida del software?",
+      "respuesta": "El conjunto de etapas desde su concepción hasta su retiro."
+    },
+    {
+      "id": 305,
+      "categoria": "Ingeniería de software",
+      "puntaje": 200,
+      "pregunta": "¿Qué es un caso de uso?",
+      "respuesta": "Una descripción de la interacción de un actor con el sistema para lograr un objetivo."
+    },
+    {
+      "id": 306,
+      "categoria": "Ingeniería de software",
+      "puntaje": 200,
+      "pregunta": "¿Qué es una historia de usuario?",
+      "respuesta": "Una descripción breve de una necesidad desde la perspectiva del usuario."
+    },
+    {
+      "id": 307,
+      "categoria": "Ingeniería de software",
+      "puntaje": 200,
+      "pregunta": "¿Qué es un criterio de aceptación?",
+      "respuesta": "Una condición verificable para considerar satisfecho un requisito."
+    },
+    {
+      "id": 308,
+      "categoria": "Ingeniería de software",
+      "puntaje": 200,
+      "pregunta": "¿Qué es un prototipo de software?",
+      "respuesta": "Una representación preliminar para explorar o validar una solución."
+    },
+    {
+      "id": 309,
+      "categoria": "Ingeniería de software",
+      "puntaje": 300,
+      "pregunta": "¿Qué es el modelo en cascada?",
+      "respuesta": "Un enfoque de desarrollo organizado en fases predominantemente secuenciales."
+    },
+    {
+      "id": 310,
+      "categoria": "Ingeniería de software",
+      "puntaje": 300,
+      "pregunta": "¿Qué es un desarrollo iterativo?",
+      "respuesta": "Un desarrollo que refina la solución mediante ciclos sucesivos."
+    },
+    {
+      "id": 311,
+      "categoria": "Ingeniería de software",
+      "puntaje": 300,
+      "pregunta": "¿Qué es un desarrollo incremental?",
+      "respuesta": "Un desarrollo que entrega funcionalidad en partes sucesivas."
+    },
+    {
+      "id": 312,
+      "categoria": "Ingeniería de software",
+      "puntaje": 300,
+      "pregunta": "¿Qué es un sprint en Scrum?",
+      "respuesta": "Un período de duración fija en el que se crea un incremento del producto."
+    },
+    {
+      "id": 313,
+      "categoria": "Ingeniería de software",
+      "puntaje": 400,
+      "pregunta": "¿Qué es el Product Backlog en Scrum?",
+      "respuesta": "La lista ordenada y emergente del trabajo necesario para mejorar el producto."
+    },
+    {
+      "id": 314,
+      "categoria": "Ingeniería de software",
+      "puntaje": 400,
+      "pregunta": "¿Qué es la deuda técnica?",
+      "respuesta": "El costo futuro de soluciones técnicas que requieren mejoras."
+    },
+    {
+      "id": 315,
+      "categoria": "Ingeniería de software",
+      "puntaje": 400,
+      "pregunta": "¿Qué es refactorizar código?",
+      "respuesta": "Mejorar su estructura interna sin cambiar su comportamiento observable."
+    },
+    {
+      "id": 316,
+      "categoria": "Ingeniería de software",
+      "puntaje": 400,
+      "pregunta": "¿Qué es una revisión de código?",
+      "respuesta": "El examen de cambios por otra persona para detectar problemas y mejorar calidad."
+    },
+    {
+      "id": 317,
+      "categoria": "Ingeniería de software",
+      "puntaje": 500,
+      "pregunta": "¿Qué es la modularidad?",
+      "respuesta": "La organización del software en partes con responsabilidades definidas."
+    },
+    {
+      "id": 318,
+      "categoria": "Ingeniería de software",
+      "puntaje": 500,
+      "pregunta": "¿Qué es el acoplamiento entre módulos?",
+      "respuesta": "El grado de dependencia entre ellos."
+    },
+    {
+      "id": 319,
+      "categoria": "Ingeniería de software",
+      "puntaje": 500,
+      "pregunta": "¿Qué es la cohesión de un módulo?",
+      "respuesta": "El grado en que sus elementos contribuyen a una responsabilidad común."
+    },
+    {
+      "id": 320,
+      "categoria": "Ingeniería de software",
+      "puntaje": 500,
+      "pregunta": "¿Qué representa UML?",
+      "respuesta": "Un lenguaje visual para modelar sistemas."
+    },
+    {
+      "id": 321,
+      "categoria": "Linux y línea de comandos",
+      "puntaje": 100,
+      "pregunta": "¿Para qué sirve pwd en una terminal de Linux?",
+      "respuesta": "Para mostrar el directorio de trabajo actual."
+    },
+    {
+      "id": 322,
+      "categoria": "Linux y línea de comandos",
+      "puntaje": 100,
+      "pregunta": "¿Para qué sirve ls?",
+      "respuesta": "Para listar el contenido de un directorio."
+    },
+    {
+      "id": 323,
+      "categoria": "Linux y línea de comandos",
+      "puntaje": 100,
+      "pregunta": "¿Para qué sirve cd?",
+      "respuesta": "Para cambiar de directorio."
+    },
+    {
+      "id": 324,
+      "categoria": "Linux y línea de comandos",
+      "puntaje": 100,
+      "pregunta": "¿Para qué sirve mkdir?",
+      "respuesta": "Para crear directorios."
+    },
+    {
+      "id": 325,
+      "categoria": "Linux y línea de comandos",
+      "puntaje": 200,
+      "pregunta": "¿Para qué sirve cp?",
+      "respuesta": "Para copiar archivos o directorios."
+    },
+    {
+      "id": 326,
+      "categoria": "Linux y línea de comandos",
+      "puntaje": 200,
+      "pregunta": "¿Para qué sirve mv?",
+      "respuesta": "Para mover o renombrar archivos y directorios."
+    },
+    {
+      "id": 327,
+      "categoria": "Linux y línea de comandos",
+      "puntaje": 200,
+      "pregunta": "¿Para qué sirve rm?",
+      "respuesta": "Para eliminar archivos y, con opciones adecuadas, directorios."
+    },
+    {
+      "id": 328,
+      "categoria": "Linux y línea de comandos",
+      "puntaje": 200,
+      "pregunta": "¿Para qué sirve cat con un archivo de texto?",
+      "respuesta": "Para mostrar su contenido en la salida estándar."
+    },
+    {
+      "id": 329,
+      "categoria": "Linux y línea de comandos",
+      "puntaje": 300,
+      "pregunta": "¿Para qué sirve grep?",
+      "respuesta": "Para buscar líneas que coinciden con un patrón."
+    },
+    {
+      "id": 330,
+      "categoria": "Linux y línea de comandos",
+      "puntaje": 300,
+      "pregunta": "¿Para qué sirve man?",
+      "respuesta": "Para consultar páginas del manual."
+    },
+    {
+      "id": 331,
+      "categoria": "Linux y línea de comandos",
+      "puntaje": 300,
+      "pregunta": "¿Para qué sirve chmod?",
+      "respuesta": "Para cambiar permisos de archivos o directorios."
+    },
+    {
+      "id": 332,
+      "categoria": "Linux y línea de comandos",
+      "puntaje": 300,
+      "pregunta": "¿Para qué sirve sudo?",
+      "respuesta": "Para ejecutar comandos como otro usuario, normalmente con privilegios administrativos."
+    },
+    {
+      "id": 333,
+      "categoria": "Linux y línea de comandos",
+      "puntaje": 400,
+      "pregunta": "¿Para qué sirve ps?",
+      "respuesta": "Para mostrar información de procesos."
+    },
+    {
+      "id": 334,
+      "categoria": "Linux y línea de comandos",
+      "puntaje": 400,
+      "pregunta": "¿Para qué sirve kill?",
+      "respuesta": "Para enviar una señal a un proceso."
+    },
+    {
+      "id": 335,
+      "categoria": "Linux y línea de comandos",
+      "puntaje": 400,
+      "pregunta": "¿Qué representa el símbolo ~ en una ruta de una shell como Bash?",
+      "respuesta": "El directorio personal del usuario."
+    },
+    {
+      "id": 336,
+      "categoria": "Linux y línea de comandos",
+      "puntaje": 400,
+      "pregunta": "¿Qué hace una tubería con el símbolo | en una shell?",
+      "respuesta": "Conecta la salida estándar de un comando con la entrada de otro."
+    },
+    {
+      "id": 337,
+      "categoria": "Linux y línea de comandos",
+      "puntaje": 500,
+      "pregunta": "¿Qué hace el operador > al redirigir la salida a un archivo?",
+      "respuesta": "Crea el archivo o reemplaza su contenido."
+    },
+    {
+      "id": 338,
+      "categoria": "Linux y línea de comandos",
+      "puntaje": 500,
+      "pregunta": "¿Qué hace el operador >> al redirigir la salida a un archivo?",
+      "respuesta": "Añade la salida al final del archivo."
+    },
+    {
+      "id": 339,
+      "categoria": "Linux y línea de comandos",
+      "puntaje": 500,
+      "pregunta": "¿Qué hace Ctrl+C normalmente con un comando en primer plano?",
+      "respuesta": "Envía una señal de interrupción."
+    },
+    {
+      "id": 340,
+      "categoria": "Linux y línea de comandos",
+      "puntaje": 500,
+      "pregunta": "¿Qué es un script de shell?",
+      "respuesta": "Un archivo de instrucciones que interpreta una shell."
+    },
+    {
+      "id": 341,
+      "categoria": "Nube y despliegue",
+      "puntaje": 100,
+      "pregunta": "¿Qué es la computación en la nube?",
+      "respuesta": "El uso de recursos informáticos ofrecidos como servicios a través de una red."
+    },
+    {
+      "id": 342,
+      "categoria": "Nube y despliegue",
+      "puntaje": 100,
+      "pregunta": "¿Qué es un servidor?",
+      "respuesta": "Un sistema que ofrece servicios o recursos a otros."
+    },
+    {
+      "id": 343,
+      "categoria": "Nube y despliegue",
+      "puntaje": 100,
+      "pregunta": "¿Qué es un despliegue de software?",
+      "respuesta": "La puesta de una versión en un entorno para su uso."
+    },
+    {
+      "id": 344,
+      "categoria": "Nube y despliegue",
+      "puntaje": 100,
+      "pregunta": "¿Qué es un entorno de producción?",
+      "respuesta": "El entorno que presta el servicio a sus usuarios reales."
+    },
+    {
+      "id": 345,
+      "categoria": "Nube y despliegue",
+      "puntaje": 200,
+      "pregunta": "¿Qué es un entorno de desarrollo?",
+      "respuesta": "El entorno utilizado para construir y modificar el software."
+    },
+    {
+      "id": 346,
+      "categoria": "Nube y despliegue",
+      "puntaje": 200,
+      "pregunta": "¿Qué es un entorno de staging?",
+      "respuesta": "Un entorno previo a producción para validar cambios."
+    },
+    {
+      "id": 347,
+      "categoria": "Nube y despliegue",
+      "puntaje": 200,
+      "pregunta": "¿Qué es una máquina virtual?",
+      "respuesta": "Un entorno de cómputo virtualizado que ejecuta su propio sistema operativo."
+    },
+    {
+      "id": 348,
+      "categoria": "Nube y despliegue",
+      "puntaje": 200,
+      "pregunta": "¿Qué es un contenedor de software?",
+      "respuesta": "Una forma de ejecutar procesos aislados con sus dependencias."
+    },
+    {
+      "id": 349,
+      "categoria": "Nube y despliegue",
+      "puntaje": 300,
+      "pregunta": "¿Qué es una imagen de contenedor?",
+      "respuesta": "Una plantilla de solo lectura para crear contenedores."
+    },
+    {
+      "id": 350,
+      "categoria": "Nube y despliegue",
+      "puntaje": 300,
+      "pregunta": "¿Para qué sirve un Dockerfile?",
+      "respuesta": "Para describir cómo construir una imagen de contenedor."
+    },
+    {
+      "id": 351,
+      "categoria": "Nube y despliegue",
+      "puntaje": 300,
+      "pregunta": "¿Qué es IaaS?",
+      "respuesta": "Infraestructura informática ofrecida como servicio."
+    },
+    {
+      "id": 352,
+      "categoria": "Nube y despliegue",
+      "puntaje": 300,
+      "pregunta": "¿Qué es PaaS?",
+      "respuesta": "Una plataforma administrada para desarrollar y ejecutar aplicaciones."
+    },
+    {
+      "id": 353,
+      "categoria": "Nube y despliegue",
+      "puntaje": 400,
+      "pregunta": "¿Qué es SaaS?",
+      "respuesta": "Software ofrecido como servicio."
+    },
+    {
+      "id": 354,
+      "categoria": "Nube y despliegue",
+      "puntaje": 400,
+      "pregunta": "¿Qué es la escalabilidad?",
+      "respuesta": "La capacidad de adaptar recursos para atender cambios de demanda."
+    },
+    {
+      "id": 355,
+      "categoria": "Nube y despliegue",
+      "puntaje": 400,
+      "pregunta": "¿Qué es escalar verticalmente?",
+      "respuesta": "Aumentar los recursos de una misma instancia."
+    },
+    {
+      "id": 356,
+      "categoria": "Nube y despliegue",
+      "puntaje": 400,
+      "pregunta": "¿Qué es escalar horizontalmente?",
+      "respuesta": "Agregar más instancias para repartir el trabajo."
+    },
+    {
+      "id": 357,
+      "categoria": "Nube y despliegue",
+      "puntaje": 500,
+      "pregunta": "¿Para qué sirve un balanceador de carga?",
+      "respuesta": "Para distribuir solicitudes entre varias instancias."
+    },
+    {
+      "id": 358,
+      "categoria": "Nube y despliegue",
+      "puntaje": 500,
+      "pregunta": "¿Qué es integración continua?",
+      "respuesta": "La integración frecuente de cambios con verificaciones automatizadas."
+    },
+    {
+      "id": 359,
+      "categoria": "Nube y despliegue",
+      "puntaje": 500,
+      "pregunta": "¿Qué es un pipeline de CI/CD?",
+      "respuesta": "Una secuencia automatizada para integrar, verificar y entregar software."
+    },
+    {
+      "id": 360,
+      "categoria": "Nube y despliegue",
+      "puntaje": 500,
+      "pregunta": "¿Qué es hacer rollback de un despliegue?",
+      "respuesta": "Volver a una versión anterior."
+    },
+    {
+      "id": 361,
+      "categoria": "Lógica y sistemas digitales",
+      "puntaje": 100,
+      "pregunta": "¿Qué dígitos utiliza el sistema binario?",
+      "respuesta": "Cero y uno."
+    },
+    {
+      "id": 362,
+      "categoria": "Lógica y sistemas digitales",
+      "puntaje": 100,
+      "pregunta": "¿Qué base utiliza el sistema decimal?",
+      "respuesta": "La base diez."
+    },
+    {
+      "id": 363,
+      "categoria": "Lógica y sistemas digitales",
+      "puntaje": 100,
+      "pregunta": "¿Qué base utiliza el sistema hexadecimal?",
+      "respuesta": "La base dieciséis."
+    },
+    {
+      "id": 364,
+      "categoria": "Lógica y sistemas digitales",
+      "puntaje": 100,
+      "pregunta": "¿Qué es una compuerta lógica?",
+      "respuesta": "Un circuito que realiza una operación lógica."
+    },
+    {
+      "id": 365,
+      "categoria": "Lógica y sistemas digitales",
+      "puntaje": 200,
+      "pregunta": "¿Cuándo produce uno una compuerta AND de dos entradas?",
+      "respuesta": "Cuando ambas entradas son uno."
+    },
+    {
+      "id": 366,
+      "categoria": "Lógica y sistemas digitales",
+      "puntaje": 200,
+      "pregunta": "¿Cuándo produce uno una compuerta OR de dos entradas?",
+      "respuesta": "Cuando al menos una entrada es uno."
+    },
+    {
+      "id": 367,
+      "categoria": "Lógica y sistemas digitales",
+      "puntaje": 200,
+      "pregunta": "¿Qué hace una compuerta NOT?",
+      "respuesta": "Invierte el valor lógico de su entrada."
+    },
+    {
+      "id": 368,
+      "categoria": "Lógica y sistemas digitales",
+      "puntaje": 200,
+      "pregunta": "¿Cuándo produce uno una compuerta XOR de dos entradas?",
+      "respuesta": "Cuando las entradas son diferentes."
+    },
+    {
+      "id": 369,
+      "categoria": "Lógica y sistemas digitales",
+      "puntaje": 300,
+      "pregunta": "¿Qué es una tabla de verdad?",
+      "respuesta": "Una tabla con las salidas para todas las combinaciones de entradas."
+    },
+    {
+      "id": 370,
+      "categoria": "Lógica y sistemas digitales",
+      "puntaje": 300,
+      "pregunta": "¿Qué es el álgebra de Boole?",
+      "respuesta": "Un sistema algebraico para operar con valores lógicos."
+    },
+    {
+      "id": 371,
+      "categoria": "Lógica y sistemas digitales",
+      "puntaje": 300,
+      "pregunta": "¿Qué es un circuito combinacional?",
+      "respuesta": "Un circuito cuya salida depende de las entradas actuales."
+    },
+    {
+      "id": 372,
+      "categoria": "Lógica y sistemas digitales",
+      "puntaje": 300,
+      "pregunta": "¿Qué es un circuito secuencial?",
+      "respuesta": "Un circuito cuya salida puede depender de entradas y estado almacenado."
+    },
+    {
+      "id": 373,
+      "categoria": "Lógica y sistemas digitales",
+      "puntaje": 400,
+      "pregunta": "¿Cuántos bits almacena un flip-flop?",
+      "respuesta": "Un bit."
+    },
+    {
+      "id": 374,
+      "categoria": "Lógica y sistemas digitales",
+      "puntaje": 400,
+      "pregunta": "¿Qué captura un flip-flop D en el flanco activo del reloj?",
+      "respuesta": "El valor presente en su entrada D."
+    },
+    {
+      "id": 375,
+      "categoria": "Lógica y sistemas digitales",
+      "puntaje": 400,
+      "pregunta": "¿Qué hace un flip-flop T en su flanco activo cuando T vale uno?",
+      "respuesta": "Cambia al estado contrario."
+    },
+    {
+      "id": 376,
+      "categoria": "Lógica y sistemas digitales",
+      "puntaje": 400,
+      "pregunta": "¿Para qué sirve una señal de reloj en un circuito síncrono?",
+      "respuesta": "Para coordinar las actualizaciones de estado."
+    },
+    {
+      "id": 377,
+      "categoria": "Lógica y sistemas digitales",
+      "puntaje": 500,
+      "pregunta": "¿Qué es un registro digital?",
+      "respuesta": "Un conjunto de elementos de memoria que almacena varios bits."
+    },
+    {
+      "id": 378,
+      "categoria": "Lógica y sistemas digitales",
+      "puntaje": 500,
+      "pregunta": "¿Qué es un contador digital?",
+      "respuesta": "Un circuito secuencial que recorre estados para contar eventos."
+    },
+    {
+      "id": 379,
+      "categoria": "Lógica y sistemas digitales",
+      "puntaje": 500,
+      "pregunta": "¿Qué hace un multiplexor?",
+      "respuesta": "Selecciona una de varias entradas y la dirige a una salida."
+    },
+    {
+      "id": 380,
+      "categoria": "Lógica y sistemas digitales",
+      "puntaje": 500,
+      "pregunta": "¿Qué hace un decodificador binario de n entradas y hasta 2 elevado a n salidas?",
+      "respuesta": "Activa la salida correspondiente al código de entrada."
+    },
+    {
+      "id": 381,
+      "categoria": "Arquitectura y diseño de aplicaciones",
+      "puntaje": 100,
+      "pregunta": "¿Qué es la arquitectura de software?",
+      "respuesta": "La organización general de los componentes y sus relaciones."
+    },
+    {
+      "id": 382,
+      "categoria": "Arquitectura y diseño de aplicaciones",
+      "puntaje": 100,
+      "pregunta": "¿Qué es la arquitectura cliente-servidor?",
+      "respuesta": "Un modelo donde clientes solicitan servicios a servidores."
+    },
+    {
+      "id": 383,
+      "categoria": "Arquitectura y diseño de aplicaciones",
+      "puntaje": 100,
+      "pregunta": "¿Qué es una aplicación monolítica?",
+      "respuesta": "Una aplicación construida y desplegada como una unidad principal."
+    },
+    {
+      "id": 384,
+      "categoria": "Arquitectura y diseño de aplicaciones",
+      "puntaje": 100,
+      "pregunta": "¿Qué es un microservicio?",
+      "respuesta": "Un servicio con una responsabilidad delimitada que puede desplegarse de forma independiente."
+    },
+    {
+      "id": 385,
+      "categoria": "Arquitectura y diseño de aplicaciones",
+      "puntaje": 200,
+      "pregunta": "¿Qué es un patrón de diseño?",
+      "respuesta": "Una solución reutilizable a un problema recurrente de diseño."
+    },
+    {
+      "id": 386,
+      "categoria": "Arquitectura y diseño de aplicaciones",
+      "puntaje": 200,
+      "pregunta": "¿Qué representa el modelo en MVC?",
+      "respuesta": "Los datos y la lógica del dominio."
+    },
+    {
+      "id": 387,
+      "categoria": "Arquitectura y diseño de aplicaciones",
+      "puntaje": 200,
+      "pregunta": "¿Qué representa la vista en MVC?",
+      "respuesta": "La presentación de la información."
+    },
+    {
+      "id": 388,
+      "categoria": "Arquitectura y diseño de aplicaciones",
+      "puntaje": 200,
+      "pregunta": "¿Qué representa el controlador en MVC?",
+      "respuesta": "El componente que recibe acciones y coordina su atención."
+    },
+    {
+      "id": 389,
+      "categoria": "Arquitectura y diseño de aplicaciones",
+      "puntaje": 300,
+      "pregunta": "¿Qué es separar responsabilidades en software?",
+      "respuesta": "Asignar funciones distintas a componentes definidos."
+    },
+    {
+      "id": 390,
+      "categoria": "Arquitectura y diseño de aplicaciones",
+      "puntaje": 300,
+      "pregunta": "¿Qué es una capa de acceso a datos?",
+      "respuesta": "La parte que encapsula operaciones de persistencia."
+    },
+    {
+      "id": 391,
+      "categoria": "Arquitectura y diseño de aplicaciones",
+      "puntaje": 300,
+      "pregunta": "¿Qué es una caché?",
+      "respuesta": "Un almacenamiento de datos reutilizables para acelerar su acceso."
+    },
+    {
+      "id": 392,
+      "categoria": "Arquitectura y diseño de aplicaciones",
+      "puntaje": 300,
+      "pregunta": "¿Qué es una cola de mensajes?",
+      "respuesta": "Un mecanismo que almacena mensajes para su procesamiento."
+    },
+    {
+      "id": 393,
+      "categoria": "Arquitectura y diseño de aplicaciones",
+      "puntaje": 400,
+      "pregunta": "¿Qué es el procesamiento asíncrono?",
+      "respuesta": "El procesamiento que permite continuar sin esperar inmediatamente su finalización."
+    },
+    {
+      "id": 394,
+      "categoria": "Arquitectura y diseño de aplicaciones",
+      "puntaje": 400,
+      "pregunta": "¿Qué es la inyección de dependencias?",
+      "respuesta": "Proporcionar a un componente las dependencias que necesita desde el exterior."
+    },
+    {
+      "id": 395,
+      "categoria": "Arquitectura y diseño de aplicaciones",
+      "puntaje": 400,
+      "pregunta": "¿Qué propone el principio de responsabilidad única?",
+      "respuesta": "Que un módulo tenga una única razón de cambio."
+    },
+    {
+      "id": 396,
+      "categoria": "Arquitectura y diseño de aplicaciones",
+      "puntaje": 400,
+      "pregunta": "¿Qué propone el principio DRY?",
+      "respuesta": "Evitar duplicar conocimiento o reglas en el sistema."
+    },
+    {
+      "id": 397,
+      "categoria": "Arquitectura y diseño de aplicaciones",
+      "puntaje": 500,
+      "pregunta": "¿Qué es una factoría o fábrica de objetos?",
+      "respuesta": "Un componente que encapsula la creación de objetos."
+    },
+    {
+      "id": 398,
+      "categoria": "Arquitectura y diseño de aplicaciones",
+      "puntaje": 500,
+      "pregunta": "¿Qué hace el patrón Observer?",
+      "respuesta": "Notifica a suscriptores cuando cambia u ocurre algo en un objeto observado."
+    },
+    {
+      "id": 399,
+      "categoria": "Arquitectura y diseño de aplicaciones",
+      "puntaje": 500,
+      "pregunta": "¿Qué es un diagrama de secuencia?",
+      "respuesta": "Un diagrama que muestra mensajes entre participantes a lo largo del tiempo."
+    },
+    {
+      "id": 400,
+      "categoria": "Arquitectura y diseño de aplicaciones",
+      "puntaje": 500,
+      "pregunta": "¿Qué es una dependencia circular?",
+      "respuesta": "Una cadena de dependencias que vuelve a su punto de origen."
+    }
+  ]
+}

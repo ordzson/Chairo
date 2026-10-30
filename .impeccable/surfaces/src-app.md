@@ -19,7 +19,7 @@ THESIS: Un índice de seis separadores permite explorar los juegos antes de leer
 
 OWN-WORLD: Papel marfil, tinta azul, cartulina amarilla, naranja, turquesa, azul, verde y violeta; encuadernación física y acetato lechoso con profundidad de manual de software de los 2000.
 
-STORY: Reconocer Chairo, explorar seis juegos Próximamente y consultar su ficha; fijar modalidad es opcional y no inicia partidas.
+STORY: Reconocer Chispazo, explorar seis juegos Próximamente y consultar su ficha; fijar modalidad es opcional y no inicia partidas.
 
 FIRST VIEWPORT: Marca compacta arriba, seis franjas verticales de nombres y estado, ficha de acetato debajo con Jeopardy inicialmente seleccionado y etiqueta de preferencia al final. La acción principal es seleccionar una pestaña; no hay Entrar.
 

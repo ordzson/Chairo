@@ -1,7 +1,7 @@
 {
   "schemaVersion": 2,
   "generatedAt": "2026-09-15T22:34:42Z",
-  "title": "Design System: Chairo",
+  "title": "Design System: Chispazo",
   "extensions": {
     "colorMeta": {
       "mission-ink": {
@@ -213,7 +213,7 @@
   ],
   "narrative": {
     "northStar": "El archivador de misión vivo",
-    "overview": "Chairo se siente como un manual juvenil que alguien sigue usando: papel marfil con fibra visible, tinta azul, lomo y herrajes de archivador, separadores de capítulos intensos, acetato lechoso y marcas pintadas a mano. La materia física organiza la interfaz; no es decoración aplicada sobre una estructura de aplicación genérica.\n\nLa voz combina la energía optimista de software educativo de los años 2000 con lectura inmediata para todas las edades. El índice conduce la exploración, el capítulo activo se adelanta y una ficha transparente revela el contenido asociado; cada efecto digital debe reforzar esa ilusión táctil y seguir siendo claro con teclado, movimiento reducido y colores forzados.",
+    "overview": "Chispazo se siente como un manual juvenil que alguien sigue usando: papel marfil con fibra visible, tinta azul, lomo y herrajes de archivador, separadores de capítulos intensos, acetato lechoso y marcas pintadas a mano. La materia física organiza la interfaz; no es decoración aplicada sobre una estructura de aplicación genérica. Su marca denominativa amarilla de volumen moldeado lleva un contorno ultramarino y, sobre la «o» final, un destello amarillo cóncavo de cuatro puntas: la firma visual de una idea que se enciende al jugar.\n\nLa voz combina la energía optimista de software educativo de los años 2000 con lectura inmediata para todas las edades. El índice conduce la exploración, el capítulo activo se adelanta y una ficha transparente revela el contenido asociado; cada efecto digital debe reforzar esa ilusión táctil y seguir siendo claro con teclado, movimiento reducido y colores forzados.",
     "keyCharacteristics": [
       "Archivador azul marino centrado que enmarca una hoja física.",
       "Índice vertical de capítulos saturados como navegación primaria.",

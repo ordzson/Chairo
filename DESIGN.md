@@ -1,5 +1,5 @@
 ---
-name: Chairo
+name: Chispazo
 description: Un archivador juvenil y táctil que convierte el catálogo de juegos bíblicos en un manual de misión vivo.
 colors:
   mission-ink: "#07266e"
@@ -130,13 +130,13 @@ components:
     padding: "0.75rem 1rem"
 ---
 
-# Design System: Chairo
+# Design System: Chispazo
 
 ## Overview
 
 **Creative North Star: "El archivador de misión vivo"**
 
-Chairo se siente como un manual juvenil que alguien sigue usando: papel marfil con fibra visible, tinta azul, lomo y herrajes de archivador, separadores de capítulos intensos, acetato lechoso y marcas pintadas a mano. La materia física organiza la interfaz; no es decoración aplicada sobre una estructura de aplicación genérica.
+Chispazo se siente como un manual juvenil que alguien sigue usando: papel marfil con fibra visible, tinta azul, lomo y herrajes de archivador, separadores de capítulos intensos, acetato lechoso y marcas pintadas a mano. La materia física organiza la interfaz; no es decoración aplicada sobre una estructura de aplicación genérica. Su marca denominativa amarilla de volumen moldeado lleva un contorno ultramarino y, sobre la «o» final, un destello amarillo cóncavo de cuatro puntas: la firma visual de una idea que se enciende al jugar.
 
 La voz combina la energía optimista de software educativo de los años 2000 con lectura inmediata para todas las edades. El índice conduce la exploración, el capítulo activo se adelanta y una ficha transparente revela el contenido asociado; cada efecto digital debe reforzar esa ilusión táctil y seguir siendo claro con teclado, movimiento reducido y colores forzados.
 
