@@ -11,6 +11,7 @@ import {
   nextPlayerAfter,
   normalizeWager,
   stealOrder,
+  wagerLimit,
   type JeopardyCell,
   type JeopardyPlayer,
   type JeopardySetup
@@ -89,6 +90,8 @@ test('el orden de turnos y de robo sigue a quien falló', () => {
   expect(normalizeWager(99_999, 300)).toBe(300);
   expect(normalizeWager(-50, 300)).toBe(100);
   expect(normalizeWager(249, 800)).toBe(200);
+  expect(wagerLimit(800)).toBe(800);
+  expect(wagerLimit(-200)).toBe(100);
 });
 
 test('una ronda completa: fallos, robos, apuesta especial y doble', () => {
@@ -128,10 +131,11 @@ test('una ronda completa: fallos, robos, apuesta especial y doble', () => {
   // Leo encuentra una apuesta especial: la pregunta espera a la apuesta.
   state = selectCell(state, 'leo', '0-1');
   expect(viewRoom(state, 'leo').clue).toMatchObject({ prompt: null, special: true, points: null, category: 'Q0' });
+  // Con −100 Leo solo puede arriesgar la mínima.
   state = placeWager(state, 'leo', 99_999);
-  expect(state.wager).toBe(300);
+  expect(state.wager).toBe(100);
   state = judgeAnswer(markAnswered(state, 'leo'), 'ana', true);
-  expect(player(state, 'leo').score).toBe(200);
+  expect(player(state, 'leo').score).toBe(0);
   expect(state.turnPlayerId).toBe('eva');
 
   // Eva falla la doble; Rut roba y acierta.

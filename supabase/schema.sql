@@ -1780,8 +1780,8 @@
   end;
   $$;
 
-  -- Se apuesta de cien en cien, entre 100 y lo que tenga quien apuesta o la
-  -- casilla más alta del tablero, lo que sea mayor. Igual que `normalizeWager`.
+  -- Se apuesta de cien en cien, entre 100 y lo que tenga quien apuesta; con
+  -- menos de 100 solo cabe la mínima. Igual que `normalizeWager`.
   create or replace function public.set_jeopardy_wager(p_code text, p_wager integer)
   returns jsonb
   language plpgsql
@@ -1791,7 +1791,6 @@
   declare
     room public.jeopardy_rooms%rowtype;
     seat public.jeopardy_players%rowtype;
-    top_points integer;
     amount integer;
   begin
     room := public.jeopardy_lock_room(p_code);
@@ -1799,8 +1798,7 @@
     if room.phase <> 'wager' then raise exception 'invalid-move'; end if;
     if room.turn_player_id is distinct from seat.id then raise exception 'not-your-turn'; end if;
 
-    select greatest(seat.score, max(value)) into top_points from public.jeopardy_cells where room_id = room.id;
-    amount := greatest(100, least(top_points, round(coalesce(p_wager, 100) / 100.0)::integer * 100));
+    amount := greatest(100, least(seat.score, round(coalesce(p_wager, 100) / 100.0)::integer * 100));
     update public.jeopardy_rooms
       set wager = amount, phase = 'question', deadline_at = null,
           message = seat.name || ' apuesta ' || amount || ' puntos.'

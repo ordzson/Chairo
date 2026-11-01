@@ -226,9 +226,9 @@ export function cellPoints(cell: Pick<JeopardyCell, 'value' | 'special' | 'doubl
   return cell.double ? cell.value * 2 : cell.value;
 }
 
-/** Tope de la apuesta: lo que tiene quien apuesta o la casilla más alta. */
-export function wagerLimit(score: number, board: readonly Pick<JeopardyTile, 'value'>[]): number {
-  return Math.max(score, ...board.map(cell => cell.value), WAGER_STEP);
+/** Tope de la apuesta: lo que tiene quien apuesta, sin bajar de la apuesta mínima. */
+export function wagerLimit(score: number): number {
+  return Math.max(score, WAGER_STEP);
 }
 
 export function normalizeWager(value: number, limit: number): number {

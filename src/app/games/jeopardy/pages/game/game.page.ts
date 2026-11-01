@@ -19,6 +19,7 @@ import {
   COUNTDOWN_SECONDS,
   TURN_PHASES,
   WAGER_STEP,
+  normalizeWager,
   playerName,
   playingPlayers,
   selfPlayer,
@@ -82,7 +83,7 @@ export class JeopardyGamePageComponent {
     const room = this.room();
     return room?.players.find(player => player.id === room.turnPlayerId) ?? null;
   });
-  readonly wagerMax = computed(() => wagerLimit(this.self()?.score ?? 0, this.room()?.board ?? []));
+  readonly wagerMax = computed(() => wagerLimit(this.self()?.score ?? 0));
   readonly columns = computed(() => {
     const room = this.room();
     if (!room) return [];
@@ -141,12 +142,21 @@ export class JeopardyGamePageComponent {
     return this.move(() => this.rooms.selectCell(this.code, cellId));
   }
 
+  /** Lo escrito a mano se ajusta al soltar el campo: de cien en cien, entre 100 y los puntos del equipo. */
   updateWager(event: Event): void {
-    if (event.target instanceof HTMLInputElement) this.wager.set(event.target.valueAsNumber || WAGER_STEP);
+    if (!(event.target instanceof HTMLInputElement)) return;
+    const wager = normalizeWager(event.target.valueAsNumber, this.wagerMax());
+    this.wager.set(wager);
+    event.target.value = String(wager);
+  }
+
+  stepWager(direction: 1 | -1): void {
+    this.sound.playButtonClick();
+    this.wager.update(wager => normalizeWager(wager + direction * WAGER_STEP, this.wagerMax()));
   }
 
   confirmWager(): Promise<void> {
-    return this.move(() => this.rooms.setWager(this.code, this.wager()));
+    return this.move(() => this.rooms.setWager(this.code, normalizeWager(this.wager(), this.wagerMax())));
   }
 
   answered(): Promise<void> { return this.move(() => this.rooms.markAnswered(this.code)); }

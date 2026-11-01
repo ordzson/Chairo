@@ -145,7 +145,7 @@ export function placeWager(state: JeopardyState, selfId: string | null, value: n
   const self = requireSeat(state, selfId);
   if (state.phase !== 'wager') throw new JeopardyError('invalid-move');
   if (state.turnPlayerId !== self.id) throw new JeopardyError('not-your-turn');
-  const wager = normalizeWager(value, wagerLimit(self.score, state.cells));
+  const wager = normalizeWager(value, wagerLimit(self.score));
   return { ...state, wager, phase: 'question', deadline: null, message: `${self.name} apuesta ${wager} puntos.` };
 }
 

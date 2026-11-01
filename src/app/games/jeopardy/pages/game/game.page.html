@@ -98,8 +98,12 @@
               <h2>Apuesta especial</h2>
               <p>Pregunta extrema. Si fallas, también pierdes lo apostado.</p>
               @if (myTurn()) {
-                <label for="wager">Tu apuesta · máximo {{ wagerMax() }}</label>
-                <input id="wager" type="number" [min]="wagerStep" [max]="wagerMax()" [step]="wagerStep" [value]="wager()" (input)="updateWager($event)">
+                <label for="wager">Tu apuesta · de {{ wagerStep }} a {{ wagerMax() }}</label>
+                <div class="wager-stepper">
+                  <button class="stepper-button pressable" type="button" [attr.aria-label]="'Restar ' + wagerStep" [disabled]="busy() || wager() <= wagerStep" (click)="stepWager(-1)">−</button>
+                  <input id="wager" type="number" inputmode="numeric" [min]="wagerStep" [max]="wagerMax()" [step]="wagerStep" [value]="wager()" (change)="updateWager($event)">
+                  <button class="stepper-button pressable" type="button" [attr.aria-label]="'Sumar ' + wagerStep" [disabled]="busy() || wager() >= wagerMax()" (click)="stepWager(1)">+</button>
+                </div>
                 <button class="primary-action pressable" type="button" [disabled]="busy()" (click)="confirmWager()">Confirmar {{ wager() }} puntos</button>
               } @else { <p class="waiting-copy">{{ current()?.name }} está eligiendo su apuesta.</p> }
             </div>
